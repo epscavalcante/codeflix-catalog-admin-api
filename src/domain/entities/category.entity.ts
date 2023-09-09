@@ -1,39 +1,65 @@
-import EntityId from "../../../shared/domain/value-objects/entity-id.vo";
+import Uuid from "../value-objects/uuid.vo";
+import Entity from "./entity";
+import EntityValidationError from "../exceptions/entity-validation-error.exception";
+import ValueObject from "../value-objects/value-object";
+import { CategoryValidatorFactory } from "../validators/category.validator";
 
-export default class Category {
-    categoryId: string | EntityId;
+export default class Category extends Entity {
+    categoryId: Uuid;
     name: string;
     description: string | null;
     isActive: boolean;
     createdAt: Date;
 
     constructor(props: CategoryProps) {
-        this.categoryId = props.categoryId || new EntityId();
+        super();
+        this.categoryId = props.categoryId ?? new Uuid();
         this.name = props.name;
         this.description = props.description ?? null;
         this.isActive = props.isActive ?? true;
         this.createdAt = props.createdAt ?? new Date();
     }
 
-    // Factory
     static create(props: CategoryCreateCommand): Category {
-        return new Category(props);
+        const category = new Category(props);
+
+        Category.validate(category);
+
+        return category;
+    }
+
+    static validate(entity: Category) {
+        const categoryValidator = CategoryValidatorFactory.create();
+
+        const isValid = categoryValidator.validate(entity);
+
+        if (!isValid) {
+            throw new EntityValidationError(categoryValidator.errors);
+        }
     }
 
     changeName(name: string): void {
         this.name = name;
+
+        Category.validate(this);
     }
 
     changeDescription(description: string): void {
         this.description = description;
+        
+        Category.validate(this);
     }
 
     activate(): void {
         this.isActive = true;
+
+        Category.validate(this);
     }
 
     deactivate(): void {
         this.isActive = false;
+        
+        Category.validate(this);
     }
 
     toJSON() {
@@ -45,10 +71,14 @@ export default class Category {
             createdAt: this.createdAt.toJSON(),
         }
     }
+
+    get entityId(): ValueObject {
+        return this.categoryId;
+    }
 }
 
 export type CategoryProps = {
-    categoryId?: string | EntityId;
+    categoryId?: Uuid;
     name: string;
     description?: string;
     isActive?: boolean;
