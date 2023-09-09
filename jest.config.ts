@@ -3,9 +3,10 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
+// import { Config } from 'jest';
 
-const config: Config = {
+// const config: Config = {
+const config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -123,7 +124,7 @@ const config: Config = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  rootDir: "src",
+  rootDir: "./src",
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
@@ -137,7 +138,9 @@ const config: Config = {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: [
+    './infra/testing/expect-validation.ts'
+  ],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -166,7 +169,7 @@ const config: Config = {
   // ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
-  testRegex: ".*\\..*spec\\.ts$",
+  // testRegex: [],
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: undefined,
@@ -176,7 +179,7 @@ const config: Config = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    "^.+\\.ts?$": "@swc/jest",
+    '^.+\\.(t|js)sx?$': '@swc/jest',
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
