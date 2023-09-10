@@ -233,121 +233,194 @@ describe('Category Unit Test', () => {
     });
 
     describe('Testes de invalidação na categoria', () => {
-        test('Deve invalidar criação da categoria sem nome', () => {
-            const input: CategoryProps = {
-                name: null
-            }
-
-            expect(() => Category.create(input)).containsErrorMessage({
-                name: [
-                    'name must be shorter than or equal to 255 characters',
-                    'name must be a string',
-                    'name should not be empty',
-                ]
+        describe('Invalidação do name', () => {
+            test('Deve invalidar criação da categoria sem nome', () => {
+                const input: CategoryProps = {
+                    name: null
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    name: [
+                        'name must be shorter than or equal to 255 characters',
+                        'name must be a string',
+                        'name should not be empty',
+                    ]
+                });
+            });
+    
+            test('Deve invalidar criação da categoria com nome vazio', () => {
+                const input: CategoryProps = {
+                    name: ''
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    name: [
+                        'name should not be empty',
+                    ]
+                });
+            });
+    
+            test('Deve invalidar criação da categoria com nome maior que 255 caracteres', () => {
+                const input: CategoryProps = {
+                    name: 'a'.repeat(256)
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    name: [
+                        'name must be shorter than or equal to 255 characters'
+                    ]
+                });
+            });
+    
+            test('Deve invalidar criação da categoria informando nome como número', () => {
+                const input: CategoryProps = {
+                    name: 1 as any
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    name: [
+                        "name must be shorter than or equal to 255 characters",
+                        "name must be a string",
+                    ]
+                });
             });
         });
 
-        test('Deve invalidar criação da categoria com nome vazio', () => {
-            const input: CategoryProps = {
-                name: ''
-            }
+        describe('Invalidação da description', () => {
+            test('Deve invalidar criação da categoria informando descrição maior que 255 caracteres', () => {
+                const input: CategoryProps = {
+                    name: 'Categoria',
+                    description: "C".repeat(256)
+                }
 
-            expect(() => Category.create(input)).containsErrorMessage({
-                name: [
-                    'name should not be empty',
-                ]
+                expect(() => Category.create(input)).containsErrorMessage({
+                    description: [
+                        "description must be shorter than or equal to 255 characters"
+                    ]
+                });
+            });
+
+            test('Deve invalidar criação da categoria informando descrição como número', () => {
+                const input: CategoryProps = {
+                    name: 'Categoria',
+                    description: 2 as any
+                }
+
+                expect(() => Category.create(input)).containsErrorMessage({
+                    description: [
+                        "description must be shorter than or equal to 255 characters",
+                        "description must be a string",
+                    ]
+                });
+            });
+        })
+
+        describe('Invalidação do isActive', () => {
+            test('Deve invalidar criação da categoria informando isActive como número não boleano', () => {
+                const input: CategoryProps = {
+                    name: 'Categoria',
+                    isActive: 2 as any
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    isActive: [
+                        "isActive must be a boolean value",
+                    ]
+                });
+            });
+    
+            test('Deve invalidar criação da categoria informando isActive booleano como número booleano 1', () => {
+                const input: CategoryProps = {
+                    name: 'Categoria',
+                    isActive: 1 as any
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    isActive: [
+                        "isActive must be a boolean value",
+                    ]
+                });
+            });
+    
+            test('Deve invalidar criação da categoria informando isActive booleano como número booleano 0', () => {
+                const input: CategoryProps = {
+                    name: 'Categoria',
+                    isActive: 0 as any
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    isActive: [
+                        "isActive must be a boolean value",
+                    ]
+                });
             });
         });
 
-        test('Deve invalidar criação da categoria com nome maior que 255 caracteres', () => {
-            const input: CategoryProps = {
-                name: 'a'.repeat(256)
-            }
-
-            expect(() => Category.create(input)).containsErrorMessage({
-                name: [
-                    'name must be shorter than or equal to 255 characters'
-                ]
+        describe('Invalidação do createdAt', () => {
+            test('Deve invalidar criação da categoria informando createdAt como número', () => {
+                const input: CategoryProps = {
+                    name: 'Categoria',
+                    createdAt: 2 as any
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    createdAt: [
+                        "createdAt must be a Date instance",
+                    ]
+                });
             });
-        });
 
-        test('Deve invalidar criação da categoria informando nome como número', () => {
-            const input: CategoryProps = {
-                name: 1 as any
-            }
-
-            expect(() => Category.create(input)).containsErrorMessage({
-                name: [
-                    "name must be shorter than or equal to 255 characters",
-                    "name must be a string",
-                ]
+            test('Deve invalidar criação da categoria informando createdAt como timestamp', () => {
+                const input: CategoryProps = {
+                    name: 'Categoria',
+                    createdAt: (new Date).getTime() as any
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    createdAt: [
+                        "createdAt must be a Date instance",
+                    ]
+                });
             });
-        });
 
-        test('Deve invalidar criação da categoria informando descrição maior que 255 caracteres', () => {
-            const input: CategoryProps = {
-                name: 'Categoria',
-                description: "C".repeat(256)
-            }
-
-            expect(() => Category.create(input)).containsErrorMessage({
-                description: [
-                    "description must be shorter than or equal to 255 characters"
-                ]
+            test('Deve invalidar criação da categoria informando createdAt como date (Y-m-d)', () => {
+                const input: CategoryProps = {
+                    name: 'Categoria',
+                    createdAt: '2023-09-10T00:05:53.154Z' as any
+                }
+    
+                expect(() => Category.create(input)).containsErrorMessage({
+                    createdAt: [
+                        "createdAt must be a Date instance",
+                    ]
+                });
             });
-        });
-
-        test('Deve invalidar criação da categoria informando descrição como número', () => {
-            const input: CategoryProps = {
-                name: 'Categoria',
-                description: 2 as any
-            }
-
-            expect(() => Category.create(input)).containsErrorMessage({
-                description: [
-                    "description must be shorter than or equal to 255 characters",
-                    "description must be a string",
-                ]
-            });
-        });
-
-        test('Deve invalidar criação da categoria informando isActive como número', () => {
-            const input: CategoryProps = {
-                name: 'Categoria',
-                isActive: 2 as any
-            }
-
-            expect(() => Category.create(input)).containsErrorMessage({
-                isActive: [
-                    "isActive must be a boolean value",
-                ]
-            });
-        });
-
-        test('Deve invalidar criação da categoria informando isActive booleano como número 0 | 1', () => {
-            const input: CategoryProps = {
-                name: 'Categoria',
-                isActive: 1 as any
-            }
-
-            expect(() => Category.create(input)).containsErrorMessage({
-                isActive: [
-                    "isActive must be a boolean value",
-                ]
-            });
-        });
-
-        test('Deve invalidar criação da categoria informando isActive booleano como número 0 | 1', () => {
-            const input: CategoryProps = {
-                name: 'Categoria',
-                isActive: 0 as any
-            }
-
-            expect(() => Category.create(input)).containsErrorMessage({
-                isActive: [
-                    "isActive must be a boolean value",
-                ]
-            });
+    
+            // test('Deve invalidar criação da categoria informando isActive booleano como número booleano 1', () => {
+            //     const input: CategoryProps = {
+            //         name: 'Categoria',
+            //         isActive: 1 as any
+            //     }
+    
+            //     expect(() => Category.create(input)).containsErrorMessage({
+            //         isActive: [
+            //             "isActive must be a boolean value",
+            //         ]
+            //     });
+            // });
+    
+            // test('Deve invalidar criação da categoria informando isActive booleano como número booleano 0', () => {
+            //     const input: CategoryProps = {
+            //         name: 'Categoria',
+            //         isActive: 0 as any
+            //     }
+    
+            //     expect(() => Category.create(input)).containsErrorMessage({
+            //         isActive: [
+            //             "isActive must be a boolean value",
+            //         ]
+            //     });
+            // });
         });
     });
 });

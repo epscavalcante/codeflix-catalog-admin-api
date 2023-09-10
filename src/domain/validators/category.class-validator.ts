@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsOptional, IsString, MaxLength } from "class-validator";
+import { IsBoolean, IsDate, IsNotEmpty, IsOptional, IsString, MaxLength } from "class-validator";
 import Category from "domain/entities/category.entity";
 
 export class CategoryRules {
@@ -16,7 +16,18 @@ export class CategoryRules {
     @IsBoolean()
     isActive: boolean;
 
-    constructor({name, description, isActive}: Category) {
-        Object.assign(this, {name, description, isActive});
+    @IsOptional()
+    @IsDate()
+    createdAt: Date;
+
+    constructor(
+        {
+            name, 
+            description, 
+            isActive,
+            createdAt
+        }: Category
+    ) {
+        Object.assign(this, { name, description, isActive, createdAt });
     }
 }
