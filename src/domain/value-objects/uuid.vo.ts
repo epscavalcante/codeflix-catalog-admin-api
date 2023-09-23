@@ -17,4 +17,8 @@ export default class Uuid extends ValueObject {
         if (!isValid)
             throw new InvalidUuidException();
     }
+
+    toString() {
+        return this.value;
+    }
 }
