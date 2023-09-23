@@ -3,6 +3,7 @@ import Entity from "./entity";
 import EntityValidationError from "../exceptions/entity-validation-error.exception";
 import ValueObject from "../value-objects/value-object";
 import { CategoryValidatorFactory } from "../validators/category.validator";
+import CategoryFactory from "../factories/category.factory";
 
 export default class Category extends Entity {
     categoryId: Uuid;
@@ -36,6 +37,10 @@ export default class Category extends Entity {
         if (!isValid) {
             throw new EntityValidationError(categoryValidator.errors);
         }
+    }
+
+    static fake() {
+        return CategoryFactory; 
     }
 
     changeName(name: string): void {
