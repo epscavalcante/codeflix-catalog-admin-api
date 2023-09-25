@@ -1,5 +1,20 @@
-import Category from "domain/entities/category.entity";
+import Category from "../entities/category.entity";
 import IRepository from "./repository";
-import Uuid from "domain/value-objects/uuid.vo";
+import Uuid from "../value-objects/uuid.vo";
+import ISearchableRepository, { SearchParams, SearchResult } from "./searchable.repository";
 
-export default interface ICategoryInterface extends IRepository<Category, Uuid> {}
+export type CategoryFilter = string;
+
+export class CategorySearchParams extends SearchParams<CategoryFilter> {}
+
+export class CategorySearchResult extends SearchResult<Category> {}
+
+export default interface ICategoryRepository 
+    extends IRepository<Category, Uuid>, 
+    ISearchableRepository<
+        Category, 
+        Uuid, 
+        CategoryFilter, 
+        CategorySearchParams, 
+        CategorySearchResult 
+    > {}

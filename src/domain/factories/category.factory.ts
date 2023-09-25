@@ -11,7 +11,7 @@ export default class CategoryFactory<TBuild = any> {
     private _name: PropOrFactory<string> = (_index) => this.chance.word();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     private _description: PropOrFactory<string | null> = (_index) =>
-        this.chance.paragraph();
+        this.chance.paragraph({ sentences: 1 })
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     private _isActive: PropOrFactory<boolean> = (_index) => true;
     // auto generated in entity
