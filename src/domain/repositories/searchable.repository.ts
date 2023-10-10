@@ -1,5 +1,6 @@
 import Entity from "../entities/entity";
 import ValueObject from "../value-objects/value-object";
+import IRepository from "./repository";
 
 export default interface ISearchableRepository<
     E extends Entity, 
@@ -7,7 +8,7 @@ export default interface ISearchableRepository<
     Filter = string,
     SearchInput = SearchParams<Filter>,
     SearchOutput = SearchResult
-> {
+> extends IRepository<E, EntityId> {
     sortableFields: string[];
     search(props: SearchInput): Promise<SearchOutput>
 }
