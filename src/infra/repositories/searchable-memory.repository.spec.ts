@@ -1,7 +1,7 @@
 import { SearchParams, SearchResult } from "../../domain/repositories/searchable.repository";
 import Entity from "../../domain/entities/entity";
 import Uuid from "../../domain/value-objects/uuid.vo";
-import { SearchableMemoryRepository } from "./searchable-memory.reposity";
+import { SearchableMemoryRepository } from "./searchable-memory.repository";
 
 type EntityStubProps = {
     entityId?: Uuid;

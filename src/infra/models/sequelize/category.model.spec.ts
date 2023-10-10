@@ -1,5 +1,5 @@
 import { DataType } from "sequelize-typescript";
-import CategoryModel from "./category.sequelize";
+import CategoryModel from "./category.model";
 import { setupDatabase } from "../../helpers/setup-database";
 
 describe("Category Model Test", () => {
