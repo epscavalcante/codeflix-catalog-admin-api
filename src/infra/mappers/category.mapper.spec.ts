@@ -1,10 +1,10 @@
-import CategorySequelizeRepository from "../../repositories/category-sequelize.repository";
-import CategoryModel from "../sequelize/category.sequelize";
-import Uuid from "../../../domain/value-objects/uuid.vo";
+import CategorySequelizeRepository from "../repositories/category-sequelize.repository";
+import CategoryModel from "../models/sequelize/category.model";
+import Uuid from "../../domain/value-objects/uuid.vo";
 import CategoryMapper from "./category.mapper";
-import EntityValidationError from "../../../domain/exceptions/entity-validation-error.exception";
-import Category from "../../../domain/entities/category.entity";
-import { setupDatabase } from "../../helpers/setup-database";
+import EntityValidationError from "../../domain/exceptions/entity-validation-error.exception";
+import Category from "../../domain/entities/category.entity";
+import { setupDatabase } from "../helpers/setup-database";
 
 describe('Category Mapper Test', () => {
     let repository: CategorySequelizeRepository;

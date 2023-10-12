@@ -1,4 +1,4 @@
-import CategoryModel from "../database/sequelize/category.sequelize";
+import CategoryModel from "../models/sequelize/category.model";
 import { Sequelize } from "sequelize-typescript";
 import CategorySequelizeRepository from "./category-sequelize.repository";
 import Category from "../../domain/entities/category.entity";
@@ -8,7 +8,7 @@ import {
     CategorySearchParams,
     CategorySearchResult,
 } from "../../domain/repositories/category.repository";
-import CategoryMapper from "../database/mappers/category.mapper";
+import CategoryMapper from "../mappers/category.mapper";
 import { setupDatabase } from '../helpers/setup-database';
 
 describe("Category Sequelize Repository Tests", () => {
@@ -178,7 +178,7 @@ describe("Category Sequelize Repository Tests", () => {
                     name: "Movie",
                     description: null,
                     isActive: true,
-                    createdAt: createdAt.toJSON(),
+                    createdAt: createdAt,
                 })
             );
         });

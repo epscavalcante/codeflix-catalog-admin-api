@@ -1,10 +1,10 @@
 import Uuid from "../../domain/value-objects/uuid.vo";
 import ICategoryRepository, { CategorySearchParams, CategorySearchResult } from "../../domain/repositories/category.repository";
-import CategoryModel from "../database/sequelize/category.sequelize";
+import CategoryModel from "../models/sequelize/category.model";
 import EntityNotFoundException from "../../domain/exceptions/entity-not-found.exception";
 import Category from "../../domain/entities/category.entity";
 import { Op } from "sequelize";
-import CategoryMapper from "../database/mappers/category.mapper";
+import CategoryMapper from "../mappers/category.mapper";
 
 export default class CategorySequelizeRepository implements ICategoryRepository {
     sortableFields: string[] = ['name', 'createdAt'];

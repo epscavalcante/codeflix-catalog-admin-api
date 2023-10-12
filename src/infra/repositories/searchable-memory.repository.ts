@@ -1,13 +1,14 @@
 import ISearchableRepository, { SearchParams, SearchResult, SortDirection } from "../../domain/repositories/searchable.repository";
 import Entity from "../../domain/entities/entity";
 import ValueObject from "../../domain/value-objects/value-object";
+import MemoryRespository from "./memory.repository";
 
-export abstract class SearchableMemoryRepository<E extends Entity, Uuid extends ValueObject, Filter = string> 
+export abstract class SearchableMemoryRepository<E extends Entity, Uuid extends ValueObject, Filter = string>
+extends MemoryRespository<E, Uuid> 
 implements ISearchableRepository<E, Uuid, Filter> {
-    items: E[];
     sortableFields: string[] = [];
     
-    async search(props: SearchParams<Filter>): Promise<SearchResult<Entity>> {
+    async search(props: SearchParams<Filter>): Promise<SearchResult<E>> {
         const itemsFiltered = await this.applyFilter(this.items, props.filter);
         const itemsSorted = await this.applySorting(itemsFiltered, props.sort, props.sortDir);
         const itemsPaginated = await this.applyPagination(itemsSorted, props.page, props.perPage);
