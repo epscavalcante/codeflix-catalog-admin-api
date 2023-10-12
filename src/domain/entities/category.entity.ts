@@ -73,7 +73,7 @@ export default class Category extends Entity {
             name: this.name,
             description: this.description,
             isActive: this.isActive,
-            createdAt: this.createdAt.toJSON(),
+            createdAt: this.createdAt,
         }
     }
 

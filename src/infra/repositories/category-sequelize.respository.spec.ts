@@ -178,7 +178,7 @@ describe("Category Sequelize Repository Tests", () => {
                     name: "Movie",
                     description: null,
                     isActive: true,
-                    createdAt: createdAt.toJSON(),
+                    createdAt: createdAt,
                 })
             );
         });
