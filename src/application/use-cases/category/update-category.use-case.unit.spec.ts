@@ -26,6 +26,17 @@ describe("Update Category UseCase UnitTest", () => {
         ).rejects.toThrow(new EntityNotFoundException(uuid.value, Category));
     });
 
+    test("Deve lançar exception EntityValidationException", async () => {
+        const category = new Category({name: 'Test'});
+        repository.items = [category];
+        const input = {
+            id: category.categoryId.value,
+            name: "T".repeat(256),
+        };
+
+        expect(() => useCase.handle(input)).rejects.toThrowError('Entity Validation Error');
+    });
+
     test("Deve alterar o nome da categoria", async () => {
         const spyUpdate = jest.spyOn(repository, "update");
         const category = new Category({name: 'Test'});

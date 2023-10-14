@@ -30,6 +30,14 @@ describe("Create Category UseCase Integration Test", () => {
         });
     });
 
+    test("Deve lançar exception EntityValidationException", async () => {
+        const input = {
+            name: "T".repeat(256),
+        };
+
+        await expect(() => useCase.handle(input)).rejects.toThrowError('Entity Validation Error');
+    });
+
     test("Deve criar uma categoria sem descrição e inativa", async () => {
         const output = await useCase.handle({
             name: "Test",

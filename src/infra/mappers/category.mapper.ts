@@ -1,6 +1,6 @@
 import Uuid from "../../domain/value-objects/uuid.vo";
 import Category from "../../domain/entities/category.entity";
-import EntityValidationError from "domain/exceptions/entity-validation-error.exception";
+import EntityValidationError from "../../domain/exceptions/entity-validation-error.exception";
 import CategoryModel from "../models/sequelize/category.model";
 
 export default class CategoryMapper {
@@ -23,7 +23,11 @@ export default class CategoryMapper {
             createdAt: model.createdAt,
         });
 
-        Category.validate(category);
+        category.validate();
+
+        if (category.notification.hasErrors()) {
+            throw new EntityValidationError(category.notification.toJSON());
+        }
 
         return category;
     }

@@ -1,6 +1,5 @@
 import Uuid from "../../../domain/value-objects/uuid.vo";
 import InvalidUuidException from "../../../domain/exceptions/invalid-uuid.exception";
-import CategoryMemoryRespository from "../../../infra/repositories/category-memory.repository";
 import UpdateCategoryUseCase from "./update-category.use-case";
 import EntityNotFoundException from "../../../domain/exceptions/entity-not-found.exception";
 import Category from "../../../domain/entities/category.entity";
@@ -31,9 +30,21 @@ describe("Update Category UseCase Integration Test", () => {
         ).rejects.toThrow(new EntityNotFoundException(uuid.value, Category));
     });
 
+    test("Deve lançar exception EntityValidationException", async () => {
+        const category = Category.fake().aCategory().build();
+        await repository.insert(category);
+
+        const input = {
+            id: category.categoryId.value,
+            name: "T".repeat(256),
+        };
+
+        await expect(() => useCase.handle(input)).rejects.toThrowError('Entity Validation Error');
+    });
+
     test("Deve alterar o nome da categoria", async () => {
         const spyUpdate = jest.spyOn(repository, "update");
-        const category = Category.fake().aCategory().build();
+        const category = Category.fake().aCategory().withName('teste').build();
         await repository.insert(category);
        
         const output = await useCase.handle({

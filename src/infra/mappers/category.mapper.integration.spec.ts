@@ -6,7 +6,7 @@ import EntityValidationError from "../../domain/exceptions/entity-validation-err
 import Category from "../../domain/entities/category.entity";
 import { setupDatabase } from "../helpers/setup-database";
 
-describe('Category Mapper Test', () => {
+describe('Category Mapper Integration Tests', () => {
     let repository: CategorySequelizeRepository;
 
     setupDatabase({ models:  [CategoryModel] });
@@ -18,7 +18,8 @@ describe('Category Mapper Test', () => {
     describe('Category map Model to Entity', () => {
         test('Should receives entity validation exception', () => {
             const categoryModel = CategoryModel.build({
-                categoryId: (new Uuid()).value
+                categoryId: (new Uuid()).value,
+                name: 'a'.repeat(256)
             });
     
             try {
@@ -26,13 +27,13 @@ describe('Category Mapper Test', () => {
                 fail('Category is valid, but needs throws exception');
             } catch (error) {
                 expect(error).toBeInstanceOf(EntityValidationError);
-                expect((error as EntityValidationError).error).toMatchObject({
-                    name: [
-                        'name must be shorter than or equal to 255 characters',
-                        'name must be a string',
-                        'name should not be empty'
-                    ]
-                });
+                expect((error as EntityValidationError).error).toMatchObject([
+                    {
+                        name: [
+                            'name must be shorter than or equal to 255 characters',
+                        ]
+                    }
+                ]);
             }
         });
     

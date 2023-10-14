@@ -1,8 +1,8 @@
-import { FieldErrors } from "domain/validators/validator";
+import { FieldErrors } from "../validators/validator";
 
 export default class EntityValidationError extends Error {
     constructor(
-        public error: FieldErrors, 
+        public error: FieldErrors[], 
         message = 'Entity Validation Error'
     ) {
         super(message);
