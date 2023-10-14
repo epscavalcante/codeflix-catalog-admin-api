@@ -24,19 +24,15 @@ export default class Category extends Entity {
     static create(props: CategoryCreateCommand): Category {
         const category = new Category(props);
 
-        Category.validate(category);
+        category.validate(['name']);
 
         return category;
     }
 
-    static validate(entity: Category) {
+    validate(fields?: string[]) {
         const categoryValidator = CategoryValidatorFactory.create();
 
-        const isValid = categoryValidator.validate(entity);
-
-        if (!isValid) {
-            throw new EntityValidationError(categoryValidator.errors);
-        }
+        return categoryValidator.validate(this.notification, this, fields);
     }
 
     static fake() {
@@ -46,25 +42,19 @@ export default class Category extends Entity {
     changeName(name: string): void {
         this.name = name;
 
-        Category.validate(this);
+        this.validate(['name']);
     }
 
     changeDescription(description: string): void {
         this.description = description;
-        
-        Category.validate(this);
     }
 
     activate(): void {
         this.isActive = true;
-
-        Category.validate(this);
     }
 
     deactivate(): void {
         this.isActive = false;
-        
-        Category.validate(this);
     }
 
     toJSON() {

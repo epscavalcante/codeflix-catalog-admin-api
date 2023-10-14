@@ -1,18 +1,11 @@
-import Uuid from "../value-objects/uuid.vo";
+import Notification from "../validators/notiification";
 import ValueObject from "../value-objects/value-object";
 
 export default abstract class Entity {
-    // public readonly uuid: Uuid;
 
-    // constructor(uuid?: Uuid) {
-    //     this.uuid = uuid || new Uuid();
-    // }
+    notification: Notification = new Notification();
 
     abstract toJSON(): any;
 
     abstract get entityId(): ValueObject;
-
-    // get id(): string {
-    //     return this.uuid.value;
-    //   }
 }

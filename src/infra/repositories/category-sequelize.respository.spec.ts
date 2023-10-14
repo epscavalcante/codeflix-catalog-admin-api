@@ -267,11 +267,11 @@ describe("Category Sequelize Repository Tests", () => {
             ]);
 
             const categories = [
-                Category.fake().aCategory().withName("b").build(),
-                Category.fake().aCategory().withName("a").build(),
-                Category.fake().aCategory().withName("d").build(),
-                Category.fake().aCategory().withName("e").build(),
-                Category.fake().aCategory().withName("c").build(),
+                Category.fake().aCategory().withName("b_____").build(),
+                Category.fake().aCategory().withName("a_____").build(),
+                Category.fake().aCategory().withName("d_____").build(),
+                Category.fake().aCategory().withName("e_____").build(),
+                Category.fake().aCategory().withName("c_____").build(),
             ];
             await repository.bulkInsert(categories);
 

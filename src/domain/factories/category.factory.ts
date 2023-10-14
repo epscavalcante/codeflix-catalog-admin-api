@@ -8,10 +8,11 @@ export default class CategoryFactory<TBuild = any> {
     // auto generated in entity
     private _categoryId: PropOrFactory<Uuid> | undefined = undefined;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    private _name: PropOrFactory<string> = (_index) => this.chance.word();
+    private _name: PropOrFactory<string> = (_index) =>
+        this.chance.word({ length: 5 });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     private _description: PropOrFactory<string | null> = (_index) =>
-        this.chance.paragraph({ sentences: 1 })
+        this.chance.paragraph({ sentences: 1 });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     private _isActive: PropOrFactory<boolean> = (_index) => true;
     // auto generated in entity
@@ -84,7 +85,9 @@ export default class CategoryFactory<TBuild = any> {
                         createdAt: this.callFactory(this._createdAt, index),
                     }),
                 });
-                // Category.validate(category);
+
+                category.validate();
+
                 return category;
             });
         return this.countObjs === 1 ? (categories[0] as any) : categories;
