@@ -1,5 +1,5 @@
-import { config as readEnv } from "dotenv";
-import { join } from "path";
+import { config as readEnv } from 'dotenv';
+import { join } from 'path';
 
 export default class Config {
     static env: any = null;
@@ -10,7 +10,7 @@ export default class Config {
         return {
             dialect: Config.env.DB_VENDOR,
             host: Config.env.DB_HOST,
-            logging: Config.env.DB_LOGGING === "true",
+            logging: Config.env.DB_LOGGING === 'true',
         };
     }
 
@@ -19,7 +19,7 @@ export default class Config {
             return;
         }
         Config.env = readEnv({
-            path: join(__dirname, `../../.env.${process.env.NODE_ENV}`),
+            path: join(__dirname, `../../../.env.${process.env.NODE_ENV}`),
         }).parsed;
     }
 }
