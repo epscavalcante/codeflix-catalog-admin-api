@@ -1,10 +1,9 @@
-import Category from "../entities/category.entity";
-import IRepository from "./repository";
-import Uuid from "../value-objects/uuid.vo";
+import Category from '../entities/category.entity';
+import Uuid from '../value-objects/uuid.vo';
 import ISearchableRepository, {
     SearchParams,
     SearchResult,
-} from "./searchable.repository";
+} from './searchable.repository';
 
 export type CategoryFilter = string;
 
