@@ -36,5 +36,7 @@ lerna-debug.log*
 
 tsconfig.tsbuildinfo
 
-.env.*
+.env*
 !.env.example
+
+db
