@@ -1,20 +1,16 @@
-import Uuid from "../../../domain/value-objects/uuid.vo";
-import InvalidUuidException from "../../../domain/exceptions/invalid-uuid.exception";
-import UpdateCategoryUseCase from "./update-category.use-case";
-import EntityNotFoundException from "../../../domain/exceptions/entity-not-found.exception";
-import Category from "../../../domain/entities/category.entity";
-import { setupDatabase } from "../../../infra/helpers/setup-database";
-import CategoryModel from "../../../infra/models/sequelize/category.model";
-import CategorySequelizeRepository from "../../../infra/repositories/category-sequelize.repository";
+import Uuid from "../../../../domain/value-objects/uuid.vo";
+import InvalidUuidException from "../../../../domain/exceptions/invalid-uuid.exception";
+import CategoryMemoryRepository from "../../../../infra/repositories/category-memory.repository";
+import UpdateCategoryUseCase from "../update-category.use-case";
+import EntityNotFoundException from "../../../../domain/exceptions/entity-not-found.exception";
+import Category from "../../../../domain/entities/category.entity";
 
-describe("Update Category UseCase Integration Test", () => {
-    let repository: CategorySequelizeRepository;
+describe("Update Category UseCase UnitTest", () => {
+    let repository: CategoryMemoryRepository;
     let useCase: UpdateCategoryUseCase;
 
-    setupDatabase({ models: [CategoryModel] });
-
     beforeEach(() => {
-        repository = new CategorySequelizeRepository(CategoryModel);
+        repository = new CategoryMemoryRepository();
         useCase = new UpdateCategoryUseCase(repository);
     });
 
@@ -31,21 +27,20 @@ describe("Update Category UseCase Integration Test", () => {
     });
 
     test("Deve lançar exception EntityValidationException", async () => {
-        const category = Category.fake().aCategory().build();
-        await repository.insert(category);
-
+        const category = new Category({name: 'Test'});
+        repository.items = [category];
         const input = {
             id: category.categoryId.value,
             name: "T".repeat(256),
         };
 
-        await expect(() => useCase.handle(input)).rejects.toThrowError('Entity Validation Error');
+        expect(() => useCase.handle(input)).rejects.toThrowError('Entity Validation Error');
     });
 
     test("Deve alterar o nome da categoria", async () => {
         const spyUpdate = jest.spyOn(repository, "update");
-        const category = Category.fake().aCategory().withName('teste').build();
-        await repository.insert(category);
+        const category = new Category({name: 'Test'});
+        repository.items.push(category);
        
         const output = await useCase.handle({
             id: category.categoryId.value,
@@ -56,16 +51,16 @@ describe("Update Category UseCase Integration Test", () => {
         expect(output).toStrictEqual({
             id: category.categoryId.value,
             name: "Changed",
-            description: category.description,
-            isActive: category.isActive,
-            createdAt: category.createdAt,
+            description: null,
+            isActive: true,
+            createdAt: repository.items[0].createdAt,
         });
     });
 
     test("Deve alterar a description da categoria", async () => {
         const spyUpdate = jest.spyOn(repository, "update");
-        const category = Category.fake().aCategory().build();
-        await repository.insert(category);
+        const category = new Category({name: 'Test'});
+        repository.items.push(category);
        
         const output = await useCase.handle({
             id: category.categoryId.value,
@@ -75,17 +70,17 @@ describe("Update Category UseCase Integration Test", () => {
         expect(spyUpdate).toHaveBeenCalledTimes(1);
         expect(output).toStrictEqual({
             id: category.categoryId.value,
-            name: category.name,
+            name: "Test",
             description: 'Changed',
-            isActive: category.isActive,
-            createdAt: category.createdAt,
+            isActive: true,
+            createdAt: repository.items[0].createdAt,
         });
     });
 
     test("Deve inativar uma categoria", async () => {
         const spyUpdate = jest.spyOn(repository, "update");
-        const category = Category.fake().aCategory().activate().build();
-        await repository.insert(category);
+        const category = new Category({name: 'Test'});
+        repository.items.push(category);
        
         const output = await useCase.handle({
             id: category.categoryId.value,
@@ -95,17 +90,17 @@ describe("Update Category UseCase Integration Test", () => {
         expect(spyUpdate).toHaveBeenCalledTimes(1);
         expect(output).toStrictEqual({
             id: category.categoryId.value,
-            name: category.name,
-            description: category.description,
+            name: "Test",
+            description: null,
             isActive: false,
-            createdAt: category.createdAt
+            createdAt: repository.items[0].createdAt,
         });
     });
 
     test("Deve a ativar uma categoria", async () => {
         const spyUpdate = jest.spyOn(repository, "update");
-        const category = Category.fake().aCategory().deactivate().build();
-        await repository.insert(category);
+        const category = new Category({name: 'Test', isActive: false});
+        repository.items.push(category);
        
         const output = await useCase.handle({
             id: category.categoryId.value,
@@ -115,10 +110,10 @@ describe("Update Category UseCase Integration Test", () => {
         expect(spyUpdate).toHaveBeenCalledTimes(1);
         expect(output).toStrictEqual({
             id: category.categoryId.value,
-            name: category.name,
-            description: category.description,
+            name: "Test",
+            description: null,
             isActive: true,
-            createdAt: category.createdAt
+            createdAt: repository.items[0].createdAt,
         });
     });
 });

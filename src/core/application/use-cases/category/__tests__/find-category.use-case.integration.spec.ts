@@ -1,16 +1,20 @@
-import Uuid from "../../../domain/value-objects/uuid.vo";
-import InvalidUuidException from "../../../domain/exceptions/invalid-uuid.exception";
-import CategoryMemoryRespository from "../../../infra/repositories/category-memory.repository";
-import FindCategoryUseCase from "./find-category.use-case";
-import EntityNotFoundException from "../../../domain/exceptions/entity-not-found.exception";
-import Category from "../../../domain/entities/category.entity";
+import Uuid from "../../../../domain/value-objects/uuid.vo";
+import InvalidUuidException from "../../../../domain/exceptions/invalid-uuid.exception";
+import CategorySequelizeRespository from "../../../../infra/repositories/category-sequelize.repository";
+import FindCategoryUseCase from "../find-category.use-case";
+import EntityNotFoundException from "../../../../domain/exceptions/entity-not-found.exception";
+import Category from "../../../../domain/entities/category.entity";
+import { setupDatabase } from "../../../../infra/helpers/setup-database";
+import CategoryModel from "../../../../infra/models/sequelize/category.model";
 
 describe("Find a Category UseCase Unit Test", () => {
-    let repository: CategoryMemoryRespository;
+    let repository: CategorySequelizeRespository;
     let useCase: FindCategoryUseCase;
 
+    setupDatabase({ models: [CategoryModel]})
+
     beforeEach(() => {
-        repository = new CategoryMemoryRespository();
+        repository = new CategorySequelizeRespository(CategoryModel);
         useCase = new FindCategoryUseCase(repository);
     });
 
@@ -36,7 +40,6 @@ describe("Find a Category UseCase Unit Test", () => {
         const output = await useCase.handle({ id: category.categoryId.value});
 
         expect(spyFindById).toHaveBeenCalledTimes(1);
-        expect(repository.items).toHaveLength(1);
         expect(output).toStrictEqual({
             id: category.categoryId.value,
             name: category.name,

@@ -6,7 +6,7 @@ import ICategoryRepository, {
 import { SearchableMemoryRepository } from './searchable-memory.repository';
 import { SortDirection } from '../../domain/repositories/searchable.repository';
 
-export default class CategoryMemoryRespository
+export default class CategoryMemoryRepository
     extends SearchableMemoryRepository<Category, Uuid, CategoryFilter>
     implements ICategoryRepository
 {

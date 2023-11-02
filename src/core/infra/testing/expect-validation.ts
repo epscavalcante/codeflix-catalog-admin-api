@@ -1,4 +1,4 @@
-// import EntityValidationError from "../../domain/exceptions/entity-validation-error.exception";
+// import EntityValidationException from "../../domain/exceptions/entity-validation-error.exception";
 // import { FieldErrors, IValidator } from "../../domain/validators/validator"
 // import exp from "constants";
 
@@ -16,7 +16,7 @@
 //                 expected();
 //                 return isValid();
 //             } catch (error) {
-//                 const err = error as EntityValidationError;
+//                 const err = error as EntityValidationException;
 
 //                 return assertContainsErrorsMessage(err.error, received);
 //             }

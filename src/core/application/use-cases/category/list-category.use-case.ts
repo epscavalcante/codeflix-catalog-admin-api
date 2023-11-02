@@ -38,4 +38,4 @@ export type ListCategoryInput = {
     filter?: CategoryFilter | null;
 };
 
-export type ListCategoryOutput = PaginationOutputType<CategoryOutput>;
+export type ListCategoryOutput = PaginationOutputType<CategoryOutputType>;

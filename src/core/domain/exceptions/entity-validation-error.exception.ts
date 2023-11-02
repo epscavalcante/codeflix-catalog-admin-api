@@ -1,6 +1,6 @@
 import { FieldErrors } from "../validators/validator";
 
-export default class EntityValidationError extends Error {
+export default class EntityValidationException extends Error {
     constructor(
         public error: FieldErrors[], 
         message = 'Entity Validation Error'

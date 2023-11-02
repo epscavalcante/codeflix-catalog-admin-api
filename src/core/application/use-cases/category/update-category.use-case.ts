@@ -4,7 +4,7 @@ import IUseCase from "../use-case";
 import Uuid from "../../../domain/value-objects/uuid.vo";
 import EntityNotFoundException from "../../../domain/exceptions/entity-not-found.exception";
 import CategoryOutput, { CategoryOutputType } from "../mappers/category-output";
-import EntityValidationError from "../../../domain/exceptions/entity-validation-error.exception";
+import EntityValidationException from "../../../domain/exceptions/entity-validation-error.exception";
 import { UpdateCategoryInput } from "./update-category-input.use-case";
 
 export default class UpdateCategoryUseCase
@@ -32,7 +32,7 @@ export default class UpdateCategoryUseCase
         }
 
         if (category.notification.hasErrors()) {
-            throw new EntityValidationError(category.notification.toJSON());
+            throw new EntityValidationException(category.notification.toJSON());
         }
 
         await this.repository.update(category);

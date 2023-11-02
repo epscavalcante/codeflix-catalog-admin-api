@@ -2,7 +2,7 @@ import CategorySequelizeRepository from "../repositories/category-sequelize.repo
 import CategoryModel from "../models/sequelize/category.model";
 import Uuid from "../../domain/value-objects/uuid.vo";
 import CategoryMapper from "./category.mapper";
-import EntityValidationError from "../../domain/exceptions/entity-validation-error.exception";
+import EntityValidationException from "../../domain/exceptions/entity-validation-error.exception";
 import Category from "../../domain/entities/category.entity";
 import { setupDatabase } from "../helpers/setup-database";
 
@@ -26,8 +26,8 @@ describe('Category Mapper Integration Tests', () => {
                 CategoryMapper.toEntity(categoryModel);
                 fail('Category is valid, but needs throws exception');
             } catch (error) {
-                expect(error).toBeInstanceOf(EntityValidationError);
-                expect((error as EntityValidationError).error).toMatchObject([
+                expect(error).toBeInstanceOf(EntityValidationException);
+                expect((error as EntityValidationException).error).toMatchObject([
                     {
                         name: [
                             'name must be shorter than or equal to 255 characters',

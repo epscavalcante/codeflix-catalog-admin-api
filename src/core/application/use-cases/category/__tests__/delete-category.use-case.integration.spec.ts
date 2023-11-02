@@ -1,11 +1,11 @@
-import Uuid from "../../../domain/value-objects/uuid.vo";
-import InvalidUuidException from "../../../domain/exceptions/invalid-uuid.exception";
-import DeleteCategoryUseCase from "./delete-category.use-case";
-import EntityNotFoundException from "../../../domain/exceptions/entity-not-found.exception";
-import Category from "../../../domain/entities/category.entity";
-import { setupDatabase } from "../../../infra/helpers/setup-database";
-import CategoryModel from "../../../infra/models/sequelize/category.model";
-import CategorySequelizeRepository from "../../../infra/repositories/category-sequelize.repository";
+import Uuid from "../../../../domain/value-objects/uuid.vo";
+import InvalidUuidException from "../../../../domain/exceptions/invalid-uuid.exception";
+import DeleteCategoryUseCase from "../delete-category.use-case";
+import EntityNotFoundException from "../../../../domain/exceptions/entity-not-found.exception";
+import Category from "../../../../domain/entities/category.entity";
+import { setupDatabase } from "../../../../infra/helpers/setup-database";
+import CategoryModel from "../../../../infra/models/sequelize/category.model";
+import CategorySequelizeRepository from "../../../../infra/repositories/category-sequelize.repository";
 
 describe("Delete Category UseCase Integration Test", () => {
     let repository: CategorySequelizeRepository;

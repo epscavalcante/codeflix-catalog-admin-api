@@ -1,10 +1,10 @@
-import Category from "../../../domain/entities/category.entity";
-import { CategorySearchResult } from "../../../domain/repositories/category.repository";
-import CategorySequelizeRespository from "../../../infra/repositories/category-sequelize.repository";
-import ListCategoryUseCase from "./list-category.use-case";
-import CategoryOutput from "../mappers/category-output";
-import { setupDatabase } from "../../../infra/helpers/setup-database";
-import CategoryModel from "../../../infra/models/sequelize/category.model";
+import Category from "../../../../domain/entities/category.entity";
+import { CategorySearchResult } from "../../../../domain/repositories/category.repository";
+import CategorySequelizeRespository from "../../../../infra/repositories/category-sequelize.repository";
+import ListCategoryUseCase from "../list-category.use-case";
+import CategoryOutput from "../../mappers/category-output";
+import { setupDatabase } from "../../../../infra/helpers/setup-database";
+import CategoryModel from "../../../../infra/models/sequelize/category.model";
 
 describe("List categories Integration Test", () => {
     let useCase: ListCategoryUseCase;

@@ -1,13 +1,13 @@
 import Category from "../../domain/entities/category.entity";
-import CategoryMemoryRespository from "./category-memory.repository";
+import CategoryMemoryRepository from "./category-memory.repository";
 import Uuid from "../../domain/value-objects/uuid.vo";
 import EntityNotFoundException from "../../domain/exceptions/entity-not-found.exception";
 import { CategoryFilter } from "../../domain/repositories/category.repository";
 
 describe('Unit Test Memory repository', () => {
-    let repository: CategoryMemoryRespository;
+    let repository: CategoryMemoryRepository;
 
-    beforeEach(() => repository = new CategoryMemoryRespository())
+    beforeEach(() => repository = new CategoryMemoryRepository())
 
     test('Should insert an entity', async () => {
         const entity = Category.fake().aCategory().build();

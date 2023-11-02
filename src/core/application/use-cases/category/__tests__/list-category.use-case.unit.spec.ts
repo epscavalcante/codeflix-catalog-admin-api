@@ -1,15 +1,15 @@
-import Category from "../../../domain/entities/category.entity";
-import { CategorySearchResult } from "../../../domain/repositories/category.repository";
-import CategoryMemoryRespository from "../../../infra/repositories/category-memory.repository";
-import ListCategoryUseCase from "./list-category.use-case";
-import CategoryOutput from "../mappers/category-output";
+import Category from "../../../../domain/entities/category.entity";
+import { CategorySearchResult } from "../../../../domain/repositories/category.repository";
+import CategoryMemoryRepository from "../../../../infra/repositories/category-memory.repository";
+import ListCategoryUseCase from "../list-category.use-case";
+import CategoryOutput from "../../mappers/category-output";
 
 describe("List categories Unit Test", () => {
     let useCase: ListCategoryUseCase;
-    let repository: CategoryMemoryRespository;
+    let repository: CategoryMemoryRepository;
 
     beforeEach(() => {
-        repository = new CategoryMemoryRespository();
+        repository = new CategoryMemoryRepository();
         useCase = new ListCategoryUseCase(repository);
     });
 

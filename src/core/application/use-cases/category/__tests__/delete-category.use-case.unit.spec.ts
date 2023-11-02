@@ -1,16 +1,16 @@
-import Uuid from "../../../domain/value-objects/uuid.vo";
-import InvalidUuidException from "../../../domain/exceptions/invalid-uuid.exception";
-import CategoryMemoryRespository from "../../../infra/repositories/category-memory.repository";
-import DeleteCategoryUseCase from "./delete-category.use-case";
-import EntityNotFoundException from "../../../domain/exceptions/entity-not-found.exception";
-import Category from "../../../domain/entities/category.entity";
+import Uuid from "../../../../domain/value-objects/uuid.vo";
+import InvalidUuidException from "../../../../domain/exceptions/invalid-uuid.exception";
+import CategoryMemoryRepository from "../../../../infra/repositories/category-memory.repository";
+import DeleteCategoryUseCase from "../delete-category.use-case";
+import EntityNotFoundException from "../../../../domain/exceptions/entity-not-found.exception";
+import Category from "../../../../domain/entities/category.entity";
 
 describe("Delete Category UseCase Unit Test", () => {
-    let repository: CategoryMemoryRespository;
+    let repository: CategoryMemoryRepository;
     let useCase: DeleteCategoryUseCase;
 
     beforeEach(() => {
-        repository = new CategoryMemoryRespository();
+        repository = new CategoryMemoryRepository();
         useCase = new DeleteCategoryUseCase(repository);
     });
 

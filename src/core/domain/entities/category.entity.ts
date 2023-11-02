@@ -1,6 +1,6 @@
 import Uuid from "../value-objects/uuid.vo";
 import Entity from "./entity";
-import EntityValidationError from "../exceptions/entity-validation-error.exception";
+import EntityValidationException from "../exceptions/entity-validation-error.exception";
 import ValueObject from "../value-objects/value-object";
 import { CategoryValidatorFactory } from "../validators/category.validator";
 import CategoryFactory from "../factories/category.factory";
