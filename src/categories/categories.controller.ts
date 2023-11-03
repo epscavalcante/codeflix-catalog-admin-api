@@ -67,8 +67,6 @@ export class CategoriesController {
             id,
         });
 
-        console.log(categoryFoundOutput);
-
         return new CategoryPresenter(categoryFoundOutput);
     }
 
