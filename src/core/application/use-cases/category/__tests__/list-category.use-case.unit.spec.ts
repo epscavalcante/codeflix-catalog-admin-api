@@ -1,5 +1,5 @@
 import Category from "../../../../domain/entities/category.entity";
-import { CategorySearchResult } from "../../../../domain/repositories/category.repository";
+import { CategorySearchResult } from "../../../../domain/repositories/category.repository.interface";
 import CategoryMemoryRepository from "../../../../infra/repositories/category-memory.repository";
 import ListCategoryUseCase from "../list-category.use-case";
 import CategoryOutput from "../../mappers/category-output";

@@ -208,6 +208,25 @@ const config = {
     },
     collectCoverageFrom: ['**/*.(t|j)s'],
     coverageDirectory: '../coverage',
+    coveragePathIgnorePatterns: [
+      "/node_modules/",
+      '.interfaces.ts',
+      '/core/infra/testing/',
+      'test/helpers',
+      '.interface.ts',
+      '.fixture.ts',
+      '.d.ts',
+      'app.config.global.ts',
+      'main.ts'
+    ],
+    coverageThreshold: {
+        global: {
+            statements: 80,
+            branches: 80,
+            functions: 80,
+            lines: 80,
+        }
+    },
     testEnvironment: 'node',
     setupFilesAfterEnv: [
         './core/infra/testing/expect-notification-validation.ts',

@@ -1,5 +1,5 @@
 import Entity from "../../domain/entities/entity";
-import IRepository from "../../domain/repositories/repository";
+import IRepository from "../../domain/repositories/repository.interface";
 import ValueObject from "../../domain/value-objects/value-object";
 import EntityNotFoundException from "../../domain/exceptions/entity-not-found.exception";
 

@@ -2,11 +2,11 @@ import ICategoryRepository, {
     CategoryFilter,
     CategorySearchParams,
     CategorySearchResult,
-} from "../../../domain/repositories/category.repository";
+} from "../../../domain/repositories/category.repository.interface";
 import Category from "../../../domain/entities/category.entity";
-import IUseCase from "../use-case";
+import IUseCase from "../use-case.interface";
 import CategoryOutput, { CategoryOutputType } from "../mappers/category-output";
-import { SortDirection } from "../../../domain/repositories/searchable.repository";
+import { SortDirection } from "../../../domain/repositories/searchable.repository.interface";
 import PaginationOutput, { PaginationOutputType } from "../mappers/pagination-output";
 
 export default class ListCategoryUseCase

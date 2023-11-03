@@ -1,4 +1,4 @@
-import { SortDirection } from '../../core/domain/repositories/searchable.repository';
+import { SortDirection } from '../../core/domain/repositories/searchable.repository.interface';
 import { ListCategoryInput } from '../../core/application/use-cases/category/list-category.use-case';
 
 export default class SearchCategoryDto implements ListCategoryInput {

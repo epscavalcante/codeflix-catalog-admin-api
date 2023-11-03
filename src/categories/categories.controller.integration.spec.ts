@@ -3,7 +3,7 @@ import { ConfigModule } from '../config/config.module';
 import { DatabaseModule } from '../database/database.module';
 import { CategoriesModule } from './categories.module';
 import { CategoriesController } from './categories.controller';
-import ICategoryRepository from '../core/domain/repositories/category.repository';
+import ICategoryRepository from '../core/domain/repositories/category.repository.interface';
 import { CATEGORY_PROVIDERS } from './categories.provider';
 import CreateCategoryUseCase from '../core/application/use-cases/category/create-category.use-case';
 import DeleteCategoryUseCase from '../core/application/use-cases/category/delete-category.use-case';

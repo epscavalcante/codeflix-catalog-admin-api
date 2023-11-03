@@ -1,5 +1,5 @@
 import Uuid from "../../domain/value-objects/uuid.vo";
-import ICategoryRepository, { CategorySearchParams, CategorySearchResult } from "../../domain/repositories/category.repository";
+import ICategoryRepository, { CategorySearchParams, CategorySearchResult } from "../../domain/repositories/category.repository.interface";
 import CategoryModel from "../models/sequelize/category.model";
 import EntityNotFoundException from "../../domain/exceptions/entity-not-found.exception";
 import Category from "../../domain/entities/category.entity";
