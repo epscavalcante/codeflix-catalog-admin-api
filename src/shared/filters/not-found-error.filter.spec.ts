@@ -1,7 +1,7 @@
 import { Controller, Get, INestApplication } from '@nestjs/common';
-import Entity from '../../core/domain/entities/entity';
+import Entity from '@core/shared/domain/entity';
 import { NotFoundErrorFilter } from './not-found-error.filter';
-import EntityNotFoundException from '../../core/domain/exceptions/entity-not-found.exception';
+import EntityNotFoundException from '@core/shared/domain/exceptions/entity-not-found.exception';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 
@@ -36,7 +36,7 @@ describe('NotFoundErrorFilter Test', () => {
         return request(app.getHttpServer()).get('/stub').expect({
             statusCode: 404,
             message: 'StubEntity not found using ID: fake_id',
-            error: 'Not Found'
+            error: 'Not Found',
         });
     });
 });

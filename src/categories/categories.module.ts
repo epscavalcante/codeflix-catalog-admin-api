@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { CategoriesController } from './categories.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
-import CategoryModel from '../core/infra/models/sequelize/category.model';
 import { CATEGORY_PROVIDERS } from './categories.provider';
+import CategoryModel from '@core/category/infra/database/sequelize/models/category.model';
 
 @Module({
     imports: [SequelizeModule.forFeature([CategoryModel])],

@@ -1,11 +1,11 @@
-import CategoryOutput from '@core/application/use-cases/mappers/category-output';
-import ICategoryRepository from '@core/domain/repositories/category.repository.interface';
 import { instanceToPlain } from 'class-transformer';
 import { ListCategoriesFixture } from '../../src/categories/categories.fixture';
 import { CategoryPresenter } from '../../src/categories/categories.presenter';
 import { CATEGORY_PROVIDERS } from '../../src/categories/categories.provider';
 import { startApp } from '../helpers/start-app';
 import request from 'supertest';
+import ICategoryRepository from '@core/category/domain/category.repository.interface';
+import CategoryOutput from '@core/category/application/use-cases/mappers/category-output';
 
 describe('CategoriesController (e2e)', () => {
     describe('GET /categories', () => {

@@ -1,12 +1,12 @@
 import request from 'supertest';
 import { CreateCategoryFixture } from '../../src/categories/categories.fixture';
-import ICategoryRepository from '@core/domain/repositories/category.repository.interface';
+import ICategoryRepository from '@core/category/domain/category.repository.interface';
 import { CATEGORY_PROVIDERS } from '../../src/categories/categories.provider';
 import { startApp } from '../helpers/start-app';
-import CategoryOutput from '@core/application/use-cases/mappers/category-output';
+import CategoryOutput from '@core/category/application/use-cases/mappers/category-output';
 import { instanceToPlain } from 'class-transformer';
 import { CategoryPresenter } from '../../src/categories/categories.presenter';
-import { CategoryId } from '@core/domain/entities/category.aggregate';
+import { CategoryId } from '@core/category/domain/category.aggregate';
 
 describe('CategoriesController (e2e)', () => {
     const appHelper = startApp();

@@ -201,7 +201,7 @@ const config = {
     // watchman: true,
     clearMocks: true,
     moduleFileExtensions: ['js', 'json', 'ts'],
-    rootDir: 'src',
+    rootDir: './src',
     testRegex: '.*\\..*spec\\.ts$',
     transform: {
         '^.+\\.(t|j)s$': '@swc/jest',
@@ -213,7 +213,7 @@ const config = {
       '.interfaces.ts',
       '/core/infra/testing/',
       'test/helpers',
-      '/core/infra/database/sequelize/migrations/',
+      '/core/shared/infra/database/sequelize/migrations/',
       '.interface.ts',
       '.fixture.ts',
       '.d.ts',
@@ -232,7 +232,7 @@ const config = {
     },
     testEnvironment: 'node',
     setupFilesAfterEnv: [
-        './core/infra/testing/expect-notification-validation.ts',
+        './core/shared/infra/testing/expect-notification-validation.ts',
     ],
     coverageProvider: 'v8',
 };

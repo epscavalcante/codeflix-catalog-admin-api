@@ -3,13 +3,13 @@ import { ConfigModule } from '../config/config.module';
 import { DatabaseModule } from '../database/database.module';
 import { CategoriesModule } from './categories.module';
 import { CategoriesController } from './categories.controller';
-import ICategoryRepository from '../core/domain/repositories/category.repository.interface';
+import ICategoryRepository from '../core/category/domain/category.repository.interface';
 import { CATEGORY_PROVIDERS } from './categories.provider';
-import CreateCategoryUseCase from '../core/application/use-cases/category/create-category.use-case';
-import DeleteCategoryUseCase from '../core/application/use-cases/category/delete-category.use-case';
-import UpdateCategoryUseCase from '../core/application/use-cases/category/update-category.use-case';
-import FindCategoryUseCase from '../core/application/use-cases/category/find-category.use-case';
-import ListCategoryUseCase from '../core/application/use-cases/category/list-category.use-case';
+import CreateCategoryUseCase from '@core/category/application/use-cases/create-category.use-case';
+import ListCategoryUseCase from '@core/category/application/use-cases/list-category.use-case';
+import FindCategoryUseCase from '@core/category/application/use-cases/find-category.use-case';
+import UpdateCategoryUseCase from '@core/category/application/use-cases/update-category.use-case';
+import DeleteCategoryUseCase from '@core/category/application/use-cases/delete-category.use-case';
 
 describe('CategoriesController Integration tests', () => {
     let controller: CategoriesController;

@@ -8,19 +8,21 @@ import {
     Delete,
     Inject,
     ParseUUIDPipe,
-    HttpStatus,
     HttpCode,
     Query,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import CreateCategoryUseCase from '../core/application/use-cases/category/create-category.use-case';
-import FindCategoryUseCase from '../core/application/use-cases/category/find-category.use-case';
-import ListCategoryUseCase from '../core/application/use-cases/category/list-category.use-case';
-import UpdateCategoryUseCase from '../core/application/use-cases/category/update-category.use-case';
-import DeleteCategoryUseCase from '../core/application/use-cases/category/delete-category.use-case';
 import SearchCategoryDto from './dto/search-category.dto';
-import { CategoryCollectionPresenter, CategoryPresenter } from './categories.presenter';
+import {
+    CategoryCollectionPresenter,
+    CategoryPresenter,
+} from './categories.presenter';
+import CreateCategoryUseCase from '@core/category/application/use-cases/create-category.use-case';
+import FindCategoryUseCase from '@core/category/application/use-cases/find-category.use-case';
+import ListCategoryUseCase from '@core/category/application/use-cases/list-category.use-case';
+import UpdateCategoryUseCase from '@core/category/application/use-cases/update-category.use-case';
+import DeleteCategoryUseCase from '@core/category/application/use-cases/delete-category.use-case';
 
 @Controller('categories')
 export class CategoriesController {

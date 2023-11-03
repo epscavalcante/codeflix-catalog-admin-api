@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import CategoryModel from '../core/infra/models/sequelize/category.model';
+import CategoryModel from '../core/category/infra/database/sequelize/models/category.model';
 import { ConfigService } from '@nestjs/config';
 import { ConfigSchemaType } from '../config/config.module';
 
