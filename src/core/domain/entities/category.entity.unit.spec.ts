@@ -246,6 +246,7 @@ describe("Category Unit Test", () => {
         describe("Invalidação do name", () => {
             test("Deve invalidar criação da categoria sem nome", () => {
                 const input: CategoryProps = {
+                    // @ts-ignore
                     name: null,
                 };
 

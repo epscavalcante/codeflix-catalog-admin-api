@@ -39,7 +39,7 @@ export default abstract class MemoryRespository<E extends Entity, Uuid extends V
         return this.items;
     }
 
-    async findById(entityId: Uuid): Promise<E> {
+    async findById(entityId: Uuid): Promise<E | null> {
         return this._get(entityId);
     }
 

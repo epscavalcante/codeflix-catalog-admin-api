@@ -1,6 +1,6 @@
 import CategoryOutput from '@core/application/use-cases/mappers/category-output';
 import Category from '@core/domain/entities/category.entity';
-import ICategoryRepository from '@core/domain/repositories/category.repository';
+import ICategoryRepository from '@core/domain/repositories/category.repository.interface';
 import Uuid from '@core/domain/value-objects/uuid.vo';
 import { instanceToPlain } from 'class-transformer';
 import { UpdateCategoryFixture } from '../../src/categories/categories.fixture';
@@ -118,20 +118,20 @@ describe('CategoriesController (e2e)', () => {
                         new Uuid(id),
                     );
                     const presenter = new CategoryPresenter(
-                        CategoryOutput.toOutput(categoryUpdated),
+                        CategoryOutput.toOutput(categoryUpdated!),
                     );
                     const serialized = instanceToPlain(presenter);
                     expect(res.body).toStrictEqual(serialized);
                     expect(res.body).toStrictEqual({
                         id: serialized.id,
                         createdAt: serialized.createdAt,
-                        name: expected.name ?? categoryUpdated.name,
+                        name: expected.name ?? categoryUpdated!.name,
                         description:
                             'description' in expected
                                 ? expected.description
-                                : categoryUpdated.description,
+                                : categoryUpdated!.description,
                         isActive:
-                            expected.isActive ?? categoryUpdated.isActive,
+                            expected.isActive ?? categoryUpdated!.isActive,
                     });
                 },
             );

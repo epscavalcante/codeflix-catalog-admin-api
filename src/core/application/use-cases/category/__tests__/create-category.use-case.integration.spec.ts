@@ -22,11 +22,11 @@ describe("Create Category UseCase Integration Test", () => {
         const category = await repository.findById(new Uuid(output.id));
 
         expect(output).toStrictEqual({
-            id: category.categoryId.value,
+            id: category!.categoryId.value,
             name: "Test",
             description: null,
             isActive: true,
-            createdAt: category.createdAt,
+            createdAt: category!.createdAt,
         });
     });
 
@@ -47,11 +47,11 @@ describe("Create Category UseCase Integration Test", () => {
         const category = await repository.findById(new Uuid(output.id));
 
         expect(output).toStrictEqual({
-            id: category.categoryId.value,
+            id: category!.categoryId.value,
             name: "Test",
             description: null,
             isActive: false,
-            createdAt: category.createdAt,
+            createdAt: category!.createdAt,
         });
     });
 
@@ -65,11 +65,11 @@ describe("Create Category UseCase Integration Test", () => {
         const category = await repository.findById(new Uuid(output.id));
 
         expect(output).toStrictEqual({
-            id: category.categoryId.value,
+            id: category!.categoryId.value,
             name: "Test",
             description: "Test",
             isActive: false,
-            createdAt: category.createdAt,
+            createdAt: category!.createdAt,
         });
     });
 });

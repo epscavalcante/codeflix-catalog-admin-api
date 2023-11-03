@@ -28,7 +28,7 @@ export default class UpdateCategoryUseCase
         }
 
         if ("description" in input) {
-            category.changeDescription(input.description);
+            category.changeDescription(input.description!);
         }
 
         if (category.notification.hasErrors()) {

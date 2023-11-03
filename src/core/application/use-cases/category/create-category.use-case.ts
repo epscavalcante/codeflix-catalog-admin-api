@@ -11,6 +11,7 @@ export default class CreateCategoryUseCase
     constructor(private readonly repository: ICategoryRepository) {}
 
     async handle(input: CreateCategoryInput): Promise<CreateCategoryOutput> {
+        // @ts-ignore
         const category = Category.create(input);
 
         if (category.notification.hasErrors()) {

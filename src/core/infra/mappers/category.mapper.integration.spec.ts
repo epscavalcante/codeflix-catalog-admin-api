@@ -19,7 +19,9 @@ describe('Category Mapper Integration Tests', () => {
         test('Should receives entity validation exception', () => {
             const categoryModel = CategoryModel.build({
                 categoryId: (new Uuid()).value,
-                name: 'a'.repeat(256)
+                name: 'a'.repeat(256),
+                isActive: false,
+                createdAt: new Date()
             });
     
             try {

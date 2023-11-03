@@ -47,10 +47,11 @@ export const configDatabaseValidationSchema: Joi.StrictSchemaMap<DatabaseSchemaT
 export class ConfigModule extends NestConfigModule {
     static forRoot(options: ConfigModuleOptions = {}) {
         const { envFilePath, ...otherProps } = options;
+
         return super.forRoot({
             isGlobal: true,
             envFilePath: [
-                ...(Array.isArray(envFilePath) ? envFilePath : [envFilePath]),
+                ...(Array.isArray(envFilePath) ? envFilePath : [envFilePath || '']),
                 join(process.cwd(), `.env.${process.env.NODE_ENV}`),
                 join(process.cwd(), `.env`),
             ],

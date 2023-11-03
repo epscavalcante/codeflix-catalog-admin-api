@@ -275,7 +275,6 @@ export class ListCategoriesFixture {
     static arrangeIncrementedWithCreatedAt() {
         const _entities = Category.fake()
             .theCategories(4)
-            .withName((i) => i + 'aaaa')
             .withCreatedAt((i) => new Date(new Date().getTime() + i * 2000))
             .build();
 
@@ -343,11 +342,11 @@ export class ListCategoriesFixture {
         const faker = Category.fake().aCategory();
 
         const entitiesMap = {
-            a: faker.withName('aaaa').build(),
-            AAA: faker.withName('AAAA').build(),
-            AaA: faker.withName('AaAA').build(),
-            b: faker.withName('bbbb').build(),
-            c: faker.withName('cccc').build(),
+            a: faker.withName('aaa').build(),
+            AAA: faker.withName('AAA').build(),
+            AaA: faker.withName('AaA').build(),
+            b: faker.withName('bbb').build(),
+            c: faker.withName('ccc').build(),
         };
 
         const arrange = [

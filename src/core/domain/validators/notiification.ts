@@ -8,7 +8,7 @@ export default class Notification {
             errors.indexOf(error) === -1 && errors.push(error);
             this.errors.set(field, errors);
         } else {
-            this.errors.set(error, field);
+            this.errors.set(error, field!);
         }
     }
 

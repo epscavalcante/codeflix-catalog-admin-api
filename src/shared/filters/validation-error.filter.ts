@@ -15,6 +15,7 @@ export class ValidationErrorFilter<T> implements ExceptionFilter {
             message: union(
                 ...exception.error.reduce((acc, error) =>
                     acc.concat(
+                        // @ts-ignore
                         typeof error === 'string'
                             ? [[error]]
                             : Object.values(error),

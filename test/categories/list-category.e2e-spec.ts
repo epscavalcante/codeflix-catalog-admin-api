@@ -1,5 +1,5 @@
 import CategoryOutput from '@core/application/use-cases/mappers/category-output';
-import ICategoryRepository from '@core/domain/repositories/category.repository';
+import ICategoryRepository from '@core/domain/repositories/category.repository.interface';
 import { instanceToPlain } from 'class-transformer';
 import { ListCategoriesFixture } from '../../src/categories/categories.fixture';
 import { CategoryPresenter } from '../../src/categories/categories.presenter';

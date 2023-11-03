@@ -213,10 +213,13 @@ const config = {
       '.interfaces.ts',
       '/core/infra/testing/',
       'test/helpers',
+      '/core/infra/database/sequelize/migrations/',
       '.interface.ts',
       '.fixture.ts',
       '.d.ts',
       'app.config.global.ts',
+      'migrator.ts',
+      'migrate.ts',
       'main.ts'
     ],
     coverageThreshold: {

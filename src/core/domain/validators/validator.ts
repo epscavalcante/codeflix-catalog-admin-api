@@ -23,7 +23,7 @@ export abstract class Validator implements IValidator {
 
         if (errors.length) {
             for (const error of errors) {
-                Object.values(error.constraints).forEach((message) =>
+                Object.values(error.constraints!).forEach((message) =>
                     notification.addError(message, error.property)
                 );
             }

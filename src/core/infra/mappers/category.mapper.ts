@@ -18,7 +18,7 @@ export default class CategoryMapper {
         const category = new Category({
             categoryId: new Uuid(model.categoryId),
             name: model.name,
-            description: model.description,
+            description: model.description!,
             isActive: model.isActive,
             createdAt: model.createdAt,
         });

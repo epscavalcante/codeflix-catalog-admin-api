@@ -1,5 +1,5 @@
 import Category from '@core/domain/entities/category.entity';
-import ICategoryRepository from '@core/domain/repositories/category.repository';
+import ICategoryRepository from '@core/domain/repositories/category.repository.interface';
 import { CATEGORY_PROVIDERS } from '../../src/categories/categories.provider';
 import { startApp } from '../helpers/start-app';
 import request from 'supertest';

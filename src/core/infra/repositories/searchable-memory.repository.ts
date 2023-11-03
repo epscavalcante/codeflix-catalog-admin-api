@@ -10,7 +10,7 @@ implements ISearchableRepository<E, Uuid, Filter> {
     
     async search(props: SearchParams<Filter>): Promise<SearchResult<E>> {
         const itemsFiltered = await this.applyFilter(this.items, props.filter);
-        const itemsSorted = await this.applySorting(itemsFiltered, props.sort, props.sortDir);
+        const itemsSorted = await this.applySorting(itemsFiltered, props.sort, props?.sortDir);
         const itemsPaginated = await this.applyPagination(itemsSorted, props.page, props.perPage);
     
         return new SearchResult({
@@ -26,7 +26,7 @@ implements ISearchableRepository<E, Uuid, Filter> {
     protected applySorting(
         items: E[], 
         sort: string | null, 
-        sortDir: SortDirection,
+        sortDir: SortDirection | null,
         customSort?: (sort: string, item: E) => any
     ): E[] {
         if(!sort || !this.sortableFields.includes(sort)) {

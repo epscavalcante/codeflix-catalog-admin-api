@@ -29,7 +29,7 @@ describe("Category Sequelize Repository Tests", () => {
             category.categoryId.value
         );
 
-        expect(categoryInserted.toJSON()).toMatchObject({
+        expect(categoryInserted!.toJSON()).toMatchObject({
             categoryId: category.categoryId.value,
             name: category.name,
             description: category.description,
@@ -54,7 +54,7 @@ describe("Category Sequelize Repository Tests", () => {
             );
 
             expect(categoryModel.toJSON()).toMatchObject(
-                categoryModelFounded.toJSON()
+                categoryModelFounded!.toJSON()
             );
         });
     });
@@ -67,7 +67,7 @@ describe("Category Sequelize Repository Tests", () => {
                 return new Category({
                     categoryId: categoriesModel.categoryId,
                     name: categoriesModel.name,
-                    description: categoriesModel.description,
+                    description: categoriesModel.description!,
                     isActive: categoriesModel.isActive,
                     createdAt: categoriesModel.createdAt,
                 });
@@ -114,7 +114,7 @@ describe("Category Sequelize Repository Tests", () => {
             const categoryUpdated = await repository.findById(
                 category.categoryId
             );
-            expect(categoryUpdated.toJSON()).toStrictEqual(category.toJSON());
+            expect(categoryUpdated!.toJSON()).toStrictEqual(category.toJSON());
         });
     });
 

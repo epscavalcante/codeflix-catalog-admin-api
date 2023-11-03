@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing';
 import { join } from 'path';
 
 function expectValidate(schema: Joi.Schema, value: any) {
-    return expect(schema.validate(value, { abortEarly: false }).error.message);
+    return expect(schema.validate(value, { abortEarly: false })?.error?.message);
 }
 
 describe('Config Module Tests', () => {

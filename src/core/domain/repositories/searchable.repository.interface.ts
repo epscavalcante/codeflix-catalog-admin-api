@@ -35,15 +35,15 @@ export class SearchParams<Filter = string> extends ValueObject {
   protected _perPage: number = 15;
   protected _sort: string | null;
   protected _sortDir: SortDirection | null;
-  protected _filter: Filter | null;
+  protected _filter?: Filter | null;
 
   constructor(props: SearchParamsConstructorProps<Filter> = {}) {
     super();
-    this.page = props.page;
-    this.perPage = props.perPage;
-    this.sort = props.sort;
-    this.sortDir = props.sortDir;
-    this.filter = props.filter;
+    this.page = props.page!;
+    this.perPage = props.perPage!;
+    this.sort = props.sort!;
+    this.sortDir = props.sortDir!;
+    this.filter = props.filter!;
   }
 
   get page() {
@@ -101,7 +101,7 @@ export class SearchParams<Filter = string> extends ValueObject {
   }
 
   get filter(): Filter | null {
-    return this._filter;
+    return this._filter || null;
   }
 
   protected set filter(value: Filter | null) {

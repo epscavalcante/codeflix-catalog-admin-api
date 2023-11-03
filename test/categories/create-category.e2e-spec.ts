@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { CreateCategoryFixture } from '../../src/categories/categories.fixture';
-import ICategoryRepository from '@core/domain/repositories/category.repository';
+import ICategoryRepository from '@core/domain/repositories/category.repository.interface';
 import { CATEGORY_PROVIDERS } from '../../src/categories/categories.provider';
 import { startApp } from '../helpers/start-app';
 import Uuid from '@core/domain/value-objects/uuid.vo';
@@ -40,7 +40,7 @@ describe('CategoriesController (e2e)', () => {
                         new Uuid(categoryResponse.id),
                     );
                     const presenter = new CategoryPresenter(
-                        CategoryOutput.toOutput(categoryCreated),
+                        CategoryOutput.toOutput(categoryCreated!),
                     );
                     const categorySerialized = instanceToPlain(presenter);
 
