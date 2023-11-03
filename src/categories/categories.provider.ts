@@ -3,7 +3,7 @@ import CategoryModel from '../core/infra/models/sequelize/category.model';
 import CategorySequelizeRepository from '../core/infra/repositories/category-sequelize.repository';
 import CategoryMemoryRepository from '../core/infra/repositories/category-memory.repository';
 import CreateCategoryUseCase from '../core/application/use-cases/category/create-category.use-case';
-import ICategoryRepository from '../core/domain/repositories/category.repository';
+import ICategoryRepository from '../core/domain/repositories/category.repository.interface';
 import ListCategoryUseCase from '../core/application/use-cases/category/list-category.use-case';
 import UpdateCategoryUseCase from '../core/application/use-cases/category/update-category.use-case';
 import FindCategoryUseCase from '../core/application/use-cases/category/find-category.use-case';

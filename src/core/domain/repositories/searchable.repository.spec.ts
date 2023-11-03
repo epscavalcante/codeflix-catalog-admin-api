@@ -1,4 +1,4 @@
-import { SearchParams, SearchResult } from "./searchable.repository";
+import { SearchParams, SearchResult } from "./searchable.repository.interface";
 
 describe("SearchResult Unit Tests", () => {
     test("constructor props", () => {

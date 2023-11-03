@@ -2,9 +2,9 @@ import Category from '../../domain/entities/category.entity';
 import Uuid from '../../domain/value-objects/uuid.vo';
 import ICategoryRepository, {
     CategoryFilter,
-} from '../../domain/repositories/category.repository';
+} from '../../domain/repositories/category.repository.interface';
 import { SearchableMemoryRepository } from './searchable-memory.repository';
-import { SortDirection } from '../../domain/repositories/searchable.repository';
+import { SortDirection } from '../../domain/repositories/searchable.repository.interface';
 
 export default class CategoryMemoryRepository
     extends SearchableMemoryRepository<Category, Uuid, CategoryFilter>

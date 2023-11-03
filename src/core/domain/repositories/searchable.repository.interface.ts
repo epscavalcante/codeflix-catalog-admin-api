@@ -1,6 +1,6 @@
 import Entity from "../entities/entity";
 import ValueObject from "../value-objects/value-object";
-import IRepository from "./repository";
+import IRepository from "./repository.interface";
 
 export default interface ISearchableRepository<
     E extends Entity, 

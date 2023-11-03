@@ -1,4 +1,3 @@
-import Uuid from "../value-objects/uuid.vo";
 import Entity from "../entities/entity";
 import ValueObject from "../value-objects/value-object";
 

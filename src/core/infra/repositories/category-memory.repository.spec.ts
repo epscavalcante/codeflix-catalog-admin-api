@@ -2,7 +2,7 @@ import Category from "../../domain/entities/category.entity";
 import CategoryMemoryRepository from "./category-memory.repository";
 import Uuid from "../../domain/value-objects/uuid.vo";
 import EntityNotFoundException from "../../domain/exceptions/entity-not-found.exception";
-import { CategoryFilter } from "../../domain/repositories/category.repository";
+import { CategoryFilter } from "../../domain/repositories/category.repository.interface";
 
 describe('Unit Test Memory repository', () => {
     let repository: CategoryMemoryRepository;

@@ -1,4 +1,4 @@
-import { SearchParams, SearchResult } from "../../domain/repositories/searchable.repository";
+import { SearchParams, SearchResult } from "../../domain/repositories/searchable.repository.interface";
 import Entity from "../../domain/entities/entity";
 import Uuid from "../../domain/value-objects/uuid.vo";
 import { SearchableMemoryRepository } from "./searchable-memory.repository";

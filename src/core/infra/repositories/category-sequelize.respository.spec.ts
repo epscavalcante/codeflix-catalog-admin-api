@@ -7,7 +7,7 @@ import EntityNotFoundException from "../../domain/exceptions/entity-not-found.ex
 import {
     CategorySearchParams,
     CategorySearchResult,
-} from "../../domain/repositories/category.repository";
+} from "../../domain/repositories/category.repository.interface";
 import CategoryMapper from "../mappers/category.mapper";
 import { setupDatabase } from '../helpers/setup-database';
 

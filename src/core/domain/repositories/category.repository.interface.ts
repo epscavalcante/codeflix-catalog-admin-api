@@ -3,7 +3,7 @@ import Uuid from '../value-objects/uuid.vo';
 import ISearchableRepository, {
     SearchParams,
     SearchResult,
-} from './searchable.repository';
+} from './searchable.repository.interface';
 
 export type CategoryFilter = string;
 

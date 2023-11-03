@@ -1,4 +1,4 @@
-import ISearchableRepository, { SearchParams, SearchResult, SortDirection } from "../../domain/repositories/searchable.repository";
+import ISearchableRepository, { SearchParams, SearchResult, SortDirection } from "../../domain/repositories/searchable.repository.interface";
 import Entity from "../../domain/entities/entity";
 import ValueObject from "../../domain/value-objects/value-object";
 import MemoryRespository from "./memory.repository";
