@@ -1,8 +1,7 @@
 import CategoryOutput from '@core/application/use-cases/mappers/category-output';
-import Category from '@core/domain/entities/category.entity';
+import Category from '@core/domain/entities/category.aggregate';
 import ICategoryRepository from '@core/domain/repositories/category.repository.interface';
 import { instanceToPlain } from 'class-transformer';
-import { GetCategoryFixture } from '../../src/categories/categories.fixture';
 import { CategoryPresenter } from '../../src/categories/categories.presenter';
 import { CATEGORY_PROVIDERS } from '../../src/categories/categories.provider';
 import { startApp } from '../helpers/start-app';

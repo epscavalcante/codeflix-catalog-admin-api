@@ -1,5 +1,4 @@
-import Category from '../entities/category.entity';
-import Uuid from '../value-objects/uuid.vo';
+import Category, { CategoryId } from '../entities/category.aggregate';
 import ISearchableRepository, {
     SearchParams,
     SearchResult,
@@ -14,7 +13,7 @@ export class CategorySearchResult extends SearchResult<Category> {}
 export default interface ICategoryRepository
     extends ISearchableRepository<
         Category,
-        Uuid,
+        CategoryId,
         CategoryFilter,
         CategorySearchParams,
         CategorySearchResult

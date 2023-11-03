@@ -2,7 +2,7 @@ import Uuid from "../../../../domain/value-objects/uuid.vo";
 import InvalidUuidException from "../../../../domain/exceptions/invalid-uuid.exception";
 import UpdateCategoryUseCase from "../update-category.use-case";
 import EntityNotFoundException from "../../../../domain/exceptions/entity-not-found.exception";
-import Category from "../../../../domain/entities/category.entity";
+import Category from "../../../../domain/entities/category.aggregate";
 import { setupDatabase } from "../../../../infra/helpers/setup-database";
 import CategoryModel from "../../../../infra/models/sequelize/category.model";
 import CategorySequelizeRepository from "../../../../infra/repositories/category-sequelize.repository";

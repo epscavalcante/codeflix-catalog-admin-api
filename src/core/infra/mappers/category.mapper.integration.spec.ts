@@ -1,9 +1,8 @@
 import CategorySequelizeRepository from "../repositories/category-sequelize.repository";
 import CategoryModel from "../models/sequelize/category.model";
-import Uuid from "../../domain/value-objects/uuid.vo";
 import CategoryMapper from "./category.mapper";
 import EntityValidationException from "../../domain/exceptions/entity-validation-error.exception";
-import Category from "../../domain/entities/category.entity";
+import Category, { CategoryId } from "../../domain/entities/category.aggregate";
 import { setupDatabase } from "../helpers/setup-database";
 
 describe('Category Mapper Integration Tests', () => {
@@ -18,7 +17,7 @@ describe('Category Mapper Integration Tests', () => {
     describe('Category map Model to Entity', () => {
         test('Should receives entity validation exception', () => {
             const categoryModel = CategoryModel.build({
-                categoryId: (new Uuid()).value,
+                categoryId: (new CategoryId()).value,
                 name: 'a'.repeat(256),
                 isActive: false,
                 createdAt: new Date()

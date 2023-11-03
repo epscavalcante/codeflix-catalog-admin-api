@@ -1,5 +1,4 @@
-import Category from '../../domain/entities/category.entity';
-import Uuid from '../../domain/value-objects/uuid.vo';
+import Category, { CategoryId } from '../../domain/entities/category.aggregate';
 import ICategoryRepository, {
     CategoryFilter,
 } from '../../domain/repositories/category.repository.interface';
@@ -7,7 +6,7 @@ import { SearchableMemoryRepository } from './searchable-memory.repository';
 import { SortDirection } from '../../domain/repositories/searchable.repository.interface';
 
 export default class CategoryMemoryRepository
-    extends SearchableMemoryRepository<Category, Uuid, CategoryFilter>
+    extends SearchableMemoryRepository<Category, CategoryId, CategoryFilter>
     implements ICategoryRepository
 {
     sortableFields: string[] = ['name', 'createdAt'];

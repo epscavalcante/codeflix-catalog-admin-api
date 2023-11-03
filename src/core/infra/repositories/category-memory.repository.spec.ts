@@ -1,8 +1,6 @@
-import Category from "../../domain/entities/category.entity";
+import Category, { CategoryId } from "../../domain/entities/category.aggregate";
 import CategoryMemoryRepository from "./category-memory.repository";
-import Uuid from "../../domain/value-objects/uuid.vo";
 import EntityNotFoundException from "../../domain/exceptions/entity-not-found.exception";
-import { CategoryFilter } from "../../domain/repositories/category.repository.interface";
 
 describe('Unit Test Memory repository', () => {
     let repository: CategoryMemoryRepository;
@@ -40,7 +38,7 @@ describe('Unit Test Memory repository', () => {
     })
 
     test('Should found an entity', async () => {
-        const entityId = new Uuid();
+        const entityId = new CategoryId();
 
         const entities = [
             Category.fake().aCategory().withUuid(entityId).build()
@@ -80,7 +78,7 @@ describe('Unit Test Memory repository', () => {
 
     describe('Delete an Entity', () => {
         test('Should return Exception when entity not exist', async () => {
-            const entityId = new Uuid();
+            const entityId = new CategoryId();
             
             await expect(repository.delete(entityId)).rejects.toThrow(
                 new EntityNotFoundException(entityId.value, Category)

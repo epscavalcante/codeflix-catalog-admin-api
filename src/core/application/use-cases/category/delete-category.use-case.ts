@@ -1,8 +1,6 @@
-import ICategoryRepository from "../../../domain/repositories/category.repository.interface";
-import Category from "../../../domain/entities/category.entity";
+import ICategoryRepository from "@core/domain/repositories/category.repository.interface";
+import { CategoryId } from "@core/domain/entities/category.aggregate";
 import IUseCase from "../use-case.interface";
-import Uuid from "../../../domain/value-objects/uuid.vo";
-import EntityNotFoundException from "../../../domain/exceptions/entity-not-found.exception";
 
 export default class DeleteCategoryUseCase
     implements IUseCase<DeleteCategoryInput, DeleteCategoryOutput>
@@ -10,7 +8,7 @@ export default class DeleteCategoryUseCase
     constructor(private readonly repository: ICategoryRepository) {}
 
     async handle(input: DeleteCategoryInput): Promise<DeleteCategoryOutput> {
-        await this.repository.delete(new Uuid(input.id));
+        await this.repository.delete(new CategoryId(input.id));
     }
 }
 

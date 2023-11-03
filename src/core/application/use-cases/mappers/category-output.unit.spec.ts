@@ -1,4 +1,4 @@
-import Category from "../../../domain/entities/category.entity";
+import Category from "../../../domain/entities/category.aggregate";
 import CategoryOutput from "./category-output";
 
 describe("Category Usecases Output Unit Test", () => {

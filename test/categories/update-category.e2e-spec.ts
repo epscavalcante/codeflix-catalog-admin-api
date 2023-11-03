@@ -1,7 +1,6 @@
 import CategoryOutput from '@core/application/use-cases/mappers/category-output';
-import Category from '@core/domain/entities/category.entity';
+import Category, { CategoryId } from '@core/domain/entities/category.aggregate';
 import ICategoryRepository from '@core/domain/repositories/category.repository.interface';
-import Uuid from '@core/domain/value-objects/uuid.vo';
 import { instanceToPlain } from 'class-transformer';
 import { UpdateCategoryFixture } from '../../src/categories/categories.fixture';
 import { CategoryPresenter } from '../../src/categories/categories.presenter';
@@ -110,12 +109,14 @@ describe('CategoriesController (e2e)', () => {
                     await repository.insert(categoryCreated);
 
                     const res = await request(appHelper.app.getHttpServer())
-                        .patch(`/categories/${categoryCreated.categoryId.value}`)
+                        .patch(
+                            `/categories/${categoryCreated.categoryId.value}`,
+                        )
                         .send(send_data)
                         .expect(200);
                     const id = res.body.id;
                     const categoryUpdated = await repository.findById(
-                        new Uuid(id),
+                        new CategoryId(id),
                     );
                     const presenter = new CategoryPresenter(
                         CategoryOutput.toOutput(categoryUpdated!),

@@ -1,5 +1,5 @@
 import Uuid from "../value-objects/uuid.vo";
-import Category, { CategoryProps } from "./category.entity";
+import Category, { CategoryProps } from "./category.aggregate";
 
 describe("Category Unit Test", () => {
     let categoryValidationSpy: any;

@@ -3,7 +3,7 @@ import InvalidUuidException from "../../../../domain/exceptions/invalid-uuid.exc
 import CategoryMemoryRepository from "../../../../infra/repositories/category-memory.repository";
 import UpdateCategoryUseCase from "../update-category.use-case";
 import EntityNotFoundException from "../../../../domain/exceptions/entity-not-found.exception";
-import Category from "../../../../domain/entities/category.entity";
+import Category from "../../../../domain/entities/category.aggregate";
 
 describe("Update Category UseCase UnitTest", () => {
     let repository: CategoryMemoryRepository;

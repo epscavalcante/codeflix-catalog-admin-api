@@ -1,5 +1,5 @@
 import ICategoryRepository from "../../../domain/repositories/category.repository.interface";
-import Category from "../../../domain/entities/category.entity";
+import Category from "../../../domain/entities/category.aggregate";
 import IUseCase from "../use-case.interface";
 import CategoryOutput, { CategoryOutputType } from "../mappers/category-output";
 import EntityValidationException from "../../../domain/exceptions/entity-validation-error.exception";

@@ -1,13 +1,12 @@
-import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { CreateCategoryFixture } from '../../src/categories/categories.fixture';
 import ICategoryRepository from '@core/domain/repositories/category.repository.interface';
 import { CATEGORY_PROVIDERS } from '../../src/categories/categories.provider';
 import { startApp } from '../helpers/start-app';
-import Uuid from '@core/domain/value-objects/uuid.vo';
 import CategoryOutput from '@core/application/use-cases/mappers/category-output';
 import { instanceToPlain } from 'class-transformer';
 import { CategoryPresenter } from '../../src/categories/categories.presenter';
+import { CategoryId } from '@core/domain/entities/category.aggregate';
 
 describe('CategoriesController (e2e)', () => {
     const appHelper = startApp();
@@ -37,7 +36,7 @@ describe('CategoriesController (e2e)', () => {
 
                     const categoryResponse = response.body;
                     const categoryCreated = await repository.findById(
-                        new Uuid(categoryResponse.id),
+                        new CategoryId(categoryResponse.id),
                     );
                     const presenter = new CategoryPresenter(
                         CategoryOutput.toOutput(categoryCreated!),

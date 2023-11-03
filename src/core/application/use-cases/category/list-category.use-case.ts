@@ -3,7 +3,6 @@ import ICategoryRepository, {
     CategorySearchParams,
     CategorySearchResult,
 } from "../../../domain/repositories/category.repository.interface";
-import Category from "../../../domain/entities/category.entity";
 import IUseCase from "../use-case.interface";
 import CategoryOutput, { CategoryOutputType } from "../mappers/category-output";
 import { SortDirection } from "../../../domain/repositories/searchable.repository.interface";

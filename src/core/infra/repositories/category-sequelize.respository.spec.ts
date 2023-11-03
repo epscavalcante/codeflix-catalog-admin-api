@@ -1,8 +1,6 @@
 import CategoryModel from "../models/sequelize/category.model";
-import { Sequelize } from "sequelize-typescript";
 import CategorySequelizeRepository from "./category-sequelize.repository";
-import Category from "../../domain/entities/category.entity";
-import Uuid from "../../domain/value-objects/uuid.vo";
+import Category, { CategoryId } from "../../domain/entities/category.aggregate";
 import EntityNotFoundException from "../../domain/exceptions/entity-not-found.exception";
 import {
     CategorySearchParams,
@@ -40,7 +38,7 @@ describe("Category Sequelize Repository Tests", () => {
 
     describe("Finds category by Id", () => {
         test("Should return null when category not exist", async () => {
-            const categoryModel = await repository.findById(new Uuid());
+            const categoryModel = await repository.findById(new CategoryId());
 
             expect(categoryModel).toBeNull();
         });

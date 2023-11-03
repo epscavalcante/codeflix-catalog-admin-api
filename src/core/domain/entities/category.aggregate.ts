@@ -1,12 +1,13 @@
-import Uuid from "../value-objects/uuid.vo";
-import Entity from "./entity";
-import EntityValidationException from "../exceptions/entity-validation-error.exception";
-import ValueObject from "../value-objects/value-object";
-import { CategoryValidatorFactory } from "../validators/category.validator";
-import CategoryFactory from "../factories/category.factory";
+import Uuid from '../value-objects/uuid.vo';
+import ValueObject from '../value-objects/value-object';
+import { CategoryValidatorFactory } from '../validators/category.validator';
+import CategoryFactory from '../factories/category.factory';
+import { AggregateRoot } from './aggregate-root';
 
-export default class Category extends Entity {
-    categoryId: Uuid;
+export class CategoryId extends Uuid {}
+
+export default class Category extends AggregateRoot {
+    categoryId: CategoryId;
     name: string;
     description: string | null;
     isActive: boolean;
@@ -14,7 +15,7 @@ export default class Category extends Entity {
 
     constructor(props: CategoryProps) {
         super();
-        this.categoryId = props.categoryId ?? new Uuid();
+        this.categoryId = props.categoryId ?? new CategoryId();
         this.name = props.name;
         this.description = props.description ?? null;
         this.isActive = props.isActive ?? true;
@@ -36,7 +37,7 @@ export default class Category extends Entity {
     }
 
     static fake() {
-        return CategoryFactory; 
+        return CategoryFactory;
     }
 
     changeName(name: string): void {
@@ -64,7 +65,7 @@ export default class Category extends Entity {
             description: this.description,
             isActive: this.isActive,
             createdAt: this.createdAt,
-        }
+        };
     }
 
     get entityId(): ValueObject {
@@ -78,10 +79,10 @@ export type CategoryProps = {
     description?: string;
     isActive?: boolean;
     createdAt?: Date;
-}
+};
 
 export type CategoryCreateCommand = {
     name: string;
     description?: string;
     isActive?: boolean;
-}
+};

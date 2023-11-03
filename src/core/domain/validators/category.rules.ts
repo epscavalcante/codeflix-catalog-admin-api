@@ -1,5 +1,5 @@
 import { MaxLength, MinLength } from "class-validator";
-import Category from "../entities/category.entity";
+import Category from "../entities/category.aggregate";
 
 export class CategoryRules {
     @MinLength(3, { groups: ["name"] })

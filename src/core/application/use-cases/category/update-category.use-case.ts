@@ -1,7 +1,6 @@
 import ICategoryRepository from "../../../domain/repositories/category.repository.interface";
-import Category from "../../../domain/entities/category.entity";
+import Category, { CategoryId } from "../../../domain/entities/category.aggregate";
 import IUseCase from "../use-case.interface";
-import Uuid from "../../../domain/value-objects/uuid.vo";
 import EntityNotFoundException from "../../../domain/exceptions/entity-not-found.exception";
 import CategoryOutput, { CategoryOutputType } from "../mappers/category-output";
 import EntityValidationException from "../../../domain/exceptions/entity-validation-error.exception";
@@ -13,7 +12,7 @@ export default class UpdateCategoryUseCase
     constructor(private readonly repository: ICategoryRepository) {}
 
     async handle(input: UpdateCategoryInput): Promise<UpdateCategoryOutput> {
-        const category = await this.repository.findById(new Uuid(input.id));
+        const category = await this.repository.findById(new CategoryId(input.id));
 
         if (!category) throw new EntityNotFoundException(input.id, Category);
 

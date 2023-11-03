@@ -1,5 +1,4 @@
-import Uuid from "../../domain/value-objects/uuid.vo";
-import Category from "../../domain/entities/category.entity";
+import Category, { CategoryId } from "../../domain/entities/category.aggregate";
 import EntityValidationException from "../../domain/exceptions/entity-validation-error.exception";
 import CategoryModel from "../models/sequelize/category.model";
 
@@ -16,7 +15,7 @@ export default class CategoryMapper {
 
     static toEntity(model: CategoryModel): Category {
         const category = new Category({
-            categoryId: new Uuid(model.categoryId),
+            categoryId: new CategoryId(model.categoryId),
             name: model.name,
             description: model.description!,
             isActive: model.isActive,

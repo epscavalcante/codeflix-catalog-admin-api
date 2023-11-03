@@ -1,4 +1,4 @@
-import Category from "../../../../domain/entities/category.entity";
+import Category from "../../../../domain/entities/category.aggregate";
 import { CategorySearchResult } from "../../../../domain/repositories/category.repository.interface";
 import CategorySequelizeRespository from "../../../../infra/repositories/category-sequelize.repository";
 import ListCategoryUseCase from "../list-category.use-case";
