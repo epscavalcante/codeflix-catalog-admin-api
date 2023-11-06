@@ -69,7 +69,7 @@ describe('CategoriesController (e2e)', () => {
         describe('should a response error with 422 when throw EntityValidationError', () => {
             const app = startApp();
             const validationError =
-                UpdateCategoryFixture.arrangeForEntityValidationException();
+                UpdateCategoryFixture.arrangeForEntityValidationError();
             const arrange = Object.keys(validationError).map((key) => ({
                 label: key,
                 value: validationError[key],
