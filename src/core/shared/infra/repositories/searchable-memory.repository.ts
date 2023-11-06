@@ -21,7 +21,7 @@ implements ISearchableRepository<E, Uuid, Filter> {
         })
     }
 
-    protected abstract applyFilter(items: E[], filter: Filter | null): Promise<E[]>;
+    protected abstract applyFilter(items: E[], filter?: Filter | null): Promise<E[]>;
     
     protected applySorting(
         items: E[], 

@@ -1,6 +1,6 @@
 import { validate as validateUuid } from 'uuid';
 import Uuid from "./uuid.vo";
-import InvalidUuidException from '../exceptions/invalid-uuid.exception';
+import InvalidUuidException from '../errors/uuid-validation.error';
 
 describe('Uuid VO Unit tests', () => {
 

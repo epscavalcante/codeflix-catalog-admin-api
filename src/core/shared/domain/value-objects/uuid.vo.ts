@@ -1,6 +1,6 @@
 import { v4 as Uuidv4, validate as ValidateUuid  } from "uuid";
 import ValueObject from "./value-object";
-import InvalidUuidException from "../exceptions/invalid-uuid.exception";
+import InvalidUuidException from "../errors/uuid-validation.error";
 
 export default class Uuid extends ValueObject {
     readonly value: string;
