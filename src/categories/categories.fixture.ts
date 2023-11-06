@@ -152,7 +152,7 @@ export class CreateCategoryFixture {
         };
     }
 
-    static arrangeForEntityValidationException() {
+    static arrangeForEntityValidationError() {
         const faker = Category.fake().aCategory();
         const defaultExpected = {
             statusCode: 422,
@@ -248,7 +248,7 @@ export class UpdateCategoryFixture {
         };
     }
 
-    static arrangeForEntityValidationException() {
+    static arrangeForEntityValidationError() {
         const faker = Category.fake().aCategory();
         const defaultExpected = {
             statusCode: 422,
