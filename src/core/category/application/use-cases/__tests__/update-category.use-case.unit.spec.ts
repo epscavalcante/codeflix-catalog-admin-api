@@ -1,8 +1,8 @@
 import CategoryMemoryRepository from '@core/category/infra/repositories/category-memory.repository';
 import UpdateCategoryUseCase from '../update-category.use-case';
-import InvalidUuidException from '@core/shared/domain/exceptions/invalid-uuid.exception';
 import Category, { CategoryId } from '@core/category/domain/category.aggregate';
-import EntityNotFoundException from '@core/shared/domain/exceptions/entity-not-found.exception';
+import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
+import InvalidUuidException from '@core/shared/domain/errors/uuid-validation.error';
 
 describe('Update Category UseCase UnitTest', () => {
     let repository: CategoryMemoryRepository;
@@ -21,11 +21,11 @@ describe('Update Category UseCase UnitTest', () => {
         const uuid = new CategoryId();
 
         await expect(() => useCase.handle({ id: uuid.value })).rejects.toThrow(
-            new EntityNotFoundException(uuid.value, Category),
+            new EntityNotFoundError(uuid.value, Category),
         );
     });
 
-    test('Deve lançar exception EntityValidationException', async () => {
+    test('Deve lançar exception EntityValidationError', async () => {
         const category = new Category({ name: 'Test' });
         repository.items = [category];
         const input = {

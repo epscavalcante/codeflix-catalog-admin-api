@@ -13,7 +13,7 @@ export default class CategoryOutput {
         const { categoryId, ...props } = category.toJSON();
 
         return {
-            id: categoryId.value,
+            id: categoryId,
             ...props,
         };
     }

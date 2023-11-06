@@ -1,7 +1,7 @@
 import CategoryModel from '../database/sequelize/models/category.model';
 import CategorySequelizeRepository from './category-sequelize.repository';
 import Category, { CategoryId } from '@core/category/domain/category.aggregate';
-import EntityNotFoundException from '@core/shared/domain/exceptions/entity-not-found.exception';
+import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
 import {
     CategorySearchParams,
     CategorySearchResult,
@@ -95,7 +95,7 @@ describe('Category Sequelize Repository Tests', () => {
             const category = Category.fake().aCategory().build();
 
             await expect(repository.update(category)).rejects.toThrow(
-                new EntityNotFoundException(category.categoryId, Category),
+                new EntityNotFoundError(category.categoryId, Category),
             );
         });
 
@@ -123,7 +123,7 @@ describe('Category Sequelize Repository Tests', () => {
             await expect(
                 repository.delete(category.categoryId),
             ).rejects.toThrow(
-                new EntityNotFoundException(category.categoryId, Category),
+                new EntityNotFoundError(category.categoryId, Category),
             );
         });
 

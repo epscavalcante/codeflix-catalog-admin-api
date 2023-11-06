@@ -2,8 +2,8 @@ import ICategoryRepository from '@core/category/domain/category.repository.inter
 import Category from '@core/category/domain/category.aggregate';
 import IUseCase from '@core/shared/application/use-cases/use-case.interface';
 import CategoryOutput, { CategoryOutputType } from './mappers/category-output';
-import EntityValidationException from '@core/shared/domain/exceptions/entity-validation-error.exception';
 import { CreateCategoryInput } from './mappers/create-category-input.use-case';
+import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 
 export default class CreateCategoryUseCase
     implements IUseCase<CreateCategoryInput, CreateCategoryOutput>
@@ -15,7 +15,7 @@ export default class CreateCategoryUseCase
         const category = Category.create(input);
 
         if (category.notification.hasErrors()) {
-            throw new EntityValidationException(category.notification.toJSON());
+            throw new EntityValidationError(category.notification.toJSON());
         }
 
         await this.repository.insert(category);
