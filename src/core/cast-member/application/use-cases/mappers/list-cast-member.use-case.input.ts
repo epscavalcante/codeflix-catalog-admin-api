@@ -4,9 +4,9 @@ import { CastMemberTypeEnum } from '@core/cast-member/domain/cast-member-type.va
 import { SearchInput } from '@core/shared/application/use-cases/mappers/search-input';
 
 export class ListCastMembersFilter {
-    name?: string;
+    name?: string | null;
     @IsInt()
-    type?: CastMemberTypeEnum;
+    type?: CastMemberTypeEnum | null;
 }
 
 export class ListCastMembersInput
@@ -17,7 +17,7 @@ export class ListCastMembersInput
     sort?: string;
     sortDir?: SortDirection;
     @ValidateNested()
-    filter?: ListCastMembersFilter;
+    filter?: ListCastMembersFilter | null;
 }
 
 export class ValidateListCastMembersInput {

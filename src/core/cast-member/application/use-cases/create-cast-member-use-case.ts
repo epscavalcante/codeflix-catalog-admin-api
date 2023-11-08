@@ -34,4 +34,4 @@ export default class CreateCastMemberUseCase
     }
 }
 
-export type CreateCastMemberOutput = CastMemberOutput;
+export type CreateCastMemberOutput = CastMemberOutputType;

@@ -10,10 +10,12 @@ import ISearchableRepository, {
     SearchResult,
 } from '@core/shared/domain/repositories/searchable.repository.interface';
 import { SearchValidationError } from '@core/shared/domain/errors/search-validation.error';
+import { error } from 'console';
+import { filter } from 'rxjs';
 
 export type CastMemberFilter = {
-    name?: string;
-    type?: CastMemberType;
+    name?: string | null;
+    type?: CastMemberType | null;
 };
 
 export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {
@@ -29,21 +31,23 @@ export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {
             'filter'
         > & {
             filter?: {
-                name?: string;
-                type?: CastMemberTypeEnum;
-            };
+                name?: string | null;
+                type?: CastMemberTypeEnum | null;
+            } | null;
         } = {},
     ) {
-        const [type, errorCastMemberType] = Either.of(props.filter?.type)
-            .map((type) => type || null)
+        const [type, errorCastMemberType] = Either.of(
+            props.filter?.type ? Number(props.filter.type) : undefined,
+        )
+            .map((type) => type || undefined)
             .chain((type) =>
-                type ? CastMemberType.create(type) : Either.of(null),
+                type ? CastMemberType.create(type) : Either.of(undefined),
             );
-
         if (errorCastMemberType) {
             const error = new SearchValidationError([
                 { type: [errorCastMemberType.message] },
             ]);
+
             throw error;
         }
 
