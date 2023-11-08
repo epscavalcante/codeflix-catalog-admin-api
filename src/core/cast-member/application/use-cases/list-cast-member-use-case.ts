@@ -5,14 +5,14 @@ import { CastMemberOutputType } from "./mappers/create-cast-member.use-case.outp
 import CastMemberRepository, { CastMemberSearchParams, CastMemberSearchResult } from "@core/cast-member/domain/cast-member.repository.interface";
 import CastMemberOutputMapper from "./mappers/cast-member-output.mapper";
 
-export class ListCastMembersUseCase
+export default class ListCastMemberUseCase
     implements IUseCase<ListCastMembersInput, ListCastMembersOutput>
 {
-    constructor(private castMemberRepo: CastMemberRepository) {}
+    constructor(private castMemberRepository: CastMemberRepository) {}
 
     async handle(input: ListCastMembersInput): Promise<ListCastMembersOutput> {
         const params = CastMemberSearchParams.create(input);
-        const searchResult = await this.castMemberRepo.search(params);
+        const searchResult = await this.castMemberRepository.search(params);
         return this.toOutput(searchResult);
     }
 
