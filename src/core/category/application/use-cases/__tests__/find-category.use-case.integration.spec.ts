@@ -2,9 +2,9 @@ import { setupDatabase } from "@core/shared/infra/database/setup-database";
 import FindCategoryUseCase from "../find-category.use-case";
 import CategoryModel from "@core/category/infra/database/sequelize/models/category.model";
 import CategorySequelizeRepository from "@core/category/infra/repositories/category-sequelize.repository";
-import InvalidUuidException from "@core/shared/domain/exceptions/invalid-uuid.exception";
 import Category, { CategoryId } from "@core/category/domain/category.aggregate";
-import EntityNotFoundException from "@core/shared/domain/exceptions/entity-not-found.exception";
+import EntityNotFoundError from "@core/shared/domain/errors/entity-not-found.error";
+import InvalidUuidException from "@core/shared/domain/errors/uuid-validation.error";
 
 describe("Find a Category UseCase Unit Test", () => {
     let repository: CategorySequelizeRepository;
@@ -27,7 +27,7 @@ describe("Find a Category UseCase Unit Test", () => {
         const uuid = new CategoryId();
 
         await expect(() => useCase.handle({ id: uuid.value })).rejects.toThrow(
-            new EntityNotFoundException(uuid.value, Category)
+            new EntityNotFoundError(uuid.value, Category)
         );
     });
 

@@ -213,7 +213,7 @@ const config = {
       '.interfaces.ts',
       '/core/infra/testing/',
       'test/helpers',
-      '/core/shared/infra/database/sequelize/migrations/',
+      '/infra/database/sequelize/migrations/',
       '.interface.ts',
       '.fixture.ts',
       '.d.ts',

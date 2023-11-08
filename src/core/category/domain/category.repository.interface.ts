@@ -2,7 +2,7 @@ import Category, { CategoryId } from './category.aggregate';
 import ISearchableRepository, {
     SearchParams,
     SearchResult,
-} from '../../shared/domain/repositories/searchable.repository.interface';
+} from '@core/shared/domain/repositories/searchable.repository.interface';
 
 export type CategoryFilter = string;
 

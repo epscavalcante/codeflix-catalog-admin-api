@@ -59,7 +59,6 @@ describe('Config Module Tests', () => {
     });
 
     it.skip('Deve lançar exceção ao carregar um env invalido', () => {
-        console.log(join(__dirname, '.env.fake'))
         try {
             Test.createTestingModule({
                 imports: [
@@ -70,7 +69,6 @@ describe('Config Module Tests', () => {
             });
             fail('ConfigModule carregando env inválido.');
         } catch (e) {
-            console.log(e);
             expect(e.message).toContain(
                 '"DB_VENDOR" must be one of [mysql, sqlite]',
             );

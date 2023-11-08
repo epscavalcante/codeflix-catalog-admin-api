@@ -1,8 +1,8 @@
 import CategoryMemoryRepository from "@core/category/infra/repositories/category-memory.repository";
 import DeleteCategoryUseCase from "../delete-category.use-case";
-import InvalidUuidException from "@core/shared/domain/exceptions/invalid-uuid.exception";
-import EntityNotFoundException from "@core/shared/domain/exceptions/entity-not-found.exception";
+import EntityNotFoundError from "@core/shared/domain/errors/entity-not-found.error";
 import Category, { CategoryId } from "@core/category/domain/category.aggregate";
+import InvalidUuidException from "@core/shared/domain/errors/uuid-validation.error";
 
 describe("Delete Category UseCase Unit Test", () => {
     let repository: CategoryMemoryRepository;
@@ -20,7 +20,7 @@ describe("Delete Category UseCase Unit Test", () => {
     test("Deve lançar EntiityNotFoundExeception pq categoria não foi encontrada.", async () => {
         const uuid = new CategoryId();
         
-        await expect(() => useCase.handle({ id: uuid.value })).rejects.toThrow(new EntityNotFoundException(uuid.value, Category));
+        await expect(() => useCase.handle({ id: uuid.value })).rejects.toThrow(new EntityNotFoundError(uuid.value, Category));
     });
 
     test("Deve deletar uma categoria", async () => {

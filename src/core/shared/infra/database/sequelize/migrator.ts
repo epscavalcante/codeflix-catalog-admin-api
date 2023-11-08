@@ -8,8 +8,7 @@ export function migrator(sequelize: Sequelize, options?: Partial<UmzugOptions>) 
             glob: [
                 '*/infra/database/sequelize/migrations/*.{js,ts}',
                 {
-                    // cwd: './',
-                    cwd: join(__dirname, '..', '..'),
+                    cwd: join(__dirname, '..', '..', '..', '..'),
                     ignore: ['**/*.d.ts', '**/index.ts', '**/index.js'],
                 },
             ],

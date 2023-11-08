@@ -1,9 +1,9 @@
 import CategorySequelizeRepository from '@core/category/infra/repositories/category-sequelize.repository';
 import CategoryModel from '@core/category/infra/database/sequelize/models/category.model';
 import CategoryMapper from '@core/category/infra/database/sequelize/mappers/category.mapper';
-import EntityValidationException from '@core/shared/domain/exceptions/entity-validation-error.exception';
 import Category, { CategoryId } from '@core/category/domain/category.aggregate';
 import { setupDatabase } from '@core/shared/infra/database/setup-database';
+import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 
 describe('Category Mapper Integration Tests', () => {
     let repository: CategorySequelizeRepository;
@@ -27,9 +27,9 @@ describe('Category Mapper Integration Tests', () => {
                 CategoryMapper.toEntity(categoryModel);
                 fail('Category is valid, but needs throws exception');
             } catch (error) {
-                expect(error).toBeInstanceOf(EntityValidationException);
+                expect(error).toBeInstanceOf(EntityValidationError);
                 expect(
-                    (error as EntityValidationException).error,
+                    (error as EntityValidationError).error,
                 ).toMatchObject([
                     {
                         name: [

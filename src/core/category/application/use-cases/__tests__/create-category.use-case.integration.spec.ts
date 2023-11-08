@@ -30,7 +30,7 @@ describe('Create Category UseCase Integration Test', () => {
         });
     });
 
-    test('Deve lançar exception EntityValidationException', async () => {
+    test('Deve lançar exception EntityValidationError', async () => {
         const input = {
             name: 'T'.repeat(256),
         };

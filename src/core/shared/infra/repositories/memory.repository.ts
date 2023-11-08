@@ -1,7 +1,7 @@
 import Entity from '../../domain/entity';
 import IRepository from '@core/shared/domain/repositories/repository.interface';
 import ValueObject from '@core/shared/domain/value-objects/value-object';
-import EntityNotFoundException from '@core/shared/domain/exceptions/entity-not-found.exception';
+import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
 
 export default abstract class MemoryRespository<
     E extends Entity,
@@ -24,7 +24,7 @@ export default abstract class MemoryRespository<
         );
 
         if (itemIndex === -1) {
-            throw new EntityNotFoundException(
+            throw new EntityNotFoundError(
                 entity.entityId,
                 this.getEntity(),
             );
@@ -39,7 +39,7 @@ export default abstract class MemoryRespository<
         );
 
         if (itemIndex === -1) {
-            throw new EntityNotFoundException(entityId, this.getEntity());
+            throw new EntityNotFoundError(entityId, this.getEntity());
         }
 
         this.items.splice(itemIndex, 1);

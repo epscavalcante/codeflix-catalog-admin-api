@@ -2,9 +2,9 @@ import CategorySequelizeRepository from '@core/category/infra/repositories/categ
 import DeleteCategoryUseCase from '../delete-category.use-case';
 import { setupDatabase } from '@core/shared/infra/database/setup-database';
 import CategoryModel from '@core/category/infra/database/sequelize/models/category.model';
-import InvalidUuidException from '@core/shared/domain/exceptions/invalid-uuid.exception';
 import Category, { CategoryId } from '@core/category/domain/category.aggregate';
-import EntityNotFoundException from '@core/shared/domain/exceptions/entity-not-found.exception';
+import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
+import InvalidUuidException from '@core/shared/domain/errors/uuid-validation.error';
 
 describe('Delete Category UseCase Integration Test', () => {
     let repository: CategorySequelizeRepository;
@@ -27,14 +27,14 @@ describe('Delete Category UseCase Integration Test', () => {
         const uuid = new CategoryId();
 
         await expect(() => useCase.handle({ id: uuid.value })).rejects.toThrow(
-            new EntityNotFoundException(uuid.value, Category),
+            new EntityNotFoundError(uuid.value, Category),
         );
     });
 
     test('Deve deletar uma categoria', async () => {
         const spyDelete = jest.spyOn(repository, 'delete');
         const category = Category.fake().aCategory().build();
-        repository.insert(category);
+        await repository.insert(category);
 
         await repository.delete(category.categoryId);
 

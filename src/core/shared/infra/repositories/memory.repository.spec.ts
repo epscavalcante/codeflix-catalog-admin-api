@@ -1,7 +1,7 @@
 import Entity from '@core/shared/domain/entity';
 import MemoryRespository from './memory.repository';
 import Uuid from '@core/shared/domain/value-objects/uuid.vo';
-import EntityNotFoundException from '@core/shared/domain/exceptions/entity-not-found.exception';
+import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
 
 type EntityStubProps = {
     entityId?: Uuid;
@@ -124,7 +124,7 @@ describe('Unit Test Memory repository', () => {
             });
 
             await expect(repository.update(entity)).rejects.toThrow(
-                new EntityNotFoundException(entity.entityId, EntityStub),
+                new EntityNotFoundError(entity.entityId, EntityStub),
             );
         });
 
@@ -155,7 +155,7 @@ describe('Unit Test Memory repository', () => {
             const entityId = new Uuid();
 
             await expect(repository.delete(entityId)).rejects.toThrow(
-                new EntityNotFoundException(entityId.value, EntityStub),
+                new EntityNotFoundError(entityId.value, EntityStub),
             );
         });
 

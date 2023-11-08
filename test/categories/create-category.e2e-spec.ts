@@ -71,7 +71,7 @@ describe('CategoriesController (e2e)', () => {
 
         describe('Should receives 422 statusCode when send throw EntityValidationError', () => {
             const invalidRequest =
-                CreateCategoryFixture.arrangeForEntityValidationException();
+                CreateCategoryFixture.arrangeForEntityValidationError();
             const arrange = Object.keys(invalidRequest).map((key) => ({
                 label: key,
                 value: invalidRequest[key],

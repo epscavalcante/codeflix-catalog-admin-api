@@ -60,7 +60,7 @@ export default class Category extends AggregateRoot {
 
     toJSON() {
         return {
-            categoryId: this.categoryId,
+            categoryId: this.categoryId.value,
             name: this.name,
             description: this.description,
             isActive: this.isActive,

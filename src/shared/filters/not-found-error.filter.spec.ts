@@ -1,7 +1,7 @@
 import { Controller, Get, INestApplication } from '@nestjs/common';
 import Entity from '@core/shared/domain/entity';
 import { NotFoundErrorFilter } from './not-found-error.filter';
-import EntityNotFoundException from '@core/shared/domain/exceptions/entity-not-found.exception';
+import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 
@@ -16,7 +16,7 @@ class StubEntity extends Entity {
 class StubController {
     @Get()
     index() {
-        throw new EntityNotFoundException('fake_id', StubEntity);
+        throw new EntityNotFoundError('fake_id', StubEntity);
     }
 }
 

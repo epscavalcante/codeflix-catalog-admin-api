@@ -3,7 +3,7 @@ import ICategoryRepository, {
     CategorySearchResult,
 } from '@core/category/domain/category.repository.interface';
 import CategoryModel from '../database/sequelize/models/category.model';
-import EntityNotFoundException from '@core/shared/domain/exceptions/entity-not-found.exception';
+import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
 import Category, { CategoryId } from '@core/category/domain/category.aggregate';
 import { Op, literal } from 'sequelize';
 import CategoryMapper from '@core/category/infra/database/sequelize/mappers/category.mapper';
@@ -41,7 +41,7 @@ export default class CategorySequelizeRepository
         const categoryModel = await this._get(id);
 
         if (!categoryModel) {
-            throw new EntityNotFoundException(id, this.getEntity());
+            throw new EntityNotFoundError(id, this.getEntity());
         }
 
         const categoriesModelToUpdate = CategoryMapper.toModel(category);
@@ -55,10 +55,7 @@ export default class CategorySequelizeRepository
         const categoryModel = await this._get(categoryId.value);
 
         if (!categoryModel) {
-            throw new EntityNotFoundException(
-                categoryId.value,
-                this.getEntity(),
-            );
+            throw new EntityNotFoundError(categoryId.value, this.getEntity());
         }
 
         this.categoryModel.destroy({ where: { categoryId: categoryId.value } });
@@ -93,10 +90,10 @@ export default class CategorySequelizeRepository
                     ? {
                           order: this.formatSort(
                               props.sort,
-                              props.sortDir || 'desc',
+                              props.sortDir ?? 'desc',
                           ),
                       }
-                    : { order: [['created_at', 'desc']] }),
+                    : { order: [['created_at', 'DESC']] }),
                 offset,
                 limit,
             });

@@ -1,10 +1,10 @@
 import ICategoryRepository from '@core/category/domain/category.repository.interface';
 import Category, { CategoryId } from '@core/category/domain/category.aggregate';
 import IUseCase from '@core/shared/application/use-cases/use-case.interface';
-import EntityNotFoundException from '@core/shared/domain/exceptions/entity-not-found.exception';
+import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
 import CategoryOutput, { CategoryOutputType } from './mappers/category-output';
-import EntityValidationException from '@core/shared/domain/exceptions/entity-validation-error.exception';
 import { UpdateCategoryInput } from './mappers/update-category-input.use-case';
+import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 
 export default class UpdateCategoryUseCase
     implements IUseCase<UpdateCategoryInput, UpdateCategoryOutput>
@@ -16,7 +16,7 @@ export default class UpdateCategoryUseCase
             new CategoryId(input.id),
         );
 
-        if (!category) throw new EntityNotFoundException(input.id, Category);
+        if (!category) throw new EntityNotFoundError(input.id, Category);
 
         input.name && category.changeName(input.name);
 
@@ -33,7 +33,7 @@ export default class UpdateCategoryUseCase
         }
 
         if (category.notification.hasErrors()) {
-            throw new EntityValidationException(category.notification.toJSON());
+            throw new EntityValidationError(category.notification.toJSON());
         }
 
         await this.repository.update(category);

@@ -1,6 +1,6 @@
 import Category, { CategoryId } from "../../domain/category.aggregate";
 import CategoryMemoryRepository from "./category-memory.repository";
-import EntityNotFoundException from "@core/shared/domain/exceptions/entity-not-found.exception";
+import EntityNotFoundError from "@core/shared/domain/errors/entity-not-found.error";
 
 describe('Unit Test Memory repository', () => {
     let repository: CategoryMemoryRepository;
@@ -56,7 +56,7 @@ describe('Unit Test Memory repository', () => {
             const entity = Category.fake().aCategory().build();
             
             await expect(repository.update(entity)).rejects.toThrow(
-                new EntityNotFoundException(entity.entityId, Category)
+                new EntityNotFoundError(entity.entityId, Category)
             );
         })
 
@@ -81,7 +81,7 @@ describe('Unit Test Memory repository', () => {
             const entityId = new CategoryId();
             
             await expect(repository.delete(entityId)).rejects.toThrow(
-                new EntityNotFoundException(entityId.value, Category)
+                new EntityNotFoundError(entityId.value, Category)
             );
         })
 
