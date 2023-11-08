@@ -1,5 +1,3 @@
-import CastMemberMemoryRepository from "@core/cast-member/infra/repositories/cast-member-memory.repository";
-import { ListCastMembersUseCase } from "../list-cast-member-use-case";
 import { CastMemberSearchResult } from "@core/cast-member/domain/cast-member.repository.interface";
 import CastMember from "@core/cast-member/domain/cast-member.aggregate";
 import CastMemberOutputMapper from "../mappers/cast-member-output.mapper";
@@ -8,9 +6,10 @@ import { SortDirection } from "@core/shared/domain/repositories/searchable.repos
 import { setupDatabase } from "@core/shared/infra/database/setup-database";
 import CastMemberModel from "@core/cast-member/infra/database/sequelize/models/cast-member.model";
 import CastMemberSequelizeRepository from "@core/cast-member/infra/repositories/cast-member-sequelize.repository";
+import ListCastMemberUseCase from "../list-cast-member-use-case";
 
-describe('ListCastMembersUseCase Integration Tests', () => {
-  let useCase: ListCastMembersUseCase;
+describe('ListCastMemberUseCase Integration Tests', () => {
+  let useCase: ListCastMemberUseCase;
   let repository: CastMemberSequelizeRepository;
 
   setupDatabase({
@@ -19,7 +18,7 @@ describe('ListCastMembersUseCase Integration Tests', () => {
 
   beforeEach(() => {
     repository = new CastMemberSequelizeRepository(CastMemberModel);
-    useCase = new ListCastMembersUseCase(repository);
+    useCase = new ListCastMemberUseCase(repository);
   });
 
   test('toOutput method', () => {

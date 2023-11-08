@@ -1,18 +1,18 @@
 import CastMemberMemoryRepository from "@core/cast-member/infra/repositories/cast-member-memory.repository";
-import { ListCastMembersUseCase } from "../list-cast-member-use-case";
 import { CastMemberSearchResult } from "@core/cast-member/domain/cast-member.repository.interface";
 import CastMember from "@core/cast-member/domain/cast-member.aggregate";
 import CastMemberOutputMapper from "../mappers/cast-member-output.mapper";
 import { CastMemberTypeEnum } from "@core/cast-member/domain/cast-member-type.value-object";
 import { SortDirection } from "@core/shared/domain/repositories/searchable.repository.interface";
+import ListCastMemberUseCase from "../list-cast-member-use-case";
 
-describe('ListCastMembersUseCase Unit Tests', () => {
-  let useCase: ListCastMembersUseCase;
+describe('ListCastMemberUseCase Unit Tests', () => {
+  let useCase: ListCastMemberUseCase;
   let repository: CastMemberMemoryRepository;
 
   beforeEach(() => {
     repository = new CastMemberMemoryRepository();
-    useCase = new ListCastMembersUseCase(repository);
+    useCase = new ListCastMemberUseCase(repository);
   });
 
   test('toOutput method', () => {

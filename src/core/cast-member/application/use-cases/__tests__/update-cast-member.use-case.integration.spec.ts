@@ -37,7 +37,6 @@ describe('Update CastMember UseCase Integration tests', () => {
             type: castMember.type.value,
         };
         
-        // console.log(await useCase.handle(input));
         expect(() => useCase.handle(input)).rejects.toThrowError(
             'Entity Validation Error',
         );
