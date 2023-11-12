@@ -2,15 +2,16 @@ version: '3'
 
 services:
     app:
-        build: .
+        build: ./node
         container_name: catalog-admin-app
         ports:
             - 3000:3000
         volumes:
-            - .:/home/node/app
+            - ..:/home/node/app
 
     adminer:
         image: adminer:4-standalone
+        container_name: catalog-admin-adminer
         restart: always
         ports:
         - 8080:8080
@@ -22,7 +23,7 @@ services:
             - MYSQL_DATABASE=catalog
             - MYSQL_ROOT_PASSWORD=root
         volumes:
-            - ./db:/var/lib/mysql:delegated
+            - ./mysql/data:/var/lib/mysql:delegated
         security_opt:
             - seccomp:unconfined
 

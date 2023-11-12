@@ -39,4 +39,4 @@ tsconfig.tsbuildinfo
 .env*
 !.env.example
 
-db
+.docker/mysql/data
