@@ -4,7 +4,10 @@ import CastMemberSequelizeRepository from './cast-member-sequelize.repository';
 import CastMember from '@core/cast-member/domain/cast-member.aggregate';
 import { CastMemberId } from '@core/cast-member/domain/cast-member-id.value-object';
 import EntityEntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
-import { CastMemberSearchParams, CastMemberSearchResult } from '@core/cast-member/domain/cast-member.repository.interface';
+import {
+    CastMemberSearchParams,
+    CastMemberSearchResult,
+} from '@core/cast-member/domain/cast-member.repository.interface';
 import { CastMemberTypeEnum } from '@core/cast-member/domain/cast-member-type.value-object';
 import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
 import CastMemberMapper from '../database/sequelize/mapper/cast-member.mapper';
@@ -55,7 +58,10 @@ describe('CastMemberSequelizeRepository Tests', () => {
     it('should throw error on update when an entity not found', async () => {
         const entity = CastMember.fake().anActor().build();
         await expect(repository.update(entity)).rejects.toThrow(
-            new EntityEntityNotFoundError(entity.castMemberId.value, CastMember),
+            new EntityEntityNotFoundError(
+                entity.castMemberId.value,
+                CastMember,
+            ),
         );
     });
 
@@ -501,7 +507,10 @@ describe('CastMemberSequelizeRepository Tests', () => {
                         page: 1,
                         perPage: 2,
                         sort: 'name',
-                        filter: { name: 'TEST', type: CastMemberTypeEnum.ACTOR },
+                        filter: {
+                            name: 'TEST',
+                            type: CastMemberTypeEnum.ACTOR,
+                        },
                     }),
                     search_result: new CastMemberSearchResult({
                         items: [castMembers[2], castMembers[4]],
@@ -515,7 +524,10 @@ describe('CastMemberSequelizeRepository Tests', () => {
                         page: 2,
                         perPage: 2,
                         sort: 'name',
-                        filter: { name: 'TEST', type: CastMemberTypeEnum.ACTOR },
+                        filter: {
+                            name: 'TEST',
+                            type: CastMemberTypeEnum.ACTOR,
+                        },
                     }),
                     search_result: new CastMemberSearchResult({
                         items: [castMembers[0]],

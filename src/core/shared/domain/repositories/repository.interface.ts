@@ -1,7 +1,10 @@
-import Entity from "../entity";
-import ValueObject from "../value-objects/value-object";
+import Entity from '../entity';
+import ValueObject from '../value-objects/value-object';
 
-export default interface IRepository<E extends Entity, Uuid extends ValueObject> {
+export default interface IRepository<
+    E extends Entity,
+    Uuid extends ValueObject,
+> {
     insert(entity: E): Promise<void>;
     bulkInsert(entities: E[]): Promise<void>;
     update(entity: E): Promise<void>;

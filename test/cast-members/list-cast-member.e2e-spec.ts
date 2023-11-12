@@ -18,9 +18,12 @@ describe('CastMembersController (e2e)', () => {
 
             beforeEach(async () => {
                 castMemberRepository = nestApp.app.get<CastMemberRepository>(
-                    CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY.provide,
+                    CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY
+                        .provide,
                 );
-                await castMemberRepository.bulkInsert(Object.values(entitiesMap));
+                await castMemberRepository.bulkInsert(
+                    Object.values(entitiesMap),
+                );
             });
 
             test.each(arrange)(
@@ -49,28 +52,34 @@ describe('CastMembersController (e2e)', () => {
         describe('should return cast members using paginate, filter and sort', () => {
             let castMemberRepository: CastMemberRepository;
             const nestApp = startApp();
-            const { entitiesMap, arrangeFilteredByNameAndAscSortedByName,
-                arrangeFilteredByNameAndDescSortedByName, arrangeFilteredByType } =
-                ListCastMemberFixture.arrangeUnsorted();
+            const {
+                entitiesMap,
+                arrangeFilteredByNameAndAscSortedByName,
+                arrangeFilteredByNameAndDescSortedByName,
+                arrangeFilteredByType,
+            } = ListCastMemberFixture.arrangeUnsorted();
 
             beforeEach(async () => {
                 castMemberRepository = nestApp.app.get<CastMemberRepository>(
-                    CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY.provide,
+                    CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY
+                        .provide,
                 );
-                await castMemberRepository.bulkInsert(Object.values(entitiesMap));
+                await castMemberRepository.bulkInsert(
+                    Object.values(entitiesMap),
+                );
             });
 
             test.each([
                 arrangeFilteredByNameAndAscSortedByName[0],
                 arrangeFilteredByNameAndDescSortedByName[0],
-                arrangeFilteredByType[0]
+                arrangeFilteredByType[0],
             ])(
                 'when query params is $send_data',
                 async ({ send_data, expected }) => {
                     const queryParams = qs.stringify(send_data as any);
 
                     return request(nestApp.app.getHttpServer())
-                    .get(`/cast-members?${queryParams}`)
+                        .get(`/cast-members?${queryParams}`)
                         .expect({
                             data: expected.entities.map((e) =>
                                 instanceToPlain(

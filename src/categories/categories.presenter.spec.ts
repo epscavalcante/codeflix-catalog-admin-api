@@ -53,7 +53,7 @@ describe('Category presenter', () => {
                     description: 'Opa',
                     isActive: false,
                     createdAt: date,
-                }
+                },
             ],
             currentPage: 1,
             lastPage: 2,
@@ -68,13 +68,14 @@ describe('Category presenter', () => {
         expect(collectionPresenter.paginationPresenter.lastPage).toBe(2);
         expect(collectionPresenter.paginationPresenter.perPage).toBe(2);
         expect(collectionPresenter.paginationPresenter.total).toBe(5);
-        expect(collectionPresenter.meta).toEqual(collectionPresenter.paginationPresenter);
+        expect(collectionPresenter.meta).toEqual(
+            collectionPresenter.paginationPresenter,
+        );
     });
-
 
     test('Deve transformar CollectionPresenter', () => {
         const date = new Date();
-        
+
         const collectionPresenter = new CategoryCollectionPresenter({
             items: [
                 {
@@ -83,7 +84,7 @@ describe('Category presenter', () => {
                     description: 'Opa',
                     isActive: false,
                     createdAt: date,
-                }
+                },
             ],
             currentPage: 1,
             lastPage: 2,
@@ -91,7 +92,8 @@ describe('Category presenter', () => {
             total: 5,
         });
 
-        const collectionPresenterTransformed = instanceToPlain(collectionPresenter);
+        const collectionPresenterTransformed =
+            instanceToPlain(collectionPresenter);
 
         expect(collectionPresenterTransformed).toStrictEqual({
             data: [
@@ -101,14 +103,14 @@ describe('Category presenter', () => {
                     description: 'Opa',
                     isActive: false,
                     createdAt: date.toISOString(),
-                }
+                },
             ],
             meta: {
                 currentPage: 1,
                 perPage: 2,
-                lastPage:2,
-                total: 5
-            }
+                lastPage: 2,
+                total: 5,
+            },
         });
     });
 });

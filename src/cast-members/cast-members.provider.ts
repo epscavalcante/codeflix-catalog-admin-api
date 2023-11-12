@@ -1,13 +1,13 @@
-import CreateCastMemberUseCase from "@core/cast-member/application/use-cases/create-cast-member-use-case";
-import DeleteCastMemberUseCase from "@core/cast-member/application/use-cases/delete-cast-member.use-case";
-import FindCastMemberUseCase from "@core/cast-member/application/use-cases/find-cast-member.use-case";
-import ListCastMemberUseCase from "@core/cast-member/application/use-cases/list-cast-member-use-case";
-import UpdateCastMemberUseCase from "@core/cast-member/application/use-cases/update-cast-member.use-case";
-import CastMemberRepository from "@core/cast-member/domain/cast-member.repository.interface";
-import CastMemberModel from "@core/cast-member/infra/database/sequelize/models/cast-member.model";
-import CastMemberMemoryRepository from "@core/cast-member/infra/repositories/cast-member-memory.repository";
-import CastMemberSequelizeRepository from "@core/cast-member/infra/repositories/cast-member-sequelize.repository";
-import { getModelToken } from "@nestjs/sequelize";
+import CreateCastMemberUseCase from '@core/cast-member/application/use-cases/create-cast-member-use-case';
+import DeleteCastMemberUseCase from '@core/cast-member/application/use-cases/delete-cast-member.use-case';
+import FindCastMemberUseCase from '@core/cast-member/application/use-cases/find-cast-member.use-case';
+import ListCastMemberUseCase from '@core/cast-member/application/use-cases/list-cast-member-use-case';
+import UpdateCastMemberUseCase from '@core/cast-member/application/use-cases/update-cast-member.use-case';
+import CastMemberRepository from '@core/cast-member/domain/cast-member.repository.interface';
+import CastMemberModel from '@core/cast-member/infra/database/sequelize/models/cast-member.model';
+import CastMemberMemoryRepository from '@core/cast-member/infra/repositories/cast-member-memory.repository';
+import CastMemberSequelizeRepository from '@core/cast-member/infra/repositories/cast-member-sequelize.repository';
+import { getModelToken } from '@nestjs/sequelize';
 
 export const REPOSITORIES = {
     CAST_MEMBER_REPOSITORY: {

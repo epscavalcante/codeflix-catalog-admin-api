@@ -1,5 +1,5 @@
-import { Sequelize, SequelizeOptions } from "sequelize-typescript";
-import Config from "./config";
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+import Config from './config';
 
 export function setupDatabase(options: SequelizeOptions = {}) {
     let _sequelize: Sequelize;
@@ -14,9 +14,9 @@ export function setupDatabase(options: SequelizeOptions = {}) {
     });
 
     beforeEach(async () => await _sequelize.sync({ force: true }));
-    
+
     afterAll(async () => await _sequelize.close());
-    
+
     return {
         get sequelize() {
             return _sequelize;

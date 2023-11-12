@@ -1,9 +1,9 @@
-import { setupDatabase } from "@core/shared/infra/database/setup-database";
-import CastMemberModel from "../models/cast-member.model";
-import { CastMemberId } from "@core/cast-member/domain/cast-member-id.value-object";
-import CastMemberMapper from "./cast-member.mapper";
-import CastMember from "@core/cast-member/domain/cast-member.aggregate";
-import EntityValidationError from "@core/shared/domain/errors/entity-validation.error";
+import { setupDatabase } from '@core/shared/infra/database/setup-database';
+import CastMemberModel from '../models/cast-member.model';
+import { CastMemberId } from '@core/cast-member/domain/cast-member-id.value-object';
+import CastMemberMapper from './cast-member.mapper';
+import CastMember from '@core/cast-member/domain/cast-member.aggregate';
+import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 
 describe('CastMember Mapper Integration Tests', () => {
     // let repository: CastMemberSequelizeRepository;
@@ -28,19 +28,15 @@ describe('CastMember Mapper Integration Tests', () => {
                 fail('CastMember is valid, but needs throws ');
             } catch (error) {
                 expect(error).toBeInstanceOf(EntityValidationError);
-                expect(
-                    (error as EntityValidationError).error,
-                ).toMatchObject([
+                expect((error as EntityValidationError).error).toMatchObject([
                     {
                         name: [
                             'name must be shorter than or equal to 255 characters',
-                        ]
+                        ],
                     },
                     {
-                        type: [
-                            'Invalid cast member type: 4'
-                        ]
-                    }
+                        type: ['Invalid cast member type: 4'],
+                    },
                 ]);
             }
         });
@@ -55,7 +51,8 @@ describe('CastMember Mapper Integration Tests', () => {
                 createdAt: castMember.createdAt,
             });
 
-            const castMemberEntityMapped = CastMemberMapper.toEntity(castMemberModel);
+            const castMemberEntityMapped =
+                CastMemberMapper.toEntity(castMemberModel);
 
             expect(castMemberEntityMapped.toJSON()).toStrictEqual(
                 castMember.toJSON(),

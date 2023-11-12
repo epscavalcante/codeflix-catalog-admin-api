@@ -1,6 +1,6 @@
-import { CategoryId } from "@core/category/domain/category.aggregate";
-import ICategoryRepository from "@core/category/domain/category.repository.interface";
-import IUseCase from "@core/shared/application/use-cases/use-case.interface";
+import { CategoryId } from '@core/category/domain/category.aggregate';
+import ICategoryRepository from '@core/category/domain/category.repository.interface';
+import IUseCase from '@core/shared/application/use-cases/use-case.interface';
 
 export default class DeleteCategoryUseCase
     implements IUseCase<DeleteCategoryInput, DeleteCategoryOutput>

@@ -21,9 +21,9 @@ describe('Update CastMember UseCase UnitTest', () => {
             id: 'fake',
         } as UpdateCastMemberInput;
 
-        await expect(() =>
-            useCase.handle(input),
-        ).rejects.toThrow(new InvalidUuidException());
+        await expect(() => useCase.handle(input)).rejects.toThrow(
+            new InvalidUuidException(),
+        );
     });
 
     test('Deve lançar exceção de castMember não encontrada', async () => {
@@ -40,7 +40,7 @@ describe('Update CastMember UseCase UnitTest', () => {
         const input = {
             id: castMember.castMemberId.value,
             name: 'T'.repeat(256),
-            type: castMember.type.value
+            type: castMember.type.value,
         };
 
         expect(() => useCase.handle(input)).rejects.toThrowError(
@@ -56,7 +56,7 @@ describe('Update CastMember UseCase UnitTest', () => {
         const output = await useCase.handle({
             id: castMember.castMemberId.value,
             name: 'Changed',
-            type: castMember.type.value
+            type: castMember.type.value,
         });
 
         expect(spyUpdate).toHaveBeenCalledTimes(1);

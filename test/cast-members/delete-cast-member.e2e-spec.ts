@@ -1,7 +1,7 @@
-import CastMember from "@core/cast-member/domain/cast-member.aggregate";
-import CastMemberRepository from "@core/cast-member/domain/cast-member.repository.interface";
-import { CAST_MEMBER_PROVIDERS } from "../../src/cast-members/cast-members.provider";
-import { startApp } from "../helpers/start-app";
+import CastMember from '@core/cast-member/domain/cast-member.aggregate';
+import CastMemberRepository from '@core/cast-member/domain/cast-member.repository.interface';
+import { CAST_MEMBER_PROVIDERS } from '../../src/cast-members/cast-members.provider';
+import { startApp } from '../helpers/start-app';
 import request from 'supertest';
 
 describe('CastMembersController (e2e)', () => {
@@ -37,9 +37,11 @@ describe('CastMembersController (e2e)', () => {
         });
 
         it('should delete a castMember response with status 204', async () => {
-            const castMemberRepository = appHelper.app.get<CastMemberRepository>(
-                CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY.provide,
-            );
+            const castMemberRepository =
+                appHelper.app.get<CastMemberRepository>(
+                    CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY
+                        .provide,
+                );
             const castMember = CastMember.fake().aDirector().build();
             await castMemberRepository.insert(castMember);
 

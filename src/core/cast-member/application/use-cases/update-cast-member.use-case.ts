@@ -5,7 +5,9 @@ import { CastMemberId } from '@core/cast-member/domain/cast-member-id.value-obje
 import { CastMemberNotFoundError } from '@core/cast-member/domain/errors/cast-member-not-found.error';
 import CastMemberType from '@core/cast-member/domain/cast-member-type.value-object';
 import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
-import CastMemberOutputMapper, { CastMemberOutputType } from './mappers/cast-member-output.mapper';
+import CastMemberOutputMapper, {
+    CastMemberOutputType,
+} from './mappers/cast-member-output.mapper';
 
 export default class UpdateCastMemberUseCase
     implements IUseCase<UpdateCastMemberInput, UpdateCastMemberOutput>

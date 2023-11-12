@@ -28,9 +28,7 @@ describe('Category Mapper Integration Tests', () => {
                 fail('Category is valid, but needs throws exception');
             } catch (error) {
                 expect(error).toBeInstanceOf(EntityValidationError);
-                expect(
-                    (error as EntityValidationError).error,
-                ).toMatchObject([
+                expect((error as EntityValidationError).error).toMatchObject([
                     {
                         name: [
                             'name must be shorter than or equal to 255 characters',

@@ -1,4 +1,4 @@
-import { SearchResult } from "@core/shared/domain/repositories/searchable.repository.interface";
+import { SearchResult } from '@core/shared/domain/repositories/searchable.repository.interface';
 
 export type PaginationOutputType<Item = any> = {
     items: Item[];
@@ -11,7 +11,7 @@ export type PaginationOutputType<Item = any> = {
 export default class PaginationOutput {
     static toOutput<Item = any>(
         items: Item[],
-        props: Omit<SearchResult, "items">
+        props: Omit<SearchResult, 'items'>,
     ): PaginationOutputType<Item> {
         return {
             items,

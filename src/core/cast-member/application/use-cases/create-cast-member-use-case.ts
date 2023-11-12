@@ -1,4 +1,7 @@
-import { CastMemberOutput, CastMemberOutputType } from './mappers/create-cast-member.use-case.output';
+import {
+    CastMemberOutput,
+    CastMemberOutputType,
+} from './mappers/create-cast-member.use-case.output';
 import CastMember from '@core/cast-member/domain/cast-member.aggregate';
 import { CreateCastMemberInput } from './mappers/create-cast-member.use-case.input';
 import CastMemberType from '@core/cast-member/domain/cast-member-type.value-object';

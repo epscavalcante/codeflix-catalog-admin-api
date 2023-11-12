@@ -39,7 +39,9 @@ describe('Delete CastMember UseCase Integration Test', () => {
 
         await repository.delete(castMember.castMemberId);
 
-        const castMemberFounded = await repository.findById(castMember.castMemberId);
+        const castMemberFounded = await repository.findById(
+            castMember.castMemberId,
+        );
 
         expect(spyDelete).toHaveBeenCalledTimes(1);
         expect(castMemberFounded).toBeNull();

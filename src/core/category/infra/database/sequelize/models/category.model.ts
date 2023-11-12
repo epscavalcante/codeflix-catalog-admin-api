@@ -1,17 +1,23 @@
-import { Column, DataType, Model, PrimaryKey, Table } from "sequelize-typescript"
+import {
+    Column,
+    DataType,
+    Model,
+    PrimaryKey,
+    Table,
+} from 'sequelize-typescript';
 
 type CategoryModelProps = {
     categoryId: string;
     name: string;
-    description: string | null
+    description: string | null;
     isActive: boolean;
-    createdAt: Date 
-}
+    createdAt: Date;
+};
 
-@Table({tableName: 'categories', timestamps: false})
+@Table({ tableName: 'categories', timestamps: false })
 export default class CategoryModel extends Model<CategoryModelProps> {
     @PrimaryKey
-    @Column({ type: DataType.UUID, field: 'category_id'})
+    @Column({ type: DataType.UUID, field: 'category_id' })
     declare categoryId: string;
 
     @Column({ allowNull: false, type: DataType.STRING(255) })
@@ -22,7 +28,7 @@ export default class CategoryModel extends Model<CategoryModelProps> {
 
     @Column({ allowNull: false, type: DataType.BOOLEAN, field: 'is_active' })
     declare isActive: boolean;
-    
+
     @Column({ allowNull: false, type: DataType.DATE(3), field: 'created_at' })
     declare createdAt: Date;
 }

@@ -56,9 +56,11 @@ describe('CreateCastMemberUseCase Unit Tests', () => {
                 name: 'test',
                 type: CastMemberTypeEnum.ACTOR,
             });
-            
-            const entity = await repository.findById(new CastMemberId(output.id));
-            
+
+            const entity = await repository.findById(
+                new CastMemberId(output.id),
+            );
+
             expect(spyInsert).toHaveBeenCalledTimes(1);
             expect(output).toStrictEqual({
                 id: entity!.castMemberId.value,
@@ -66,7 +68,6 @@ describe('CreateCastMemberUseCase Unit Tests', () => {
                 type: CastMemberTypeEnum.ACTOR,
                 createdAt: entity!.createdAt,
             });
-
         });
 
         it('should create a cast member director', async () => {
@@ -75,9 +76,11 @@ describe('CreateCastMemberUseCase Unit Tests', () => {
                 name: 'test',
                 type: CastMemberTypeEnum.DIRECTOR,
             });
-            
-            const entity = await repository.findById(new CastMemberId(output.id));
-            
+
+            const entity = await repository.findById(
+                new CastMemberId(output.id),
+            );
+
             expect(spyInsert).toHaveBeenCalledTimes(1);
             expect(output).toStrictEqual({
                 id: entity!.castMemberId.value,

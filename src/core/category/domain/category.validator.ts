@@ -1,14 +1,14 @@
-import { CategoryRules } from "./category.rules";
-import Notification from "../../shared/domain/notification";
-import { Validator } from "../../shared/domain/validator";
+import { CategoryRules } from './category.rules';
+import Notification from '../../shared/domain/notification';
+import { Validator } from '../../shared/domain/validator';
 
 export default class CategoryValidator extends Validator {
     validate(
         notification: Notification,
         data: any,
-        fields?: string[]
+        fields?: string[],
     ): boolean {
-        const newFields = fields?.length ? fields : ["name"];
+        const newFields = fields?.length ? fields : ['name'];
 
         return super.validate(notification, new CategoryRules(data), newFields);
     }

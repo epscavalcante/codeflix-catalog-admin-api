@@ -2,7 +2,10 @@ import { join } from 'path';
 import { Sequelize } from 'sequelize';
 import { SequelizeStorage, Umzug, UmzugOptions } from 'umzug';
 
-export function migrator(sequelize: Sequelize, options?: Partial<UmzugOptions>) {
+export function migrator(
+    sequelize: Sequelize,
+    options?: Partial<UmzugOptions>,
+) {
     return new Umzug({
         migrations: {
             glob: [

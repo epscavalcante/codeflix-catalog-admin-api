@@ -1,7 +1,9 @@
 import { Chance } from 'chance';
 import CastMemberFactory from '../cast-member.factory';
 import { CastMemberId } from '../cast-member-id.value-object';
-import CastMemberType, { CastMemberTypeEnum } from '../cast-member-type.value-object';
+import CastMemberType, {
+    CastMemberTypeEnum,
+} from '../cast-member-type.value-object';
 
 describe('CastMemberFactory Unit Tests', () => {
     describe('castMemberId prop', () => {
@@ -164,12 +166,8 @@ describe('CastMemberFactory Unit Tests', () => {
             );
             const castMembers = fakerMany.build();
 
-            expect(castMembers[0].createdAt.getTime()).toBe(
-                date.getTime() + 2,
-            );
-            expect(castMembers[1].createdAt.getTime()).toBe(
-                date.getTime() + 3,
-            );
+            expect(castMembers[0].createdAt.getTime()).toBe(date.getTime() + 2);
+            expect(castMembers[1].createdAt.getTime()).toBe(date.getTime() + 3);
         });
     });
 

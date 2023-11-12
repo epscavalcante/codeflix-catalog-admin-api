@@ -1,23 +1,23 @@
-import Category from "../../../../category/domain/category.aggregate";
-import { CategorySearchResult } from "../../../../category/domain/category.repository.interface";
-import CategorySequelizeRespository from "../../../infra/repositories/category-sequelize.repository";
-import ListCategoryUseCase from "../list-category.use-case";
-import CategoryOutput from "../mappers/category-output";
-import { setupDatabase } from "../../../../shared/infra/database/setup-database";
-import CategoryModel from "../../../infra/database/sequelize/models/category.model";
+import Category from '../../../../category/domain/category.aggregate';
+import { CategorySearchResult } from '../../../../category/domain/category.repository.interface';
+import CategorySequelizeRespository from '../../../infra/repositories/category-sequelize.repository';
+import ListCategoryUseCase from '../list-category.use-case';
+import CategoryOutput from '../mappers/category-output';
+import { setupDatabase } from '../../../../shared/infra/database/setup-database';
+import CategoryModel from '../../../infra/database/sequelize/models/category.model';
 
-describe("List categories Integration Test", () => {
+describe('List categories Integration Test', () => {
     let useCase: ListCategoryUseCase;
     let repository: CategorySequelizeRespository;
 
-    setupDatabase({ models: [CategoryModel]})
+    setupDatabase({ models: [CategoryModel] });
 
     beforeEach(() => {
         repository = new CategorySequelizeRespository(CategoryModel);
         useCase = new ListCategoryUseCase(repository);
     });
 
-    test("Deve retornar o output sem alteração", async () => {
+    test('Deve retornar o output sem alteração', async () => {
         const result = new CategorySearchResult({
             currentPage: 1,
             perPage: 1,
@@ -25,7 +25,7 @@ describe("List categories Integration Test", () => {
             items: [],
         });
 
-        const output = useCase["toOutput"](result);
+        const output = useCase['toOutput'](result);
 
         expect(output).toStrictEqual({
             items: [],
@@ -36,7 +36,7 @@ describe("List categories Integration Test", () => {
         });
     });
 
-    test("Deve retornar output com um item sem filtros, ordenação ou paginação", async () => {
+    test('Deve retornar output com um item sem filtros, ordenação ou paginação', async () => {
         const category = Category.fake().aCategory().build();
 
         repository.insert(category);
@@ -48,7 +48,7 @@ describe("List categories Integration Test", () => {
             items: [category],
         });
 
-        const output = useCase["toOutput"](result);
+        const output = useCase['toOutput'](result);
 
         expect(output).toStrictEqual({
             items: [category].map((item) => CategoryOutput.toOutput(item)),
@@ -59,16 +59,16 @@ describe("List categories Integration Test", () => {
         });
     });
 
-    test("Retorna o output ordenado por padrão usando CreatedAt", async () => {
+    test('Retorna o output ordenado por padrão usando CreatedAt', async () => {
         const categories = [
             Category.fake()
                 .aCategory()
-                .withName("Test 1")
+                .withName('Test 1')
                 .withCreatedAt(new Date(new Date().getTime() + 100))
                 .build(),
             Category.fake()
                 .aCategory()
-                .withName("Test 2")
+                .withName('Test 2')
                 .withCreatedAt(new Date(new Date().getTime() + 200))
                 .build(),
         ];
@@ -88,13 +88,13 @@ describe("List categories Integration Test", () => {
         });
     });
 
-    test("Deve retornar o output filtrado, ordenado e paginado", async () => {
+    test('Deve retornar o output filtrado, ordenado e paginado', async () => {
         const categories = [
-            Category.fake().aCategory().withName("a").build(),
-            Category.fake().aCategory().withName("hello").build(),
-            Category.fake().aCategory().withName("AAA").build(),
-            Category.fake().aCategory().withName("world").build(),
-            Category.fake().aCategory().withName("AaA").build(),
+            Category.fake().aCategory().withName('a').build(),
+            Category.fake().aCategory().withName('hello').build(),
+            Category.fake().aCategory().withName('AAA').build(),
+            Category.fake().aCategory().withName('world').build(),
+            Category.fake().aCategory().withName('AaA').build(),
         ];
 
         repository.bulkInsert(categories);
@@ -102,13 +102,13 @@ describe("List categories Integration Test", () => {
         const output = await useCase.handle({
             page: 1,
             perPage: 2,
-            sort: "name",
-            filter: "a",
+            sort: 'name',
+            filter: 'a',
         });
 
         expect(output).toStrictEqual({
             items: [categories[2], categories[4]].map((item) =>
-                CategoryOutput.toOutput(item)
+                CategoryOutput.toOutput(item),
             ),
             currentPage: 1,
             total: 3,

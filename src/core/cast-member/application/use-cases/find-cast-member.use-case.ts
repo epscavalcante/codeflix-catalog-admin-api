@@ -16,8 +16,7 @@ export default class FindCastMemberUseCase
         const id = new CastMemberId(input.id);
         const castMemberFound = await this.repository.findById(id);
 
-        if (!castMemberFound)
-            throw new CastMemberNotFoundError(id.value);
+        if (!castMemberFound) throw new CastMemberNotFoundError(id.value);
 
         return CastMemberOutputMapper.toOutput(castMemberFound);
     }

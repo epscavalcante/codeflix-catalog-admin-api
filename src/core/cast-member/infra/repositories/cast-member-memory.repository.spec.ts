@@ -100,7 +100,11 @@ describe('CastMemberMemoryRepository', () => {
             CastMember.fake().anActor().withName('a').build(),
         ];
 
-        let itemsSorted = await repository['applySorting'](items, 'name', 'asc');
+        let itemsSorted = await repository['applySorting'](
+            items,
+            'name',
+            'asc',
+        );
         expect(itemsSorted).toStrictEqual([items[2], items[1], items[0]]);
 
         itemsSorted = await repository['applySorting'](items, 'name', 'desc');

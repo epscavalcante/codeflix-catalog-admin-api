@@ -30,7 +30,7 @@ describe('CastMembersController (e2e)', () => {
             expect(response.body.error).toBe(arrange.expected.error);
             expect(response.body.message).toBe(arrange.expected.message);
         });
-        
+
         test('Response Invalid uuid', () => {
             const arrange = {
                 id: 'fake id',

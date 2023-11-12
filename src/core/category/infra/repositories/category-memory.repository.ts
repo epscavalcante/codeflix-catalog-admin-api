@@ -1,7 +1,9 @@
-import Category, { CategoryId } from "@core/category/domain/category.aggregate";
-import ICategoryRepository, { CategoryFilter } from "@core/category/domain/category.repository.interface";
-import { SortDirection } from "@core/shared/domain/repositories/searchable.repository.interface";
-import { SearchableMemoryRepository } from "@core/shared/infra/repositories/searchable-memory.repository";
+import Category, { CategoryId } from '@core/category/domain/category.aggregate';
+import ICategoryRepository, {
+    CategoryFilter,
+} from '@core/category/domain/category.repository.interface';
+import { SortDirection } from '@core/shared/domain/repositories/searchable.repository.interface';
+import { SearchableMemoryRepository } from '@core/shared/infra/repositories/searchable-memory.repository';
 
 export default class CategoryMemoryRepository
     extends SearchableMemoryRepository<Category, CategoryId, CategoryFilter>

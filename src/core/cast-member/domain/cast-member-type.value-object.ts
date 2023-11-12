@@ -29,7 +29,9 @@ export default class CastMemberType extends ValueObject {
         return CastMemberType.create(CastMemberTypeEnum.DIRECTOR).ok;
     }
 
-    static create(value: CastMemberTypeEnum): Either<CastMemberType, CastMemberTypeError>  {
+    static create(
+        value: CastMemberTypeEnum,
+    ): Either<CastMemberType, CastMemberTypeError> {
         return Either.safe(() => new CastMemberType(value));
     }
 }

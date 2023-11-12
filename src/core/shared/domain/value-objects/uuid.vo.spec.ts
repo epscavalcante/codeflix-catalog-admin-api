@@ -1,9 +1,8 @@
 import { validate as validateUuid } from 'uuid';
-import Uuid from "./uuid.vo";
+import Uuid from './uuid.vo';
 import InvalidUuidException from '../errors/uuid-validation.error';
 
 describe('Uuid VO Unit tests', () => {
-
     test('Deve lançar exceção de Uuid inválido', () => {
         const validateSpy = jest.spyOn(Uuid.prototype as any, 'validate');
         expect(() => new Uuid('fake id')).toThrow(new InvalidUuidException());

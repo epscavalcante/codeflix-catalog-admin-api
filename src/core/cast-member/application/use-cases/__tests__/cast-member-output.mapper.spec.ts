@@ -1,5 +1,5 @@
-import CastMember from "@core/cast-member/domain/cast-member.aggregate";
-import CastMemberOutputMapper from "../mappers/cast-member-output.mapper";
+import CastMember from '@core/cast-member/domain/cast-member.aggregate';
+import CastMemberOutputMapper from '../mappers/cast-member-output.mapper';
 
 describe('CastMember Usecases Output Unit Test', () => {
     test('Deve converter categoria para output do usecase', () => {

@@ -1,6 +1,6 @@
-import { v4 as Uuidv4, validate as ValidateUuid  } from "uuid";
-import ValueObject from "./value-object";
-import InvalidUuidException from "../errors/uuid-validation.error";
+import { v4 as Uuidv4, validate as ValidateUuid } from 'uuid';
+import ValueObject from './value-object';
+import InvalidUuidException from '../errors/uuid-validation.error';
 
 export default class Uuid extends ValueObject {
     readonly value: string;
@@ -14,8 +14,7 @@ export default class Uuid extends ValueObject {
     private validate() {
         const isValid = ValidateUuid(this.value);
 
-        if (!isValid)
-            throw new InvalidUuidException();
+        if (!isValid) throw new InvalidUuidException();
     }
 
     toString() {

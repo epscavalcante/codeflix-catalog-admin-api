@@ -24,10 +24,7 @@ export default abstract class MemoryRespository<
         );
 
         if (itemIndex === -1) {
-            throw new EntityNotFoundError(
-                entity.entityId,
-                this.getEntity(),
-            );
+            throw new EntityNotFoundError(entity.entityId, this.getEntity());
         }
 
         this.items[itemIndex] = entity;

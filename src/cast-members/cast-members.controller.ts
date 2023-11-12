@@ -16,7 +16,10 @@ import DeleteCastMemberUseCase from '@core/cast-member/application/use-cases/del
 import CreateCastMemberUseCase from '@core/cast-member/application/use-cases/create-cast-member-use-case';
 import FindCastMemberUseCase from '@core/cast-member/application/use-cases/find-cast-member.use-case';
 import ListCastMemberUseCase from '@core/cast-member/application/use-cases/list-cast-member-use-case';
-import { CastMemberCollectionPresenter, CastMemberPresenter } from './cast-members.presenter';
+import {
+    CastMemberCollectionPresenter,
+    CastMemberPresenter,
+} from './cast-members.presenter';
 import SearchCastMemberDto from './dto/search-cast-member.dto';
 import { CreateCastMemberDto } from './dto/create-cast-member.dto';
 import { UpdateCastMemberInput } from '@core/cast-member/application/use-cases/mappers/update-cast-member-use-case.input';
@@ -53,7 +56,7 @@ export class CastMembersController {
     async search(@Query() searchCastMemberDto: SearchCastMemberDto) {
         const castMembersSearchedOutput =
             await this.listCastMemberUseCase.handle(searchCastMemberDto);
-        
+
         return new CastMemberCollectionPresenter(castMembersSearchedOutput);
     }
 
@@ -79,9 +82,10 @@ export class CastMembersController {
     ) {
         const castMemberUpateInput = new UpdateCastMemberInput({
             id,
-            ...updateCastMemberDto
+            ...updateCastMemberDto,
         });
-        const castMemberUpdateOutput = await this.updateCastMemberUseCase.handle(castMemberUpateInput);
+        const castMemberUpdateOutput =
+            await this.updateCastMemberUseCase.handle(castMemberUpateInput);
 
         return new CastMemberPresenter(castMemberUpdateOutput);
     }
@@ -92,6 +96,6 @@ export class CastMembersController {
         @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 }))
         id: string,
     ) {
-        return await this.deleteCastMemberUseCase.handle({ id })
+        return await this.deleteCastMemberUseCase.handle({ id });
     }
 }

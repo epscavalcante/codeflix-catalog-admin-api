@@ -8,9 +8,7 @@ const config: Config = {
     transform: {
         '^.+\\.(t|j)s$': '@swc/jest',
     },
-    setupFilesAfterEnv: [
-        './jest-e2e-setup.ts'
-    ]
+    setupFilesAfterEnv: ['./jest-e2e-setup.ts'],
 };
 
 export default config;

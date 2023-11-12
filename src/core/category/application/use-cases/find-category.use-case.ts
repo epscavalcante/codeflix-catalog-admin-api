@@ -13,8 +13,7 @@ export default class FindCategoryUseCase
         const id = new CategoryId(input.id);
         const categoryFound = await this.repository.findById(id);
 
-        if (!categoryFound)
-            throw new EntityNotFoundError(id.value, Category);
+        if (!categoryFound) throw new EntityNotFoundError(id.value, Category);
 
         return CategoryOutput.toOutput(categoryFound);
     }

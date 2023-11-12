@@ -22,9 +22,10 @@ describe('CollectionPresenter', () => {
         expect(collectionPresenter.paginationPresenter.lastPage).toBe(2);
         expect(collectionPresenter.paginationPresenter.perPage).toBe(2);
         expect(collectionPresenter.paginationPresenter.total).toBe(5);
-        expect(collectionPresenter.meta).toEqual(collectionPresenter.paginationPresenter);
+        expect(collectionPresenter.meta).toEqual(
+            collectionPresenter.paginationPresenter,
+        );
     });
-
 
     test('Deve transformar CollectionPresenter', () => {
         const collectionPresenter = new StubCollectionPresenter({
@@ -34,16 +35,17 @@ describe('CollectionPresenter', () => {
             total: 5,
         });
 
-        const collectionPresenterTransformed = instanceToPlain(collectionPresenter);
+        const collectionPresenterTransformed =
+            instanceToPlain(collectionPresenter);
 
         expect(collectionPresenterTransformed).toStrictEqual({
-            data: [1,2,3],
+            data: [1, 2, 3],
             meta: {
                 currentPage: 1,
                 perPage: 2,
-                lastPage:2,
-                total: 5
-            }
+                lastPage: 2,
+                total: 5,
+            },
         });
     });
 });

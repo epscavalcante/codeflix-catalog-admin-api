@@ -387,7 +387,7 @@ export class ListCastMemberFixture {
                     perPage: 2,
                     sort: 'name',
                     sortDir: 'asc' as SortDirection,
-                    filter: { name: 'a'},
+                    filter: { name: 'a' },
                 },
                 expected: {
                     entities: [entitiesMap.actor_a],
@@ -445,7 +445,7 @@ export class ListCastMemberFixture {
                 send_data: {
                     page: 1,
                     perPage: 2,
-                    filter: { type: CastMemberTypeEnum.DIRECTOR }
+                    filter: { type: CastMemberTypeEnum.DIRECTOR },
                 },
                 expected: {
                     entities: [entitiesMap.director_e, entitiesMap.director_d],
@@ -469,7 +469,7 @@ export class ListCastMemberFixture {
                         entitiesMap.actor_AaA,
                         entitiesMap.actor_a,
                         entitiesMap.actor_b,
-                        entitiesMap.actor_c
+                        entitiesMap.actor_c,
                     ],
 
                     meta: {

@@ -1,8 +1,8 @@
-import CastMemberMemoryRepository from "@core/cast-member/infra/repositories/cast-member-memory.repository";
-import CreateCastMemberUseCase from "../create-cast-member-use-case";
-import { CreateCastMemberInput } from "../mappers/create-cast-member.use-case.input";
-import { CastMemberTypeEnum } from "@core/cast-member/domain/cast-member-type.value-object";
-import EntityValidationError from "@core/shared/domain/errors/entity-validation.error";
+import CastMemberMemoryRepository from '@core/cast-member/infra/repositories/cast-member-memory.repository';
+import CreateCastMemberUseCase from '../create-cast-member-use-case';
+import { CreateCastMemberInput } from '../mappers/create-cast-member.use-case.input';
+import { CastMemberTypeEnum } from '@core/cast-member/domain/cast-member-type.value-object';
+import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 
 describe('CreateCastMemberUseCase Unit Tests', () => {
     let useCase: CreateCastMemberUseCase;

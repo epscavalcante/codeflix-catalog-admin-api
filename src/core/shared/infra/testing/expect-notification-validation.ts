@@ -1,36 +1,36 @@
-import Notification from "@core/shared/domain/notification";
+import Notification from '@core/shared/domain/notification';
 
 expect.extend({
     notificationContainsErrorMessages(
         expected: Notification,
-        received: Array<string | { [key: string]: string[] }>
+        received: Array<string | { [key: string]: string[] }>,
     ) {
         const every = received.every((error) => {
-            if (typeof error === "string") {
+            if (typeof error === 'string') {
                 return expected.errors.has(error);
             } else {
                 return Object.entries(error).every(([field, messages]) => {
                     const fieldMessages = expected.errors.get(
-                        field
+                        field,
                     ) as string[];
 
                     return (
                         fieldMessages &&
                         fieldMessages.length &&
                         fieldMessages.every((message) =>
-                            messages.includes(message)
+                            messages.includes(message),
                         )
                     );
                 });
             }
         });
         return every
-            ? { pass: true, message: () => "" }
+            ? { pass: true, message: () => '' }
             : {
                   pass: false,
                   message: () =>
                       `The validation errors not contains ${JSON.stringify(
-                          received
+                          received,
                       )}. Current: ${JSON.stringify(expected.toJSON())}`,
               };
     },
