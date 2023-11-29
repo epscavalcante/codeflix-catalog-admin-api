@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigService } from '@nestjs/config';
 import { ConfigSchemaType } from '../config/config.module';
-import CategoryModel from '@core/category/infra/database/sequelize/models/category.model';
-import CastMemberModel from '@core/cast-member/infra/database/sequelize/models/cast-member.model';
+import CategoryModel from '../core/category/infra/database/sequelize/models/category.model';
+import CastMemberModel from '../core/cast-member/infra/database/sequelize/models/cast-member.model';
 
 const models = [CategoryModel, CastMemberModel];
 

@@ -1,6 +1,6 @@
-import ValueObject from '@core/shared/domain/value-objects/value-object';
+import ValueObject from '../../shared/domain/value-objects/value-object';
 import { CastMemberTypeError } from './errors/cast-member-type.error';
-import { Either } from '@core/shared/domain/either';
+import { Either } from '../../shared/domain/either';
 
 export enum CastMemberTypeEnum {
     DIRECTOR = 1,

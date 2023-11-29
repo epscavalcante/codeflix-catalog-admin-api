@@ -201,7 +201,7 @@ const config = {
     // watchman: true,
     clearMocks: true,
     moduleFileExtensions: ['js', 'json', 'ts'],
-    rootDir: './src',
+    rootDir: 'src',
     testRegex: '.*\\..*spec\\.ts$',
     transform: {
         '^.+\\.(t|j)s$': '@swc/jest',
@@ -210,17 +210,17 @@ const config = {
     coverageDirectory: '../coverage',
     coveragePathIgnorePatterns: [
       "/node_modules/",
+      '.interface.ts',
       '.interfaces.ts',
       '/core/infra/testing/',
       'test/helpers',
       '/infra/database/sequelize/migrations/',
-      '.interface.ts',
       '.fixture.ts',
       '.d.ts',
-      'app.config.global.ts',
-      'migrator.ts',
-      'migrate.ts',
-      'main.ts'
+    //   'app.config.global.ts',
+    //   'migrator.ts',
+    //   'migrate.ts',
+    //   'main.ts'
     ],
     coverageThreshold: {
         global: {

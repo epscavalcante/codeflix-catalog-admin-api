@@ -4,6 +4,7 @@ services:
     app:
         build: ./node
         container_name: catalog-admin-app
+        command: ./.docker/start.sh
         ports:
             - 3000:3000
         volumes:
@@ -27,12 +28,12 @@ services:
         security_opt:
             - seccomp:unconfined
 
-    # db_tests:
-    #     image: mysql:8.0.30-debian
-    #     container_name: catalog-admin-db-tests
-    #     environment:
-    #     - MYSQL_DATABASE=catalog
-    #     - MYSQL_ROOT_PASSWORD=root
-    #     tmpfs: /var/lib/mysql
-    #     security_opt:
-    #     - seccomp:unconfined
+    db_tests:
+        image: mysql:8.0.30-debian
+        container_name: catalog-admin-db-tests
+        environment:
+        - MYSQL_DATABASE=catalog
+        - MYSQL_ROOT_PASSWORD=root
+        tmpfs: /var/lib/mysql
+        security_opt:
+        - seccomp:unconfined

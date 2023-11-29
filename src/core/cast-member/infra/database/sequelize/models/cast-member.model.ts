@@ -1,4 +1,4 @@
-import { CastMemberTypeEnum } from '@core/cast-member/domain/cast-member-type.value-object';
+import { CastMemberTypeEnum } from '../../../../domain/cast-member-type.value-object';
 import {
     Column,
     DataType,

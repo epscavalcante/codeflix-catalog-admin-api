@@ -31,7 +31,7 @@ describe('CastMemberSequelizeRepository Tests', () => {
     });
 
     it('should return null when not found a cast_member', async () => {
-        let entityFound = await repository.findById(new CastMemberId());
+        const entityFound = await repository.findById(new CastMemberId());
 
         expect(entityFound).toBeNull();
     });

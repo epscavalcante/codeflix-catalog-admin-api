@@ -174,7 +174,7 @@ describe('CategoryFakerBuilder Unit Tests', () => {
 
     test('should create a castMember actor', () => {
         const fakerActor = CastMemberFactory.anActor();
-        let castMember = fakerActor.build();
+        const castMember = fakerActor.build();
 
         expect(castMember.castMemberId).toBeInstanceOf(CastMemberId);
         expect(typeof castMember.name === 'string').toBeTruthy();
@@ -198,7 +198,7 @@ describe('CategoryFakerBuilder Unit Tests', () => {
 
     test('should create a castMember director', () => {
         const fakerActor = CastMemberFactory.aDirector();
-        let castMember = fakerActor.build();
+        const castMember = fakerActor.build();
 
         expect(castMember.castMemberId).toBeInstanceOf(CastMemberId);
         expect(typeof castMember.name === 'string').toBeTruthy();

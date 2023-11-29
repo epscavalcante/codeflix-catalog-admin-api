@@ -13,11 +13,11 @@ export function startApp() {
             imports: [AppModule],
         }).compile();
 
-        const sequelizee: Sequelize = module.get<Sequelize>(
+        const sequelize: Sequelize = module.get<Sequelize>(
             getConnectionToken(),
         );
 
-        await sequelizee.sync({ force: true });
+        await sequelize.sync({ force: true });
 
         _app = module.createNestApplication();
         applyGlobalConfig(_app);
