@@ -11,6 +11,37 @@ export default class CategoryMemoryRepository
 {
     sortableFields: string[] = ['name', 'createdAt'];
 
+    async findByIds(ids: CategoryId[]): Promise<Category[]> {
+        //avoid to return repeated items
+        return this.items.filter((entity) => {
+            return ids.some((id) => entity.categoryId.equals(id));
+        });
+    }
+
+    async existsByIds(
+        categoriesId: CategoryId[],
+    ): Promise<{ exists: CategoryId[]; notExists: CategoryId[] }> {
+        if (this.items.length === 0) {
+            return {
+                exists: [],
+                notExists: categoriesId,
+            };
+        }
+
+        const existsId = new Set<CategoryId>();
+        const notExistsId = new Set<CategoryId>();
+        categoriesId.forEach((id) => {
+            const item = this.items.find((entity) =>
+                entity.categoryId.equals(id),
+            );
+            item ? existsId.add(id) : notExistsId.add(id);
+        });
+        return {
+            exists: Array.from(existsId.values()),
+            notExists: Array.from(notExistsId.values()),
+        };
+    }
+
     async applyFilter(
         items: Category[],
         filter: CategoryFilter,
