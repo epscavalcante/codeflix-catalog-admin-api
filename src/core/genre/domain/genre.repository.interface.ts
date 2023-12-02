@@ -8,7 +8,7 @@ import GenreId from './genre.id.vo';
 import { CategoryId } from '@core/category/domain/category.aggregate';
 
 export type GenreFilter = {
-    name?: string;
+    name?: string | null;
     categoriesId?: CategoryId[];
 };
 
