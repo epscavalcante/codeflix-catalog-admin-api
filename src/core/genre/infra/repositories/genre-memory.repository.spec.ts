@@ -1,8 +1,8 @@
 import Genre from "@core/genre/domain/genre.aggregate";
 import GenreMemoryRepository from "./genre-memory.repository";
 import GenreId from "@core/genre/domain/genre.id.vo";
-import { GenreNotFoundError } from "@core/genre/errors/genre-not-found.error";
-import Category, { CategoryId } from "@core/category/domain/category.aggregate";
+import { GenreNotFoundError } from "@core/genre/domain/errors/genre-not-found.error";
+import { CategoryId } from "@core/category/domain/category.aggregate";
 
 describe('Unit Test Memory repository', () => {
     let repository: GenreMemoryRepository;
