@@ -25,7 +25,7 @@ export default class Notification {
         }
     }
 
-    copyError(notification: Notification) {
+    copyErrors(notification: Notification) {
         notification.errors.forEach((value, field) =>
             this.setError(value, field),
         );
