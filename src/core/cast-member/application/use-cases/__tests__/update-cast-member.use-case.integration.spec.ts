@@ -28,7 +28,7 @@ describe('Update CastMember UseCase Integration tests', () => {
         ).rejects.toThrow(new CastMemberNotFoundError(castMemberId.value));
     });
 
-    test.skip('Deve lançar exception EntityValidationError', async () => {
+    test('Deve lançar exception EntityValidationError', async () => {
         const castMember = CastMember.fake().aDirector().build();
         await repository.insert(castMember);
         const input = {
@@ -37,7 +37,7 @@ describe('Update CastMember UseCase Integration tests', () => {
             type: castMember.type.value,
         };
 
-        expect(() => useCase.handle(input)).rejects.toThrowError(
+        await expect(() => useCase.handle(input)).rejects.toThrowError(
             'Entity Validation Error',
         );
     });
