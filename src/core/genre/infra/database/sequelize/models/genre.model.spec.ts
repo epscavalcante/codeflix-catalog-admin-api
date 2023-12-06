@@ -146,7 +146,11 @@ describe('Genre Model Tests', () => {
             },
         );
 
-        expect(genreModelWithCategories).toMatchObject(data);
+        expect(genreModelWithCategories).toMatchObject({
+            genreId,
+            name: data.name,
+            createdAt: data.createdAt
+        });
         expect(genreModelWithCategories!.categories).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
@@ -159,7 +163,7 @@ describe('Genre Model Tests', () => {
         );
     });
 
-    test.only('Should create a genre and after insert categories', async () => {
+    test('Should create a genre and after insert categories', async () => {
         const categories = Category.fake().theCategories(2).build();
         const categoryRepository = new CategorySequelizeRepository(
             CategoryModel,
@@ -202,7 +206,7 @@ describe('Genre Model Tests', () => {
     });
 });
 
-describe.only('GenreCategory Model Tests', () => {
+describe('GenreCategory Model Tests', () => {
     test('Check table name', () => {
         expect(GenreCategoryModel.getTableName()).toBe('category_genre');
     });

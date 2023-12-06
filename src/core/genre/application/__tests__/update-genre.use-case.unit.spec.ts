@@ -66,6 +66,7 @@ describe('UpdateGenreUseCase Unit Tests', () => {
         await categoryRepository.bulkInsert(categories);
         const genre = Genre.fake()
             .aGenre()
+            .withName('Test')
             .addCategoryId(categories[0].categoryId)
             .build();
         await genreRepository.insert(genre);
