@@ -1,9 +1,9 @@
-import GenreMemoryRepository from "@core/genre/infra/repositories/genre-memory.repository";
-import DeleteGenreUseCase from "../use-cases/delete-genre.use-case";
-import InvalidUuidException from "@core/shared/domain/errors/uuid-validation.error";
-import GenreId from "@core/genre/domain/genre.id.vo";
-import { GenreNotFoundError } from "@core/genre/domain/errors/genre-not-found.error";
-import Genre from "@core/genre/domain/genre.aggregate";
+import GenreMemoryRepository from '@core/genre/infra/repositories/genre-memory.repository';
+import DeleteGenreUseCase from '../use-cases/delete-genre.use-case';
+import InvalidUuidException from '@core/shared/domain/errors/uuid-validation.error';
+import GenreId from '@core/genre/domain/genre.id.vo';
+import { GenreNotFoundError } from '@core/genre/domain/errors/genre-not-found.error';
+import Genre from '@core/genre/domain/genre.aggregate';
 
 describe('Delete Category UseCase Unit Test', () => {
     let repository: GenreMemoryRepository;

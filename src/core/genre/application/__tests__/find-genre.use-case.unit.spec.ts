@@ -42,7 +42,10 @@ describe('ListGenre use case unit test', () => {
         await genreRepository.insert(genre);
 
         const spyGenreFindById = jest.spyOn(genreRepository, 'findById');
-        const spyCategoryFindByIds = jest.spyOn(categoryRepository, 'findByIds');
+        const spyCategoryFindByIds = jest.spyOn(
+            categoryRepository,
+            'findByIds',
+        );
         const output = await useCase.handle({ id: genre.genreId.value });
 
         expect(spyGenreFindById).toHaveBeenCalled();

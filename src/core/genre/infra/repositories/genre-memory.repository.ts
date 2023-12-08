@@ -19,8 +19,6 @@ export default class GenreMemoryRepository
     async applyFilter(items: Genre[], filter: GenreFilter): Promise<Genre[]> {
         if (!filter) return items;
 
-        console.log('Filter', filter, items);
-
         return items.filter((genre) => {
             const containsName =
                 filter.name &&

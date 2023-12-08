@@ -63,7 +63,9 @@ describe('CreateGenreUseCase Unit Tests', () => {
 
         const output = await useCase.handle({
             name: 'Genero',
-            categoriesId: categories.map(category => category.categoryId.value)
+            categoriesId: categories.map(
+                (category) => category.categoryId.value,
+            ),
         });
 
         expect(spyInsert).toHaveBeenCalled();
@@ -71,12 +73,14 @@ describe('CreateGenreUseCase Unit Tests', () => {
             id: genreRepository.items[0].genreId.value,
             name: 'Genero',
             createdAt: genreRepository.items[0].createdAt,
-            categories: categories.map(category => ({
+            categories: categories.map((category) => ({
                 id: category.categoryId.value,
                 name: category.name,
-                isActive: category.isActive
+                isActive: category.isActive,
             })),
-            categoriesId: categories.map(category => category.categoryId.value)
-        })
+            categoriesId: categories.map(
+                (category) => category.categoryId.value,
+            ),
+        });
     });
 });

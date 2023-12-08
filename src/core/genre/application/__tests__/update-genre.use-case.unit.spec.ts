@@ -72,7 +72,10 @@ describe('UpdateGenreUseCase Unit Tests', () => {
         await genreRepository.insert(genre);
 
         const spyInsert = jest.spyOn(genreRepository, 'update');
-        const spyValidateCategoriesId = jest.spyOn(categoriesIdsDatabaseValidation, 'validate');
+        const spyValidateCategoriesId = jest.spyOn(
+            categoriesIdsDatabaseValidation,
+            'validate',
+        );
 
         const output = await useCase.handle({
             id: genre.genreId.value,
@@ -104,7 +107,7 @@ describe('UpdateGenreUseCase Unit Tests', () => {
             categoriesId: [
                 categories[1].categoryId.value,
                 categories[2].categoryId.value,
-            ]
+            ],
         });
     });
 });

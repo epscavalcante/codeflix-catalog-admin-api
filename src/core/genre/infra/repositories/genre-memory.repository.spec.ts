@@ -1,8 +1,8 @@
-import Genre from "@core/genre/domain/genre.aggregate";
-import GenreMemoryRepository from "./genre-memory.repository";
-import GenreId from "@core/genre/domain/genre.id.vo";
-import { GenreNotFoundError } from "@core/genre/domain/errors/genre-not-found.error";
-import { CategoryId } from "@core/category/domain/category.aggregate";
+import Genre from '@core/genre/domain/genre.aggregate';
+import GenreMemoryRepository from './genre-memory.repository';
+import GenreId from '@core/genre/domain/genre.id.vo';
+import { GenreNotFoundError } from '@core/genre/domain/errors/genre-not-found.error';
+import { CategoryId } from '@core/category/domain/category.aggregate';
 
 describe('Unit Test Memory repository', () => {
     let repository: GenreMemoryRepository;
@@ -42,9 +42,7 @@ describe('Unit Test Memory repository', () => {
     test('Should found an entity', async () => {
         const entityId = new GenreId();
 
-        const entities = [
-            Genre.fake().aGenre().withGenreId(entityId).build(),
-        ];
+        const entities = [Genre.fake().aGenre().withGenreId(entityId).build()];
 
         await repository.bulkInsert(entities);
 
@@ -102,15 +100,17 @@ describe('Unit Test Memory repository', () => {
     });
 
     describe('Filter items', () => {
-
         it('should no filter items when filter object is undefined', async () => {
             const items = [
                 Genre.fake().aGenre().build(),
                 Genre.fake().aGenre().build(),
             ];
             const filterSpy = jest.spyOn(items, 'filter' as any);
-    
-            const itemsFiltered = await repository['applyFilter'](items, undefined as any);
+
+            const itemsFiltered = await repository['applyFilter'](
+                items,
+                undefined as any,
+            );
             expect(filterSpy).not.toHaveBeenCalled();
             expect(itemsFiltered).toStrictEqual(items);
         });
@@ -121,12 +121,15 @@ describe('Unit Test Memory repository', () => {
                 Genre.fake().aGenre().build(),
             ];
             const filterSpy = jest.spyOn(items, 'filter' as any);
-    
-            const itemsFiltered = await repository['applyFilter'](items, null as any);
+
+            const itemsFiltered = await repository['applyFilter'](
+                items,
+                null as any,
+            );
             expect(filterSpy).not.toHaveBeenCalled();
             expect(itemsFiltered).toStrictEqual(items);
         });
-    
+
         it('should filter items by name', async () => {
             const faker = Genre.fake();
             const items = [
@@ -135,7 +138,7 @@ describe('Unit Test Memory repository', () => {
                 faker.aGenre().withName('fake').build(),
             ];
             const filterSpy = jest.spyOn(items, 'filter' as any);
-    
+
             const itemsFiltered = await repository['applyFilter'](items, {
                 name: 'TEST',
             });
@@ -153,7 +156,8 @@ describe('Unit Test Memory repository', () => {
                 faker.aGenre().addCategoryId(catId1).withName('test').build(),
                 faker.aGenre().addCategoryId(catId2).withName('TEST').build(),
                 faker.aGenre().addCategoryId(catId3).withName('fake').build(),
-                faker.aGenre()
+                faker
+                    .aGenre()
                     .addCategoryId(catId1)
                     .addCategoryId(catId2)
                     .withName('genero')
@@ -161,9 +165,9 @@ describe('Unit Test Memory repository', () => {
             ];
 
             const filterSpy = jest.spyOn(items, 'filter' as any);
-    
+
             const itemsFiltered = await repository['applyFilter'](items, {
-                categoriesId: [catId1]
+                categoriesId: [catId1],
             });
             expect(filterSpy).toHaveBeenCalledTimes(1);
             expect(itemsFiltered).toStrictEqual([items[0], items[3]]);
@@ -179,23 +183,24 @@ describe('Unit Test Memory repository', () => {
                 faker.aGenre().addCategoryId(catId1).withName('test').build(),
                 faker.aGenre().addCategoryId(catId2).withName('TEST').build(),
                 faker.aGenre().addCategoryId(catId1).withName('genero').build(),
-                faker.aGenre()
+                faker
+                    .aGenre()
                     .addCategoryId(catId3)
                     .addCategoryId(catId2)
                     .withName('fake')
-                    .build(), 
+                    .build(),
             ];
 
             const filterSpy = jest.spyOn(items, 'filter' as any);
-    
+
             const itemsFiltered = await repository['applyFilter'](items, {
                 name: 'fake',
-                categoriesId: [catId2]
+                categoriesId: [catId2],
             });
             expect(filterSpy).toHaveBeenCalledTimes(1);
             expect(itemsFiltered).toStrictEqual([items[3]]);
         });
-    
+
         it('should sort by createdAt when sort param is null', async () => {
             const items = [
                 Genre.fake()
@@ -204,7 +209,7 @@ describe('Unit Test Memory repository', () => {
                     .withCreatedAt(new Date())
                     .build(),
                 Genre.fake()
-                    .aGenre()    
+                    .aGenre()
                     .withName('TEST')
                     .withCreatedAt(new Date(new Date().getTime() + 1))
                     .build(),
@@ -214,28 +219,35 @@ describe('Unit Test Memory repository', () => {
                     .withCreatedAt(new Date(new Date().getTime() + 2))
                     .build(),
             ];
-    
-            const itemsSorted = await repository['applySorting'](items, null, null);
+
+            const itemsSorted = await repository['applySorting'](
+                items,
+                null,
+                null,
+            );
             expect(itemsSorted).toStrictEqual([items[2], items[1], items[0]]);
         });
-    
+
         it('should sort by name', async () => {
             const items = [
                 Genre.fake().aGenre().withName('c').build(),
                 Genre.fake().aGenre().withName('b').build(),
                 Genre.fake().aGenre().withName('a').build(),
             ];
-    
+
             let itemsSorted = await repository['applySorting'](
                 items,
                 'name',
                 'asc',
             );
             expect(itemsSorted).toStrictEqual([items[2], items[1], items[0]]);
-    
-            itemsSorted = await repository['applySorting'](items, 'name', 'desc');
+
+            itemsSorted = await repository['applySorting'](
+                items,
+                'name',
+                'desc',
+            );
             expect(itemsSorted).toStrictEqual([items[0], items[1], items[2]]);
         });
-
-    })
+    });
 });
