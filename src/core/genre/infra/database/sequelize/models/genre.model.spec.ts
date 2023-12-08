@@ -149,7 +149,7 @@ describe('Genre Model Tests', () => {
         expect(genreModelWithCategories).toMatchObject({
             genreId,
             name: data.name,
-            createdAt: data.createdAt
+            createdAt: data.createdAt,
         });
         expect(genreModelWithCategories!.categories).toEqual(
             expect.arrayContaining([

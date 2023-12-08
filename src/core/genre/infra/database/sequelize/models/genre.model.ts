@@ -33,10 +33,9 @@ export class GenreModel extends Model<GenreModelProps> {
     @BelongsToMany(() => CategoryModel, () => GenreCategoryModel)
     declare categories: CategoryModel[];
 
-    @Column({ allowNull: false, field: 'created_at', type: DataType.DATE(6) })
+    @Column({ allowNull: false, field: 'created_at', type: DataType.DATE(3) })
     declare createdAt: Date;
 }
-
 
 export type GenreCategoryModelProps = {
     genreId: string;

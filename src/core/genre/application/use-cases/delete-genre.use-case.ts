@@ -7,9 +7,7 @@ export default class DeleteGenreUseCase
 {
     constructor(private readonly repository: IGenreRepository) {}
 
-    async handle(
-        input: DeleteGenreInput,
-    ): Promise<DeleteGenreOutput> {
+    async handle(input: DeleteGenreInput): Promise<DeleteGenreOutput> {
         await this.repository.delete(new GenreId(input.id));
     }
 }

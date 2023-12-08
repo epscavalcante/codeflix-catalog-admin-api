@@ -6,7 +6,9 @@ import GenreId from '@core/genre/domain/genre.id.vo';
 import { GenreNotFoundError } from '@core/genre/domain/errors/genre-not-found.error';
 import ICategoryRepository from '@core/category/domain/category.repository.interface';
 import CategoriesIdExistsInDatabaseValidation from '@core/category/application/validations/exists-in-database.validation';
-import GenreOutputMapper, { GenreOutputType } from '../mappers/genre.use-case.output';
+import GenreOutputMapper, {
+    GenreOutputType,
+} from '../mappers/genre.use-case.output';
 
 export default class UpdateGenreUseCase
     implements IUseCase<UpdateGenreInput, UpdateGenreOutput>

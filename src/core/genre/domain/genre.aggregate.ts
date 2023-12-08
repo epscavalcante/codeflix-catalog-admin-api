@@ -71,19 +71,21 @@ export default class Genre extends AggregateRoot {
 
     syncCategoriesId(categoriesId: CategoryId[]) {
         if (!categoriesId.length) {
-          throw new Error('Categories ID is empty');
+            throw new Error('Categories ID is empty');
         }
-    
+
         this.categoriesId = new Map(
-          categoriesId.map((categoryId) => [categoryId.value, categoryId]),
+            categoriesId.map((categoryId) => [categoryId.value, categoryId]),
         );
-      }
+    }
 
     toJSON() {
         return {
             genreId: this.genreId.value,
             name: this.name,
-            categoriesId: Array.from(this.categoriesId.values()).map(categoryId => categoryId.value),
+            categoriesId: Array.from(this.categoriesId.values()).map(
+                (categoryId) => categoryId.value,
+            ),
             createdAt: this.createdAt,
         };
     }

@@ -155,27 +155,26 @@ describe('Genre Unit Test', () => {
 
     describe('Teste sobre categorias do gênero', () => {
         test('Deve adicionar um novo CategoryId', () => {
-
             const categoryId = new CategoryId();
             const categoriesId = new Map([[categoryId.value, categoryId]]);
             const input: GenreConstrutorProps = {
                 name: 'Test',
                 categoriesId: categoriesId,
             };
-    
+
             const genre = new Genre(input);
-    
+
             const newCategoryId = new CategoryId();
             genre.addCategoryId(newCategoryId);
-    
+
             expect(genre.categoriesId).toBeInstanceOf(Map);
             expect(genre.categoriesId.size).toBe(2);
             expect(genre.toJSON()).toMatchObject({
                 name: 'Test',
-                categoriesId: [categoryId.value, newCategoryId.value]
+                categoriesId: [categoryId.value, newCategoryId.value],
             });
         });
-    
+
         test('Deve remover um novo CategoryId', () => {
             const categoryId = new CategoryId();
             const categoryIdOne = new CategoryId();
@@ -187,17 +186,17 @@ describe('Genre Unit Test', () => {
                 name: 'Test',
                 categoriesId: categoriesId,
             };
-            
+
             const genre = new Genre(input);
-    
+
             genre.removeCategoryId(categoryId);
-    
+
             expect(genre.categoriesId).toBeInstanceOf(Map);
             expect(genre.categoriesId.size).toBe(1);
             expect(genre.toJSON()).toMatchObject({
                 name: 'Test',
-                categoriesId: [categoryIdOne.value]
+                categoriesId: [categoryIdOne.value],
             });
         });
-    })
+    });
 });

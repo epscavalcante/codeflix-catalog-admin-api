@@ -202,6 +202,8 @@ describe('GenreFactory Unit Tests', () => {
         expect(genre.genreId).toBeInstanceOf(GenreId);
         expect(genre.categoriesId).toBeInstanceOf(Map);
         expect(genre.categoriesId.size).toBe(1);
-        expect(genre.categoriesId).toMatchObject(new Map([[categoryId.value, categoryId]]));
+        expect(genre.categoriesId).toMatchObject(
+            new Map([[categoryId.value, categoryId]]),
+        );
     });
 });
