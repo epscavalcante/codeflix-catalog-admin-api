@@ -108,12 +108,12 @@ describe('CategoryFakerBuilder Unit Tests', () => {
             expect(typeof faker['_description']).toBe('function');
         });
 
-        test('should call the paragraph method', () => {
+        test('should call the sentence method', () => {
             const chance = Chance();
-            const spyParagraphMethod = jest.spyOn(chance, 'paragraph');
+            const spySentenceMethod = jest.spyOn(chance, 'sentence');
             faker['chance'] = chance;
             faker.build();
-            expect(spyParagraphMethod).toHaveBeenCalled();
+            expect(spySentenceMethod).toHaveBeenCalled();
         });
 
         test('withDescription', () => {

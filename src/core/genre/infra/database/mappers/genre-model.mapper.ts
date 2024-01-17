@@ -1,5 +1,8 @@
 import Notification from '@core/shared/domain/notification';
-import { GenreCategoryModel, GenreModel } from '../sequelize/models/genre.model';
+import {
+    GenreCategoryModel,
+    GenreModel,
+} from '../sequelize/models/genre.model';
 import { CategoryId } from '@core/category/domain/category.aggregate';
 import Genre from '@core/genre/domain/genre.aggregate';
 import GenreId from '@core/genre/domain/genre.id.vo';
@@ -43,7 +46,7 @@ export class GenreModelMapper {
     static toModel(entity: Genre) {
         const props = GenreModelMapper.toModelProps(entity);
 
-        return GenreModel.build(props, { include: ['categoriesId']});
+        return GenreModel.build(props, { include: ['categoriesId'] });
     }
 
     static toModelProps(entity: Genre) {
@@ -55,7 +58,7 @@ export class GenreModelMapper {
                 (categoryId) =>
                     new GenreCategoryModel({
                         genreId,
-                        categoryId
+                        categoryId,
                     }),
             ),
         };

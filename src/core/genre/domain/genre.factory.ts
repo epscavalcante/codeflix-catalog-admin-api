@@ -9,7 +9,8 @@ export default class GenreFactory<TBuild = any> {
     // auto generated in entity
     private _genreId: PropOrFactory<GenreId> | undefined = undefined;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    private _name: PropOrFactory<string> = (_index) => this.chance.word();
+    private _name: PropOrFactory<string> = (_index) =>
+        this.chance.word({ length: 5 });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     private _categoriesId: PropOrFactory<CategoryId>[] = [];
     // auto generated in entity
