@@ -8,7 +8,7 @@ import CategoryOutput from '@core/category/application/use-cases/mappers/categor
 import ICategoryRepository from '@core/category/domain/category.repository.interface';
 
 describe('CategoriesController (e2e)', () => {
-    const nestApp = startApp();
+    const appHelper = startApp();
     describe('GET /categories/:id', () => {
         describe('should a response error when id is invalid or not found', () => {
             const arrange = [
@@ -32,22 +32,24 @@ describe('CategoriesController (e2e)', () => {
             ];
 
             test.each(arrange)('when id is $id', async ({ id, expected }) => {
-                return request(nestApp.app.getHttpServer())
+                return request(appHelper.app.getHttpServer())
                     .get(`/categories/${id}`)
+                    .authenticate(appHelper.app)
                     .expect(expected.statusCode)
                     .expect(expected);
             });
         });
 
         it('should return a category ', async () => {
-            const repository = nestApp.app.get<ICategoryRepository>(
+            const repository = appHelper.app.get<ICategoryRepository>(
                 CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
             );
             const category = Category.fake().aCategory().build();
             await repository.insert(category);
 
-            const res = await request(nestApp.app.getHttpServer())
+            const res = await request(appHelper.app.getHttpServer())
                 .get(`/categories/${category.categoryId.value}`)
+                .authenticate(appHelper.app)
                 .expect(200);
 
             const presenter = new CategoryPresenter(

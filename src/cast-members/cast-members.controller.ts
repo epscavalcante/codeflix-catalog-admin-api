@@ -10,6 +10,7 @@ import {
     ParseUUIDPipe,
     HttpCode,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import UpdateCastMemberUseCase from '@core/cast-member/application/use-cases/update-cast-member.use-case';
 import DeleteCastMemberUseCase from '@core/cast-member/application/use-cases/delete-cast-member.use-case';
@@ -24,7 +25,10 @@ import SearchCastMemberDto from './dto/search-cast-member.dto';
 import { CreateCastMemberDto } from './dto/create-cast-member.dto';
 import { UpdateCastMemberInput } from '@core/cast-member/application/use-cases/mappers/update-cast-member-use-case.input';
 import { UpdateCastMemberDto } from './dto/update-cast-member.dto';
+import AuthGuard from '../auth/auth.guard';
+import RoleGuard from '../auth/role.guard';
 
+@UseGuards(AuthGuard, RoleGuard)
 @Controller('cast-members')
 export class CastMembersController {
     @Inject(CreateCastMemberUseCase)

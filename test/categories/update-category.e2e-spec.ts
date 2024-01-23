@@ -10,10 +10,10 @@ import CategoryOutput from '@core/category/application/use-cases/mappers/categor
 
 describe('CategoriesController (e2e)', () => {
     const uuid = '9366b7dc-2d71-4799-b91c-c64adb205104';
+    const appHelper = startApp();
 
     describe('PATCH /categories/:id', () => {
         describe('should a response error when id is invalid or not found', () => {
-            const nestApp = startApp();
             const faker = Category.fake().aCategory();
             const arrange = [
                 {
@@ -40,8 +40,9 @@ describe('CategoriesController (e2e)', () => {
             test.each(arrange)(
                 'when id is $id',
                 async ({ id, send_data, expected }) => {
-                    return request(nestApp.app.getHttpServer())
+                    return request(appHelper.app.getHttpServer())
                         .patch(`/categories/${id}`)
+                        .authenticate(appHelper.app)
                         .send(send_data)
                         .expect(expected.statusCode)
                         .expect(expected);
@@ -50,7 +51,6 @@ describe('CategoriesController (e2e)', () => {
         });
 
         describe('should a response error with 422 when request body is invalid', () => {
-            const app = startApp();
             const invalidRequest =
                 UpdateCategoryFixture.arrangeInvalidRequest();
             const arrange = Object.keys(invalidRequest).map((key) => ({
@@ -58,8 +58,9 @@ describe('CategoriesController (e2e)', () => {
                 value: invalidRequest[key],
             }));
             test.each(arrange)('when body is $label', ({ value }) => {
-                return request(app.app.getHttpServer())
+                return request(appHelper.app.getHttpServer())
                     .patch(`/categories/${uuid}`)
+                    .authenticate(appHelper.app)
                     .send(value.send_data)
                     .expect(422)
                     .expect(value.expected);
@@ -86,6 +87,7 @@ describe('CategoriesController (e2e)', () => {
                 await repository.insert(category);
                 return request(app.app.getHttpServer())
                     .patch(`/categories/${category.categoryId.value}`)
+                    .authenticate(appHelper.app)
                     .send(value.send_data)
                     .expect(422)
                     .expect(value.expected);
@@ -112,6 +114,7 @@ describe('CategoriesController (e2e)', () => {
                         .patch(
                             `/categories/${categoryCreated.categoryId.value}`,
                         )
+                        .authenticate(appHelper.app)
                         .send(send_data)
                         .expect(200);
                     const id = res.body.id;

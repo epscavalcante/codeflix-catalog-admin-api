@@ -21,9 +21,9 @@ describe('CastMembersController (e2e)', () => {
                 },
             };
 
-            const response = await request(nestApp.app.getHttpServer()).get(
-                `/cast-members/${arrange.id}`,
-            );
+            const response = await request(nestApp.app.getHttpServer())
+                .get(`/cast-members/${arrange.id}`)
+                .authenticate(nestApp.app);
 
             expect(response.status).toBe(arrange.expected.statusCode);
             expect(response.body.statusCode).toBe(arrange.expected.statusCode);
@@ -43,6 +43,7 @@ describe('CastMembersController (e2e)', () => {
 
             return request(nestApp.app.getHttpServer())
                 .get(`/cast-members/${arrange.id}`)
+                .authenticate(nestApp.app)
                 .expect(arrange.expected.statusCode)
                 .expect(arrange.expected);
         });
@@ -57,6 +58,7 @@ describe('CastMembersController (e2e)', () => {
 
             const res = await request(nestApp.app.getHttpServer())
                 .get(`/cast-members/${castMember.castMemberId.value}`)
+                .authenticate(nestApp.app)
                 .expect(200);
 
             const presenter = new CastMemberPresenter(
