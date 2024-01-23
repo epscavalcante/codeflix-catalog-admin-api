@@ -11,12 +11,12 @@ describe('CategoriesController (e2e)', () => {
     describe('GET /categories', () => {
         describe('should return categories sorted by created_at when request query is empty', () => {
             let categoryRepo: ICategoryRepository;
-            const nestApp = startApp();
+            const appHelper = startApp();
             const { entitiesMap, arrange } =
                 ListCategoriesFixture.arrangeIncrementedWithCreatedAt();
 
             beforeEach(async () => {
-                categoryRepo = nestApp.app.get<ICategoryRepository>(
+                categoryRepo = appHelper.app.get<ICategoryRepository>(
                     CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
                 );
                 await categoryRepo.bulkInsert(Object.values(entitiesMap));
@@ -28,8 +28,9 @@ describe('CategoriesController (e2e)', () => {
                     const queryParams = new URLSearchParams(
                         send_data as any,
                     ).toString();
-                    return request(nestApp.app.getHttpServer())
+                    return request(appHelper.app.getHttpServer())
                         .get(`/categories/?${queryParams}`)
+                        .authenticate(appHelper.app)
                         .expect(200)
                         .expect({
                             data: expected.entities.map((e) =>
@@ -47,12 +48,12 @@ describe('CategoriesController (e2e)', () => {
 
         describe('should return categories using paginate, filter and sort', () => {
             let categoryRepo: ICategoryRepository;
-            const nestApp = startApp();
+            const appHelper = startApp();
             const { entitiesMap, arrange } =
                 ListCategoriesFixture.arrangeUnsorted();
 
             beforeEach(async () => {
-                categoryRepo = nestApp.app.get<ICategoryRepository>(
+                categoryRepo = appHelper.app.get<ICategoryRepository>(
                     CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
                 );
                 await categoryRepo.bulkInsert(Object.values(entitiesMap));
@@ -64,8 +65,9 @@ describe('CategoriesController (e2e)', () => {
                     const queryParams = new URLSearchParams(
                         send_data as any,
                     ).toString();
-                    return request(nestApp.app.getHttpServer())
+                    return request(appHelper.app.getHttpServer())
                         .get(`/categories?${queryParams}`)
+                        .authenticate(appHelper.app)
                         .expect({
                             data: expected.entities.map((e) =>
                                 instanceToPlain(

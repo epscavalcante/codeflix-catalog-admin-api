@@ -12,12 +12,12 @@ describe('CastMembersController (e2e)', () => {
     describe('GET /cast-members', () => {
         describe('should return cast members sorted by created_at when request query is empty', () => {
             let castMemberRepository: CastMemberRepository;
-            const nestApp = startApp();
+            const appHelper = startApp();
             const { entitiesMap, arrange } =
                 ListCastMemberFixture.arrangeIncrementedWithCreatedAt();
 
             beforeEach(async () => {
-                castMemberRepository = nestApp.app.get<CastMemberRepository>(
+                castMemberRepository = appHelper.app.get<CastMemberRepository>(
                     CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY
                         .provide,
                 );
@@ -32,8 +32,9 @@ describe('CastMembersController (e2e)', () => {
                     const queryParams = new URLSearchParams(
                         send_data as any,
                     ).toString();
-                    return request(nestApp.app.getHttpServer())
+                    return request(appHelper.app.getHttpServer())
                         .get(`/cast-members/?${queryParams}`)
+                        .authenticate(appHelper.app)
                         .expect(200)
                         .expect({
                             data: expected.entities.map((e) =>
@@ -51,7 +52,7 @@ describe('CastMembersController (e2e)', () => {
 
         describe('should return cast members using paginate, filter and sort', () => {
             let castMemberRepository: CastMemberRepository;
-            const nestApp = startApp();
+            const appHelper = startApp();
             const {
                 entitiesMap,
                 arrangeFilteredByNameAndAscSortedByName,
@@ -60,7 +61,7 @@ describe('CastMembersController (e2e)', () => {
             } = ListCastMemberFixture.arrangeUnsorted();
 
             beforeEach(async () => {
-                castMemberRepository = nestApp.app.get<CastMemberRepository>(
+                castMemberRepository = appHelper.app.get<CastMemberRepository>(
                     CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY
                         .provide,
                 );
@@ -78,8 +79,9 @@ describe('CastMembersController (e2e)', () => {
                 async ({ send_data, expected }) => {
                     const queryParams = qs.stringify(send_data as any);
 
-                    return request(nestApp.app.getHttpServer())
+                    return request(appHelper.app.getHttpServer())
                         .get(`/cast-members?${queryParams}`)
+                        .authenticate(appHelper.app)
                         .expect({
                             data: expected.entities.map((e) =>
                                 instanceToPlain(
