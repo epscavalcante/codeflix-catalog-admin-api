@@ -1,4 +1,3 @@
-import CastMember from '@core/cast-member/domain/cast-member.aggregate';
 import Category from '@core/category/domain/category.aggregate';
 import Genre from '@core/genre/domain/genre.aggregate';
 

@@ -1,4 +1,4 @@
-import ExistsInDatabaseValidation from '@core/category/application/validations/exists-in-database.validation';
+import CategoriesIdsExistsInDatabaseValidation from '@core/category/application/validations/categories-ids-exists-in-database.validation';
 import CreateGenreUseCase from '../use-cases/create-genre.use-case';
 import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 import Category from '@core/category/domain/category.aggregate';
@@ -18,7 +18,7 @@ describe('CreateGenreUseCase Unit Tests', () => {
     let unitOfWork: SequelizeUnitOfWorkRepository;
     let genreRepository: GenreSequelizeRepository;
     let categoryRepository: CategorySequelizeRepository;
-    let categoriesIdsDatabaseValidation: ExistsInDatabaseValidation;
+    let categoriesIdsDatabaseValidation: CategoriesIdsExistsInDatabaseValidation;
     const database = setupDatabase({
         models: [GenreModel, CategoryModel, GenreCategoryModel],
     });
@@ -27,10 +27,11 @@ describe('CreateGenreUseCase Unit Tests', () => {
         unitOfWork = new SequelizeUnitOfWorkRepository(database.sequelize);
         genreRepository = new GenreSequelizeRepository(GenreModel, unitOfWork);
         categoryRepository = new CategorySequelizeRepository(CategoryModel);
-        categoriesIdsDatabaseValidation = new ExistsInDatabaseValidation(
+        categoriesIdsDatabaseValidation = new CategoriesIdsExistsInDatabaseValidation(
             categoryRepository,
         );
         useCase = new CreateGenreUseCase(
+            unitOfWork,
             genreRepository,
             categoryRepository,
             categoriesIdsDatabaseValidation,

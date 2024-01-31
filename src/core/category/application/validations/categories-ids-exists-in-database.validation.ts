@@ -3,7 +3,7 @@ import ICategoryRepository from '@core/category/domain/category.repository.inter
 import { CategoryNotFoundError } from '@core/category/domain/errors/catagory-not-found.error';
 import { Either } from '@core/shared/domain/either';
 
-export default class ExistsInDatabaseValidation {
+export default class CategoriesIdsExistsInDatabaseValidation {
     constructor(private readonly categoryRepository: ICategoryRepository) {}
 
     async validate(

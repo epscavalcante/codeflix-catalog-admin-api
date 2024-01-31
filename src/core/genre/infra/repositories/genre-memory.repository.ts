@@ -46,4 +46,35 @@ export default class GenreMemoryRepository
             ? super.applySorting(items, sort, sortDir)
             : super.applySorting(items, 'createdAt', 'desc');
     }
+
+    async findByIds(ids: GenreId[]): Promise<Genre[]> {
+        //avoid to return repeated items
+        return this.items.filter((entity) => {
+            return ids.some((id) => entity.genreId.equals(id));
+        });
+    }
+
+    async existsByIds(
+        ids: GenreId[],
+    ): Promise<{ exists: GenreId[]; notExists: GenreId[] }> {
+        if (this.items.length === 0) {
+            return {
+                exists: [],
+                notExists: ids,
+            };
+        }
+
+        const existsId = new Set<GenreId>();
+        const notExistsId = new Set<GenreId>();
+        ids.forEach((id) => {
+            const item = this.items.find((entity) =>
+                entity.genreId.equals(id),
+            );
+            item ? existsId.add(id) : notExistsId.add(id);
+        });
+        return {
+            exists: Array.from(existsId.values()),
+            notExists: Array.from(notExistsId.values()),
+        };
+    }
 }

@@ -1,25 +1,26 @@
-import ExistsInDatabaseValidation from '@core/category/application/validations/exists-in-database.validation';
-import CreateGenreUseCase from '../use-cases/create-genre.use-case';
 import GenreMemoryRepository from '@core/genre/infra/repositories/genre-memory.repository';
 import CategoryMemoryRepository from '@core/category/infra/repositories/category-memory.repository';
 import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 import Category from '@core/category/domain/category.aggregate';
 import Genre from '@core/genre/domain/genre.aggregate';
 import UpdateGenreUseCase from '../use-cases/update-genre.use-case';
+import MemoryUnitOfWorkRepository from '@core/shared/infra/repositories/memory-unit-of-work.repository';
+import CategoriesIdsExistsInDatabaseValidation from '@core/category/application/validations/categories-ids-exists-in-database.validation';
 
 describe('UpdateGenreUseCase Unit Tests', () => {
     let useCase: UpdateGenreUseCase;
     let genreRepository: GenreMemoryRepository;
     let categoryRepository: CategoryMemoryRepository;
-    let categoriesIdsDatabaseValidation: ExistsInDatabaseValidation;
+    let categoriesIdsDatabaseValidation: CategoriesIdsExistsInDatabaseValidation;
 
     beforeEach(() => {
         genreRepository = new GenreMemoryRepository();
         categoryRepository = new CategoryMemoryRepository();
-        categoriesIdsDatabaseValidation = new ExistsInDatabaseValidation(
+        categoriesIdsDatabaseValidation = new CategoriesIdsExistsInDatabaseValidation(
             categoryRepository,
         );
         useCase = new UpdateGenreUseCase(
+            new MemoryUnitOfWorkRepository(),
             genreRepository,
             categoryRepository,
             categoriesIdsDatabaseValidation,

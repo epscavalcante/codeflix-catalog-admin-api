@@ -49,15 +49,14 @@ export class GenreModelMapper {
         return GenreModel.build(props, { include: ['categoriesId'] });
     }
 
-    static toModelProps(entity: Genre) {
-        const { genreId, categoriesId, ...otherData } = entity.toJSON();
+    static toModelProps(genre: Genre) {
+        const {  categoriesId, ...otherData } = genre.toJSON();
         return {
             ...otherData,
-            genreId,
             categoriesId: categoriesId.map(
                 (categoryId) =>
                     new GenreCategoryModel({
-                        genreId,
+                        genreId: genre.genreId.value,
                         categoryId,
                     }),
             ),

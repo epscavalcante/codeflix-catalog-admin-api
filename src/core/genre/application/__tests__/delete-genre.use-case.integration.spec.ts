@@ -29,7 +29,7 @@ describe('DeleteGenreUseCase integration Test', () => {
         unitOfWork = new SequelizeUnitOfWorkRepository(database.sequelize);
         genreRepository = new GenreSequelizeRepository(GenreModel, unitOfWork);
         categoryRepository = new CategorySequelizeRepository(CategoryModel);
-        useCase = new DeleteGenreUseCase(genreRepository);
+        useCase = new DeleteGenreUseCase(unitOfWork, genreRepository);
     });
 
     test('Deve lançar InvalidUuidExeception com id fake', async () => {

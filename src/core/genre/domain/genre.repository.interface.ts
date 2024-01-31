@@ -28,7 +28,7 @@ export class GenreSearchParams extends SearchParams<GenreFilter> {
         const categoriesId = props.filter?.categoriesId?.map((categoryId) => {
             return categoryId instanceof CategoryId
                 ? categoryId
-                : new CategoryId(categoriesId);
+                : new CategoryId(categoryId);
         });
 
         return new GenreSearchParams({
@@ -41,13 +41,16 @@ export class GenreSearchParams extends SearchParams<GenreFilter> {
     }
 
     protected set filter(value: GenreFilter | null) {
-        const _value = typeof value === 'object' ? value : null;
-
+        const _value =
+            !value || (value as unknown) === '' || typeof value !== 'object'
+                ? null
+                : value;
         const filter = {
             ...(_value?.name && { name: `${_value.name}` }),
-            ...(_value?.categoriesId?.length && {
-                categoriesId: _value.categoriesId,
-            }),
+            ...(_value?.categoriesId &&
+                _value?.categoriesId.length && {
+                    categoriesId: _value.categoriesId,
+                }),
         };
 
         this._filter = Object.keys(filter).length ? filter : null;
@@ -67,4 +70,10 @@ export default interface IGenreRepository
         GenreFilter,
         GenreSearchParams,
         GenreSearchResult
-    > {}
+    > {
+    findByIds(genresIds: GenreId[]): Promise<Genre[]>;
+    existsByIds(genresIds: GenreId[]): Promise<{
+        exists: GenreId[];
+        notExists: GenreId[];
+    }>;
+}

@@ -153,8 +153,6 @@ describe('ListGenreUseCase integration Test', () => {
             const categories = Category.fake().theCategories(4).build();
             await categoryRepository.bulkInsert(categories);
 
-            console.log(categories);
-
             const genres = [
                 Genre.fake()
                     .aGenre()
@@ -225,8 +223,6 @@ describe('ListGenreUseCase integration Test', () => {
             const output = await useCase.handle({
                 filter: { name: 'fake' },
             });
-
-            console.log(output.items)
 
             expect(output).toMatchObject({
                 total: 1,

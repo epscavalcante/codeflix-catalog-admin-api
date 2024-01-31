@@ -1,4 +1,3 @@
-import ExistsInDatabaseValidation from '@core/category/application/validations/exists-in-database.validation';
 import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 import Category from '@core/category/domain/category.aggregate';
 import Genre from '@core/genre/domain/genre.aggregate';
@@ -12,6 +11,7 @@ import CategoryModel from '@core/category/infra/database/sequelize/models/catego
 import SequelizeUnitOfWorkRepository from '@core/shared/infra/repositories/sequelize-unit-of-work.repository';
 import GenreSequelizeRepository from '@core/genre/infra/repositories/genre-sequelize.repository';
 import CategorySequelizeRepository from '@core/category/infra/repositories/category-sequelize.repository';
+import CategoriesIdsExistsInDatabaseValidation from '@core/category/application/validations/categories-ids-exists-in-database.validation';
 
 setupDatabase({ models: [GenreModel, CategoryModel, GenreCategoryModel] });
 
@@ -20,7 +20,7 @@ describe('UpdateGenreUseCase integration Test', () => {
     let unitOfWork: SequelizeUnitOfWorkRepository;
     let genreRepository: GenreSequelizeRepository;
     let categoryRepository: CategorySequelizeRepository;
-    let categoriesIdsDatabaseValidation: ExistsInDatabaseValidation;
+    let categoriesIdsDatabaseValidation: CategoriesIdsExistsInDatabaseValidation;
 
     const database = setupDatabase({
         models: [GenreModel, CategoryModel, GenreCategoryModel],
@@ -30,10 +30,11 @@ describe('UpdateGenreUseCase integration Test', () => {
         unitOfWork = new SequelizeUnitOfWorkRepository(database.sequelize);
         genreRepository = new GenreSequelizeRepository(GenreModel, unitOfWork);
         categoryRepository = new CategorySequelizeRepository(CategoryModel);
-        categoriesIdsDatabaseValidation = new ExistsInDatabaseValidation(
+        categoriesIdsDatabaseValidation = new CategoriesIdsExistsInDatabaseValidation(
             categoryRepository,
         );
         useCase = new UpdateGenreUseCase(
+            unitOfWork,
             genreRepository,
             categoryRepository,
             categoriesIdsDatabaseValidation,

@@ -15,7 +15,8 @@ export default class GenreSequelizeRepository implements IGenreRepository {
     sortableFields: string[] = ['name', 'createdAt'];
     orderBy = {
         mysql: {
-            name: (sortDir: SortDirection) => literal(`binary name ${sortDir}`),
+            name: (sortDir: SortDirection) => `binary ${this.genreModel.name}.name ${sortDir}`,
+            createdAt: (sortDir: SortDirection) => `binary ${this.genreModel.name}.created_at ${sortDir}`,
         },
     };
 
@@ -23,6 +24,132 @@ export default class GenreSequelizeRepository implements IGenreRepository {
         private genreModel: typeof GenreModel,
         private unitOfWork: SequelizeUnitOfWorkRepository,
     ) {}
+
+    async insert(genre: Genre): Promise<void> {
+        const model = GenreModelMapper.toModelProps(genre);
+        await this.genreModel.create(model, {
+            include: ['categoriesId'],
+            transaction: this.unitOfWork.getTransaction(),
+        });
+    }
+
+    async bulkInsert(genres: Genre[]): Promise<void> {
+        const genresModel = genres.map((genre) =>
+            GenreModelMapper.toModelProps(genre)
+        );
+
+        await this.genreModel.bulkCreate(genresModel, {
+            include: ['categoriesId'],
+            transaction: this.unitOfWork.getTransaction(),
+        });
+    }
+
+    async update(genre: Genre): Promise<void> {
+        const id = genre.genreId.value;
+        const model = await this._get(id);
+        if (!model) throw new GenreNotFoundError(id);
+        model.$remove(
+            'categories',
+            model.categoriesId.map((categoryId) => categoryId.categoryId),
+            {
+                transaction: this.unitOfWork.getTransaction(),
+            },
+        );
+        const { categoriesId, ...props } = GenreModelMapper.toModelProps(genre);
+        const [effectedRows] = await this.genreModel.update(props, {
+            where: { genreId: id },
+            transaction: this.unitOfWork.getTransaction(),
+        });
+
+        await model.$add(
+            'categories',
+            categoriesId.map((categoryId) => categoryId.categoryId),
+            {
+                transaction: this.unitOfWork.getTransaction(),
+            },
+        );
+
+        if (effectedRows !== 1) throw new GenreNotFoundError(model.genreId);
+    }
+
+    async delete(genreId: GenreId): Promise<void> {
+        const genreCategoryRelation =
+            this.genreModel.associations.categoriesId.target;
+        await genreCategoryRelation.destroy({
+            where: { genreId: genreId.value },
+            transaction: this.unitOfWork.getTransaction(),
+        });
+        const effectedRows = await this.genreModel.destroy({
+            where: { genreId: genreId.value },
+            transaction: this.unitOfWork.getTransaction(),
+        });
+
+        if (effectedRows !== 1) throw new GenreNotFoundError(genreId.value);
+    }
+
+    async findAll(): Promise<Genre[]> {
+        const genresModel = await GenreModel.findAll({
+            include: ['categoriesId'],
+            transaction: this.unitOfWork.getTransaction(),
+        });
+
+        return genresModel.map((model) => GenreModelMapper.toEntity(model));
+    }
+
+    async findById(genreId: GenreId): Promise<Genre | null> {
+        const genreModel = await this._get(genreId.value);
+
+        return genreModel ? GenreModelMapper.toEntity(genreModel) : null;
+    }
+
+    async findByIds(ids: GenreId[]): Promise<Genre[]> {
+        const models = await this.genreModel.findAll({
+            where: {
+                genreId: {
+                    [Op.in]: ids.map(
+                        (genreId) => genreId.value,
+                    ),
+                },
+            },
+        });
+
+        return models.map((model) =>
+            GenreModelMapper.toEntity(model),
+        );
+    }
+
+    async existsByIds(
+        ids: GenreId[],
+    ): Promise<{ exists: GenreId[]; notExists: GenreId[] }> {
+        if (ids.length === 0) {
+            return {
+                exists: [],
+                notExists: ids,
+            };
+        }
+
+        const models = await this.genreModel.findAll({
+            where: {
+                genreId: {
+                    [Op.in]: ids.map((genreId) => genreId.value),
+                },
+            },
+        });
+
+        const existsIds = models.map(
+            (model) => new GenreId(model.genreId),
+        );
+        const notExistsIds = ids.filter(
+            (genreId) =>
+                !existsIds.some((existId) =>
+                    existId.equals(genreId),
+                ),
+        );
+        return {
+            exists: existsIds,
+            notExists: notExistsIds,
+        };
+    }
 
     async search(props: GenreSearchParams): Promise<GenreSearchResult> {
         const offset = (props.page - 1) * props.perPage;
@@ -53,18 +180,18 @@ export default class GenreSequelizeRepository implements IGenreRepository {
 
             if (props.filter.categoriesId) {
                 wheres.push({
-                    field: 'categories_id',
+                    field: 'categoriesId',
                     value: props.filter.categoriesId.map(
                         (categoryId) => categoryId.value,
                     ),
                     get condition() {
                         return {
-                            ['$categoriesId.categoryId$']: {
+                            ['$categoriesId.category_id$']: {
                                 [Op.in]: this.value,
                             },
                         };
                     },
-                    rawCondition: `${genreCategoryTableName}.categoryId IN (:categoriesId)`,
+                    rawCondition: `${genreCategoryTableName}.category_id IN (:categoriesId)`,
                 });
             }
         }
@@ -103,8 +230,6 @@ export default class GenreSequelizeRepository implements IGenreRepository {
             `OFFSET ${offset}`,
         ];
 
-        console.log(query);
-
         const [idsResult] = await this.genreModel.sequelize!.query(
             query.join(' '),
             {
@@ -115,8 +240,6 @@ export default class GenreSequelizeRepository implements IGenreRepository {
                 transaction: this.unitOfWork.getTransaction(),
             },
         );
-
-        console.log(idsResult);
 
         const models = await this.genreModel.findAll({
             where: {
@@ -131,10 +254,6 @@ export default class GenreSequelizeRepository implements IGenreRepository {
             transaction: this.unitOfWork.getTransaction(),
         });
 
-        console.log('result', models.map((genreModel) =>
-            GenreModelMapper.toEntity(genreModel),
-        ));
-
         return new GenreSearchResult({
             total: count,
             currentPage: props.page,
@@ -143,67 +262,6 @@ export default class GenreSequelizeRepository implements IGenreRepository {
                 GenreModelMapper.toEntity(genreModel),
             ),
         });
-    }
-
-    async insert(genre: Genre): Promise<void> {
-        const model = GenreModelMapper.toModel(genre);
-
-        await this.genreModel.create(model.toJSON(), {
-            include: ['categoriesId'],
-            transaction: this.unitOfWork.getTransaction(),
-        });
-    }
-
-    async bulkInsert(genres: Genre[]): Promise<void> {
-        const genresModel = genres.map((genre) =>
-            GenreModelMapper.toModel(genre).toJSON(),
-        );
-
-        await this.genreModel.bulkCreate(genresModel, {
-            include: ['categoriesId'],
-            transaction: this.unitOfWork.getTransaction(),
-        });
-    }
-
-    async update(genre: Genre): Promise<void> {
-        const id = genre.genreId.value;
-        const castModelToUpdate = GenreModelMapper.toModel(genre);
-
-        const [effectedRows] = await this.genreModel.update(
-            castModelToUpdate.toJSON(),
-            {
-                where: { genreId: id },
-            },
-        );
-
-        if (effectedRows !== 1) {
-            throw new GenreNotFoundError(id);
-        }
-    }
-
-    async delete(genreId: GenreId): Promise<void> {
-        const effectedRows = await this.genreModel.destroy({
-            where: { genreId: genreId.value },
-            transaction: this.unitOfWork.getTransaction(),
-        });
-
-        if (effectedRows !== 1) {
-            throw new GenreNotFoundError(genreId.value);
-        }
-    }
-
-    async findAll(): Promise<Genre[]> {
-        const genresModel = await GenreModel.findAll({
-            transaction: this.unitOfWork.getTransaction(),
-        });
-
-        return genresModel.map((model) => GenreModelMapper.toEntity(model));
-    }
-
-    async findById(genreId: GenreId): Promise<Genre | null> {
-        const genreModel = await this._get(genreId.value);
-
-        return genreModel ? GenreModelMapper.toEntity(genreModel) : null;
     }
 
     getEntity(): new (...args: any[]) => Genre {
@@ -222,6 +280,6 @@ export default class GenreSequelizeRepository implements IGenreRepository {
         if (this.orderBy[dialect] && this.orderBy[dialect][sort]) {
             return this.orderBy[dialect][sort](sortDir);
         }
-        return `${this.genreModel.name}.\${sort}\ ${sortDir}`;
+        return `${this.genreModel.name}.\`${sort}\` ${sortDir}`;
     }
 }
