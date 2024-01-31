@@ -30,6 +30,7 @@ describe('CastMembersController (e2e)', () => {
                         appHelper.app.getHttpServer(),
                     )
                         .post('/cast-members')
+                        .authenticate(appHelper.app)
                         .send(send_data);
 
                     expect(response.status).toBe(201);
@@ -63,6 +64,7 @@ describe('CastMembersController (e2e)', () => {
             test.each(arrange)('When body is $label', async ({ value }) => {
                 return request(appHelper.app.getHttpServer())
                     .post('/cast-members')
+                    .authenticate(appHelper.app)
                     .send(value.send_data)
                     .expect(422)
                     .expect(value.expected);
@@ -80,6 +82,7 @@ describe('CastMembersController (e2e)', () => {
             test.each(arrange)('When body is $label', async ({ value }) => {
                 return request(appHelper.app.getHttpServer())
                     .post('/cast-members')
+                    .authenticate(appHelper.app)
                     .send(value.send_data)
                     .expect(422)
                     .expect(value.expected);

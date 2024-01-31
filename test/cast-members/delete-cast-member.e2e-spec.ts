@@ -31,6 +31,7 @@ describe('CastMembersController (e2e)', () => {
             test.each(arrange)('when id is $id', async ({ id, expected }) => {
                 return request(appHelper.app.getHttpServer())
                     .delete(`/cast-members/${id}`)
+                    .authenticate(appHelper.app)
                     .expect(expected.statusCode)
                     .expect(expected);
             });
@@ -47,6 +48,7 @@ describe('CastMembersController (e2e)', () => {
 
             await request(appHelper.app.getHttpServer())
                 .delete(`/cast-members/${castMember.castMemberId.value}`)
+                .authenticate(appHelper.app)
                 .expect(204);
 
             await expect(

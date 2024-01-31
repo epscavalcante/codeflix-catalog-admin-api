@@ -10,6 +10,7 @@ import FindCastMemberUseCase from '@core/cast-member/application/use-cases/find-
 import UpdateCastMemberUseCase from '@core/cast-member/application/use-cases/update-cast-member.use-case';
 import DeleteCastMemberUseCase from '@core/cast-member/application/use-cases/delete-cast-member.use-case';
 import { ConfigModule } from '../config/config.module';
+import { AuthModule } from '../auth/auth.module';
 
 describe('CastMembersController Integration tests', () => {
     let controller: CastMembersController;
@@ -20,6 +21,7 @@ describe('CastMembersController Integration tests', () => {
             imports: [
                 ConfigModule.forRoot(),
                 DatabaseModule,
+                AuthModule,
                 CastMembersModule,
             ],
         }).compile();
