@@ -18,8 +18,7 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  FOLDER_NAME: ${{ github.repository }}_app
-
+  FOLDER_NAME: ${{ github.env.repository.name }}_app
 
 jobs:
   ci:
