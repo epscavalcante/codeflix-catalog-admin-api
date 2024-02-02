@@ -57,17 +57,17 @@ const models = [CategoryModel, CastMemberModel, GenreModel, GenreCategoryModel];
         {
             provide: SequelizeUnitOfWorkRepository,
             useFactory: (sequelize: Sequelize) => {
-              return new SequelizeUnitOfWorkRepository(sequelize);
+                return new SequelizeUnitOfWorkRepository(sequelize);
             },
             inject: [getConnectionToken()],
             scope: Scope.REQUEST,
-          },
-          {
+        },
+        {
             provide: 'UnitOfWork',
             useExisting: SequelizeUnitOfWorkRepository,
             scope: Scope.REQUEST,
-          },
+        },
     ],
-    exports: ['UnitOfWork']
+    exports: ['UnitOfWork'],
 })
 export class DatabaseModule {}
