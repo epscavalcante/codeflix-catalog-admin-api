@@ -77,8 +77,8 @@ jobs:
 
       - name: 'Set env_file'
         run: |
-          docker compose -f docker-compose.ci.yaml exex -u root -T app cp .env.test.example .env.test
-          docker compose -f docker-compose.ci.yaml exex -u root -T app cp .env.e2e.example .env.e2e
+          docker compose -f docker-compose.ci.yaml exec -u root -T app cp .env.test.example .env.test
+        #   docker compose -f docker-compose.ci.yaml exec -u root -T app cp .env.e2e.example .env.e2e
       
       - name: 'Run Unit and Integration tests'
         run: docker compose -f docker-compose.ci.yaml exec -T app npm run test
