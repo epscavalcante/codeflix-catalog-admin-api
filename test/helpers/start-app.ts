@@ -4,6 +4,7 @@ import { applyGlobalConfig } from '../../src/app.config.global';
 import { AppModule } from '../../src/app.module';
 import { getConnectionToken } from '@nestjs/sequelize';
 import { Sequelize } from 'sequelize-typescript';
+import SequelizeUnitOfWorkRepository from '@core/shared/infra/repositories/sequelize-unit-of-work.repository';
 
 export function startApp() {
     let _app: INestApplication;
@@ -11,7 +12,15 @@ export function startApp() {
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             imports: [AppModule],
-        }).compile();
+        })
+            .overrideProvider('UnitOfWork')
+            .useFactory({
+                factory: (sequelize: Sequelize) => {
+                    return new SequelizeUnitOfWorkRepository(sequelize as any);
+                },
+                inject: [getConnectionToken()],
+            })
+            .compile();
 
         const sequelize: Sequelize = module.get<Sequelize>(
             getConnectionToken(),

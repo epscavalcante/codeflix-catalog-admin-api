@@ -17,4 +17,10 @@ export default interface ICategoryRepository
         CategoryFilter,
         CategorySearchParams,
         CategorySearchResult
-    > {}
+    > {
+    findByIds(categoriesIds: CategoryId[]): Promise<Category[]>;
+    existsByIds(categoriesId: CategoryId[]): Promise<{
+        exists: CategoryId[];
+        notExists: CategoryId[];
+    }>;
+}

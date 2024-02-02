@@ -1,11 +1,17 @@
-import { Global, Module } from '@nestjs/common';
-import { SequelizeModule } from '@nestjs/sequelize';
+import { Global, Module, Scope } from '@nestjs/common';
+import { SequelizeModule, getConnectionToken } from '@nestjs/sequelize';
 import { ConfigService } from '@nestjs/config';
 import { ConfigSchemaType } from '../config/config.module';
 import CategoryModel from '../core/category/infra/database/sequelize/models/category.model';
 import CastMemberModel from '../core/cast-member/infra/database/sequelize/models/cast-member.model';
+import {
+    GenreCategoryModel,
+    GenreModel,
+} from '@core/genre/infra/database/sequelize/models/genre.model';
+import SequelizeUnitOfWorkRepository from '@core/shared/infra/repositories/sequelize-unit-of-work.repository';
+import { Sequelize } from 'sequelize';
 
-const models = [CategoryModel, CastMemberModel];
+const models = [CategoryModel, CastMemberModel, GenreModel, GenreCategoryModel];
 
 @Global()
 @Module({
@@ -47,5 +53,21 @@ const models = [CategoryModel, CastMemberModel];
             inject: [ConfigService],
         }),
     ],
+    providers: [
+        {
+            provide: SequelizeUnitOfWorkRepository,
+            useFactory: (sequelize: Sequelize) => {
+                return new SequelizeUnitOfWorkRepository(sequelize);
+            },
+            inject: [getConnectionToken()],
+            scope: Scope.REQUEST,
+        },
+        {
+            provide: 'UnitOfWork',
+            useExisting: SequelizeUnitOfWorkRepository,
+            scope: Scope.REQUEST,
+        },
+    ],
+    exports: ['UnitOfWork'],
 })
 export class DatabaseModule {}

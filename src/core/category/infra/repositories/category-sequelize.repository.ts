@@ -22,6 +22,55 @@ export default class CategorySequelizeRepository
 
     constructor(private categoryModel: typeof CategoryModel) {}
 
+    async findByIds(categoriesIds: CategoryId[]): Promise<Category[]> {
+        const categoryModels = await this.categoryModel.findAll({
+            where: {
+                categoryId: {
+                    [Op.in]: categoriesIds.map(
+                        (categoryId) => categoryId.value,
+                    ),
+                },
+            },
+        });
+
+        return categoryModels.map((categoryModel) =>
+            CategoryMapper.toEntity(categoryModel),
+        );
+    }
+
+    async existsByIds(
+        categoriesId: CategoryId[],
+    ): Promise<{ exists: CategoryId[]; notExists: CategoryId[] }> {
+        if (!categoriesId.length) {
+            return {
+                exists: [],
+                notExists: [],
+            };
+        }
+
+        const categoryModels = await this.categoryModel.findAll({
+            where: {
+                categoryId: {
+                    [Op.in]: categoriesId.map((categoryId) => categoryId.value),
+                },
+            },
+        });
+
+        const existsCategoryIds = categoryModels.map(
+            (categoryModel) => new CategoryId(categoryModel.categoryId),
+        );
+        const notExistsCategoryIds = categoriesId.filter(
+            (categoryId) =>
+                !existsCategoryIds.some((existCategoryId) =>
+                    existCategoryId.equals(categoryId),
+                ),
+        );
+        return {
+            exists: existsCategoryIds,
+            notExists: notExistsCategoryIds,
+        };
+    }
+
     async insert(category: Category): Promise<void> {
         const model = CategoryMapper.toModel(category);
 
