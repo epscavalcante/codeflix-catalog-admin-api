@@ -14,7 +14,7 @@ services:
         extra_hosts:
             - "host.docker.internal:host-gateway"
         depends_on:
-            db:
+            db_tests:
                 condition: service_healthy
 
     db_tests:
