@@ -39,7 +39,7 @@ describe('Database Module Tests', () => {
     describe('MySQL Connection', () => {
         const mysqlConnectionConfig = {
             DB_VENDOR: 'mysql',
-            DB_HOST: 'db',
+            DB_HOST: 'db_tests',
             DB_DATABASE: 'catalog',
             DB_USERNAME: 'root',
             DB_PASSWORD: 'root',
@@ -66,7 +66,7 @@ describe('Database Module Tests', () => {
             const connection = app.get<Sequelize>(getConnectionToken());
             expect(connection).toBeDefined();
             expect(connection.options.dialect).toBe('mysql');
-            expect(connection.options.host).toBe('db');
+            expect(connection.options.host).toBe('db_tests');
             expect(connection.options.database).toBe('catalog');
             expect(connection.options.port).toBe(3306);
             expect(connection.options.username).toBe('root');

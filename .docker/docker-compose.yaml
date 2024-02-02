@@ -5,11 +5,6 @@ services:
         build: ./node
         container_name: catalog-admin-app
         command: ./.docker/start.sh
-        environment:
-            - DB_VENDOR=sqlite
-            - DB_HOST=":memory:"
-            - DB_LOGGING=false
-            - DB_AUTO_LOAD_MODELS=true
         ports:
             - 3000:3000
         volumes:
