@@ -17,7 +17,7 @@ services:
             db:
                 condition: service_healthy
 
-    db:
+    db_tests:
         image: mysql:8.0.30-debian
         container_name: catalog-admin-db
         environment:
