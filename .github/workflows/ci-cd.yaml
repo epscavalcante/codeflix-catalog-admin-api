@@ -85,3 +85,21 @@ jobs:
 
       - name: 'Run E2E Tests'
         run: docker compose -f docker-compose.ci.yaml exec -T app npm run test:e2e -- --runInBand --detectOpenHandles --forceExit
+
+      - name: Tagging image
+        id: tagging
+        if: github.event_name != 'pull_request'
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push image
+        id: build-final
+        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          file: Dockerfile.prod
