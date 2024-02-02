@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigService } from '@nestjs/config';
 import { ConfigSchemaType } from '../config/config.module';
@@ -7,6 +7,7 @@ import CastMemberModel from '../core/cast-member/infra/database/sequelize/models
 
 const models = [CategoryModel, CastMemberModel];
 
+@Global()
 @Module({
     imports: [
         SequelizeModule.forRootAsync({

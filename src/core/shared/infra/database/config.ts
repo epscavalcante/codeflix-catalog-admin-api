@@ -14,15 +14,39 @@ export default class Config {
         };
     }
 
+    static bucketName() {
+        Config.readEnv();
+
+        return Config.env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME;
+    }
+
+    static googleCredentials() {
+        Config.readEnv();
+
+        return JSON.parse(Config.env.GOOGLE_CLOUD_CREDENTIALS);
+    }
+
+    static rabbitmqUri() {
+        Config.readEnv();
+
+        return Config.env.RABBITMQ_URI;
+    }
+
     static readEnv() {
         if (Config.env) {
             return;
         }
-        Config.env = readEnv({
+
+        const { parsed } = readEnv({
             path: join(
                 __dirname,
                 `../../../../../.env.${process.env.NODE_ENV}`,
             ),
-        }).parsed;
+        });
+
+        Config.env = {
+            ...parsed,
+            ...process.env,
+        };
     }
 }

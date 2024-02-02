@@ -1,0 +1,12 @@
+.git/
+.github/
+.docker/.gitignore
+.docker/mysql/data/
+coverage/
+dist/
+node_modules/
+
+*.sqlite
+docker-compose.*.yaml
+docker-compose.*.
+Dockerfile*

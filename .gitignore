@@ -38,5 +38,9 @@ tsconfig.tsbuildinfo
 
 .env*
 !.env.example
+!.env.test.example
+!.env.e2e.example
+
+":memory:"*
 
 .docker/mysql/data

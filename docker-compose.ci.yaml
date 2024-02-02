@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+    app:
+        build: 
+            context: .
+            dockerfile: Dockerfile.prod
+        container_name: catalog-admin-app
+        ports:
+            - 3000:3000
+        volumes:
+            - '/etc/timezone:/etc/timezone:ro'
+            - '/etc/localtime:/etc/localtime:ro'
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        depends_on:
+            db_tests:
+                condition: service_healthy
+
+    db_tests:
+        image: mysql:8.0.30-debian
+        container_name: catalog-admin-db
+        environment:
+            - MYSQL_DATABASE=catalog
+            - MYSQL_ROOT_PASSWORD=root
+        tmpfs   : 
+            - /var/lib/mysql
+        security_opt:
+            - seccomp:unconfined
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            interval: 10s
+            timeout: 10s
+            retries: 3
