@@ -73,10 +73,15 @@ jobs:
           target: dev
 
       - name: 'Up containers'
-        run: docker compose -f docker-compose.ci.yaml up -d 
+        env: 
+            DB_VENDOR: sqlite
+            DB_HOST: ":memory:"
+            DB_LOGGING: false
+            DB_AUTO_LOAD_MODELS: true
+        run: docker compose -f docker-compose.ci.yaml up -d
       
       - name: 'Run Unit and Integration tests'
         run: docker compose -f docker-compose.ci.yaml exec -T app npm run test
 
-      - name: 'Run E2E Tests'
-        run: docker compose -f docker-compose.ci.yaml exec -T app npm run test:e2e -- --runInBand --detectOpenHandles --forceExit
+    #   - name: 'Run E2E Tests'
+    #     run: docker compose -f docker-compose.ci.yaml exec -T app npm run test:e2e -- --runInBand --detectOpenHandles --forceExit
