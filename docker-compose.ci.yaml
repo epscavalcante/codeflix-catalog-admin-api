@@ -8,15 +8,15 @@ services:
         container_name: catalog-admin-app
         ports:
             - 3000:3000
-        environment:
-            - DB_VENDOR=mysql
-            - DB_HOST=db
-            - DB_DATABASE=catalog
-            - DB_USERNAME=root
-            - DB_PASSWORD=root
-            - DB_PORT=3306
-            - DB_LOGGING=false
-            - DB_AUTO_LOAD_MODELS=true
+        # environment:
+        #     - DB_VENDOR=mysql
+        #     - DB_HOST=db
+        #     - DB_DATABASE=catalog
+        #     - DB_USERNAME=root
+        #     - DB_PASSWORD=root
+        #     - DB_PORT=3306
+        #     - DB_LOGGING=false
+        #     - DB_AUTO_LOAD_MODELS=true
         volumes:
             - '/etc/timezone:/etc/timezone:ro'
             - '/etc/localtime:/etc/localtime:ro'
