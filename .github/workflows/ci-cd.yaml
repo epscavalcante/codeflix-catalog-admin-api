@@ -14,18 +14,15 @@ on:
     branches: [ "main" ]
 
 env:
-  # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
-  # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
   FOLDER_NAME: ${{ github.event.repository.name }}-app
 
 jobs:
   ci:
-
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
@@ -93,7 +90,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-
       - name: Build and Push image
         id: build-final
         if: github.event_name != 'pull_request'
@@ -105,3 +101,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Dockerfile.prod
+
+  cd:
+    needs: ci
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' }}
+    steps:
+      - name: show version
+        run: echo ${{ needs.ci.outputs.new_version }}
