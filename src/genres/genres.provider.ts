@@ -14,6 +14,8 @@ import IUnitOfWork from '@core/shared/domain/repositories/unit-of-work.interface
 import { CATEGORY_PROVIDERS } from '../categories/categories.provider';
 import CategoriesIdsExistsInDatabaseValidation from '@core/category/application/validations/categories-ids-exists-in-database.validation';
 import GenresIdsExistsInDatabaseValidation from '@core/genre/application/validations/genres-ids-exists-in-database.validation';
+import ApplicationService from '@core/shared/application/application.service';
+import PublishGenreInQueueHandler from '@core/genre/application/handlers/publish-genre-in-queue.handler';
 
 export const REPOSITORIES = {
     GENRE_REPOSITORY: {
@@ -40,13 +42,13 @@ export const USE_CASES = {
     CREATE_GENRE_USE_CASE: {
         provide: CreateGenreUseCase,
         useFactory: (
-            unitOfWork: IUnitOfWork,
+            applicationService: ApplicationService,
             genreRepository: IGenreRepository,
             categoryRepository: ICategoryRepository,
-            categoriesIdsExistsInDatabaseValidation: CategoriesIdsExistsInDatabaseValidation
+            categoriesIdsExistsInDatabaseValidation: CategoriesIdsExistsInDatabaseValidation,
         ) => {
             return new CreateGenreUseCase(
-                unitOfWork,
+                applicationService,
                 genreRepository,
                 categoryRepository,
                 categoriesIdsExistsInDatabaseValidation,
@@ -54,6 +56,7 @@ export const USE_CASES = {
         },
         inject: [
             'UnitOfWork',
+            ApplicationService,
             REPOSITORIES.GENRE_REPOSITORY.provide,
             CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
             CATEGORY_PROVIDERS.VALIDATIONS
@@ -78,7 +81,8 @@ export const USE_CASES = {
             'UnitOfWork',
             REPOSITORIES.GENRE_REPOSITORY.provide,
             CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
-            CATEGORY_PROVIDERS.VALIDATIONS.CATEGORIES_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide
+            CATEGORY_PROVIDERS.VALIDATIONS
+                .CATEGORIES_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide,
         ],
     },
 
@@ -112,10 +116,7 @@ export const USE_CASES = {
             unitOfWork: IUnitOfWork,
             genreRepository: IGenreRepository,
         ) => new DeleteGenreUseCase(unitOfWork, genreRepository),
-        inject: [
-            'UnitOfWork',
-            REPOSITORIES.GENRE_REPOSITORY.provide,
-        ],
+        inject: ['UnitOfWork', REPOSITORIES.GENRE_REPOSITORY.provide],
     },
 };
 
@@ -129,8 +130,16 @@ export const VALIDATIONS = {
     },
 };
 
+export const HANDLERS = {
+    PUBLISH_GENRE_IN_QUEUE_EVENT_HANDLER: {
+        provide: PublishGenreInQueueHandler,
+        useClass: PublishGenreInQueueHandler,
+    },
+};
+
 export const GENRE_PROVIDERS = {
     REPOSITORIES,
     USE_CASES,
-    VALIDATIONS
+    VALIDATIONS,
+    HANDLERS,
 };
