@@ -5,6 +5,9 @@ import EntityValidationError from '@core/shared/domain/errors/entity-validation.
 import Category from '@core/category/domain/category.aggregate';
 import MemoryUnitOfWorkRepository from '@core/shared/infra/repositories/memory-unit-of-work.repository';
 import CategoriesIdsExistsInDatabaseValidation from '@core/category/application/validations/categories-ids-exists-in-database.validation';
+import ApplicationService from '@core/shared/application/application.service';
+import DomainEventMediator from '@core/shared/domain/domain-events/domain-event.mediator';
+import EventEmitter2 from 'eventemitter2';
 
 describe('CreateGenreUseCase Unit Tests', () => {
     let useCase: CreateGenreUseCase;
@@ -18,7 +21,10 @@ describe('CreateGenreUseCase Unit Tests', () => {
         categoriesIdsDatabaseValidation =
             new CategoriesIdsExistsInDatabaseValidation(categoryRepository);
         useCase = new CreateGenreUseCase(
-            new MemoryUnitOfWorkRepository(),
+            new ApplicationService(
+                new MemoryUnitOfWorkRepository(),
+                new DomainEventMediator(new EventEmitter2()),
+            ),
             genreRepository,
             categoryRepository,
             categoriesIdsDatabaseValidation,

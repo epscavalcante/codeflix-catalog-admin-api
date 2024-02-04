@@ -12,6 +12,9 @@ import {
 import CategoryModel from '@core/category/infra/database/sequelize/models/category.model';
 import CategorySequelizeRepository from '@core/category/infra/repositories/category-sequelize.repository';
 import GenreId from '@core/genre/domain/genre.id.vo';
+import ApplicationService from '@core/shared/application/application.service';
+import EventEmitter2 from 'eventemitter2';
+import DomainEventMediator from '@core/shared/domain/domain-events/domain-event.mediator';
 
 describe('CreateGenreUseCase Unit Tests', () => {
     let useCase: CreateGenreUseCase;
@@ -27,11 +30,13 @@ describe('CreateGenreUseCase Unit Tests', () => {
         unitOfWork = new SequelizeUnitOfWorkRepository(database.sequelize);
         genreRepository = new GenreSequelizeRepository(GenreModel, unitOfWork);
         categoryRepository = new CategorySequelizeRepository(CategoryModel);
-        categoriesIdsDatabaseValidation = new CategoriesIdsExistsInDatabaseValidation(
-            categoryRepository,
-        );
+        categoriesIdsDatabaseValidation =
+            new CategoriesIdsExistsInDatabaseValidation(categoryRepository);
         useCase = new CreateGenreUseCase(
-            unitOfWork,
+            new ApplicationService(
+                unitOfWork,
+                new DomainEventMediator(new EventEmitter2()),
+            ),
             genreRepository,
             categoryRepository,
             categoriesIdsDatabaseValidation,
