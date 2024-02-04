@@ -1,11 +1,10 @@
 import ValueObject from '../../shared/domain/value-objects/value-object';
-// import { GenreValidatorFactory } from './category.validator';
-// import GenreFactory from './category.factory';
 import { AggregateRoot } from '../../shared/domain/aggregate-root';
 import GenreId from './genre.id.vo';
 import GenreFactory from './genre.factory';
 import GenreValidator from './genre.validator';
 import { CategoryId } from '@core/category/domain/category.aggregate';
+import GenreCreatedEvent from './events/genre-created.event';
 
 export type GenreConstrutorProps = {
     genreId?: GenreId;
@@ -45,6 +44,13 @@ export default class Genre extends AggregateRoot {
         });
 
         genre.validate(['name']);
+        genre.applyEvent(
+            new GenreCreatedEvent({
+                genreId: genre.genreId,
+                name: genre.name,
+                createdAt: genre.createdAt,
+            }),
+        );
 
         return genre;
     }
