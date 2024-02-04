@@ -30,9 +30,8 @@ describe('UpdateGenreUseCase integration Test', () => {
         unitOfWork = new SequelizeUnitOfWorkRepository(database.sequelize);
         genreRepository = new GenreSequelizeRepository(GenreModel, unitOfWork);
         categoryRepository = new CategorySequelizeRepository(CategoryModel);
-        categoriesIdsDatabaseValidation = new CategoriesIdsExistsInDatabaseValidation(
-            categoryRepository,
-        );
+        categoriesIdsDatabaseValidation =
+            new CategoriesIdsExistsInDatabaseValidation(categoryRepository);
         useCase = new UpdateGenreUseCase(
             unitOfWork,
             genreRepository,

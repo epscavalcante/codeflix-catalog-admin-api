@@ -16,9 +16,8 @@ describe('UpdateGenreUseCase Unit Tests', () => {
     beforeEach(() => {
         genreRepository = new GenreMemoryRepository();
         categoryRepository = new CategoryMemoryRepository();
-        categoriesIdsDatabaseValidation = new CategoriesIdsExistsInDatabaseValidation(
-            categoryRepository,
-        );
+        categoriesIdsDatabaseValidation =
+            new CategoriesIdsExistsInDatabaseValidation(categoryRepository);
         useCase = new UpdateGenreUseCase(
             new MemoryUnitOfWorkRepository(),
             genreRepository,
