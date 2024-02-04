@@ -15,8 +15,10 @@ export default class GenreSequelizeRepository implements IGenreRepository {
     sortableFields: string[] = ['name', 'createdAt'];
     orderBy = {
         mysql: {
-            name: (sortDir: SortDirection) => `binary ${this.genreModel.name}.name ${sortDir}`,
-            createdAt: (sortDir: SortDirection) => `binary ${this.genreModel.name}.created_at ${sortDir}`,
+            name: (sortDir: SortDirection) =>
+                `binary ${this.genreModel.name}.name ${sortDir}`,
+            createdAt: (sortDir: SortDirection) =>
+                `binary ${this.genreModel.name}.created_at ${sortDir}`,
         },
     };
 
@@ -31,17 +33,20 @@ export default class GenreSequelizeRepository implements IGenreRepository {
             include: ['categoriesId'],
             transaction: this.unitOfWork.getTransaction(),
         });
+        this.unitOfWork.addAggregateRoot(genre);
     }
 
     async bulkInsert(genres: Genre[]): Promise<void> {
         const genresModel = genres.map((genre) =>
-            GenreModelMapper.toModelProps(genre)
+            GenreModelMapper.toModelProps(genre),
         );
 
         await this.genreModel.bulkCreate(genresModel, {
             include: ['categoriesId'],
             transaction: this.unitOfWork.getTransaction(),
         });
+
+        genres.forEach((genre) => this.unitOfWork.addAggregateRoot(genre));
     }
 
     async update(genre: Genre): Promise<void> {
@@ -70,8 +75,10 @@ export default class GenreSequelizeRepository implements IGenreRepository {
         );
 
         if (effectedRows !== 1) throw new GenreNotFoundError(model.genreId);
+        this.unitOfWork.addAggregateRoot(genre);
     }
 
+    //#Todo alterar para Genre
     async delete(genreId: GenreId): Promise<void> {
         const genreCategoryRelation =
             this.genreModel.associations.categoriesId.target;
@@ -85,6 +92,7 @@ export default class GenreSequelizeRepository implements IGenreRepository {
         });
 
         if (effectedRows !== 1) throw new GenreNotFoundError(genreId.value);
+        // this.unitOfWork.addAggregateRoot(genre);
     }
 
     async findAll(): Promise<Genre[]> {
@@ -106,16 +114,12 @@ export default class GenreSequelizeRepository implements IGenreRepository {
         const models = await this.genreModel.findAll({
             where: {
                 genreId: {
-                    [Op.in]: ids.map(
-                        (genreId) => genreId.value,
-                    ),
+                    [Op.in]: ids.map((genreId) => genreId.value),
                 },
             },
         });
 
-        return models.map((model) =>
-            GenreModelMapper.toEntity(model),
-        );
+        return models.map((model) => GenreModelMapper.toEntity(model));
     }
 
     async existsByIds(
@@ -136,14 +140,9 @@ export default class GenreSequelizeRepository implements IGenreRepository {
             },
         });
 
-        const existsIds = models.map(
-            (model) => new GenreId(model.genreId),
-        );
+        const existsIds = models.map((model) => new GenreId(model.genreId));
         const notExistsIds = ids.filter(
-            (genreId) =>
-                !existsIds.some((existId) =>
-                    existId.equals(genreId),
-                ),
+            (genreId) => !existsIds.some((existId) => existId.equals(genreId)),
         );
         return {
             exists: existsIds,

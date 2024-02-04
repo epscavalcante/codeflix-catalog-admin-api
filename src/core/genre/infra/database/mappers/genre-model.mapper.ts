@@ -50,7 +50,7 @@ export class GenreModelMapper {
     }
 
     static toModelProps(genre: Genre) {
-        const {  categoriesId, ...otherData } = genre.toJSON();
+        const { categoriesId, ...otherData } = genre.toJSON();
         return {
             ...otherData,
             categoriesId: categoriesId.map(
