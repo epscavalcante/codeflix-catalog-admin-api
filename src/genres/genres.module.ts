@@ -18,10 +18,11 @@ import { CategoriesModule } from '../categories/categories.module';
         ...Object.values(GENRE_PROVIDERS.REPOSITORIES),
         ...Object.values(GENRE_PROVIDERS.USE_CASES),
         ...Object.values(GENRE_PROVIDERS.VALIDATIONS),
+        ...Object.values(GENRE_PROVIDERS.HANDLERS),
     ],
     exports: [
         GENRE_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
-        GENRE_PROVIDERS.VALIDATIONS.GENRES_IDS_EXISTS_IN_DATABASE_VALIDATOR
+        GENRE_PROVIDERS.VALIDATIONS.GENRES_IDS_EXISTS_IN_DATABASE_VALIDATOR,
     ],
 })
 export class GenresModule {}
