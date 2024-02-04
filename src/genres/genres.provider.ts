@@ -55,7 +55,6 @@ export const USE_CASES = {
             );
         },
         inject: [
-            'UnitOfWork',
             ApplicationService,
             REPOSITORIES.GENRE_REPOSITORY.provide,
             CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
