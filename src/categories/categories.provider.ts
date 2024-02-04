@@ -68,16 +68,16 @@ export const USE_CASES = {
 
 export const VALIDATIONS = {
     CATEGORIES_IDS_EXISTS_IN_DATABASE_VALIDATOR: {
-      provide: CategoriesIdsExistsInDatabaseValidation,
-      useFactory: (categoryRepo: ICategoryRepository) => {
-        return new CategoriesIdsExistsInDatabaseValidation(categoryRepo);
-      },
-      inject: [REPOSITORIES.CATEGORY_REPOSITORY.provide],
+        provide: CategoriesIdsExistsInDatabaseValidation,
+        useFactory: (categoryRepo: ICategoryRepository) => {
+            return new CategoriesIdsExistsInDatabaseValidation(categoryRepo);
+        },
+        inject: [REPOSITORIES.CATEGORY_REPOSITORY.provide],
     },
-  };
+};
 
 export const CATEGORY_PROVIDERS = {
     REPOSITORIES,
     USE_CASES,
-    VALIDATIONS
+    VALIDATIONS,
 };
