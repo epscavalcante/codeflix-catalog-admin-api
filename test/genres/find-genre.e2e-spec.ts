@@ -66,7 +66,9 @@ describe('GenresController (e2e)', () => {
             const keyInResponse = GetGenreFixture.keysInResponse;
             expect(Object.keys(res.body)).toStrictEqual(keyInResponse);
 
-            const presenter = new GenrePresenter(GenreOutputMapper.toOutput(genre, categories));
+            const presenter = new GenrePresenter(
+                GenreOutputMapper.toOutput(genre, categories),
+            );
             const serialized = instanceToPlain(presenter);
             serialized.categoriesId = expect.arrayContaining(
                 serialized.categoriesId,

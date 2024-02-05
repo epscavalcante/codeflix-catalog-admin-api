@@ -73,7 +73,7 @@ describe('ListGenreUseCase integration Test', () => {
 
             const output = await useCase['toOutput'](result);
 
-             expect(output).toMatchObject({
+            expect(output).toMatchObject({
                 currentPage: 1,
                 perPage: 10,
                 total: 1,
@@ -86,30 +86,29 @@ describe('ListGenreUseCase integration Test', () => {
                         id: genre.genreId.value,
                         name: genre.name,
                         createdAt: genre.createdAt,
-                        
                     }),
                 ]),
-            )
+            );
             expect(output.items[0].categories).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({
                         id: categories[0].categoryId.value,
                         name: categories[0].name,
-                        isActive: categories[0].isActive
+                        isActive: categories[0].isActive,
                     }),
                     expect.objectContaining({
                         id: categories[1].categoryId.value,
                         name: categories[1].name,
-                        isActive: categories[1].isActive
+                        isActive: categories[1].isActive,
                     }),
                 ]),
-            )
+            );
             expect(output.items[0].categoriesId).toEqual(
                 expect.arrayContaining([
                     categories[0].categoryId.value,
                     categories[1].categoryId.value,
                 ]),
-            )
+            );
         });
     });
 
@@ -232,7 +231,7 @@ describe('ListGenreUseCase integration Test', () => {
             });
 
             const genre = genres[2];
-            
+
             expect(output.items).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({
@@ -241,27 +240,27 @@ describe('ListGenreUseCase integration Test', () => {
                         createdAt: genre.createdAt,
                     }),
                 ]),
-            )
+            );
             expect(output.items[0].categories).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({
                         id: categories[2].categoryId.value,
                         name: categories[2].name,
-                        isActive: categories[2].isActive
+                        isActive: categories[2].isActive,
                     }),
                     expect.objectContaining({
                         id: categories[3].categoryId.value,
                         name: categories[3].name,
-                        isActive: categories[3].isActive
+                        isActive: categories[3].isActive,
                     }),
                 ]),
-            )
+            );
             expect(output.items[0].categoriesId).toEqual(
                 expect.arrayContaining([
                     categories[2].categoryId.value,
                     categories[3].categoryId.value,
                 ]),
-            )
+            );
         });
     });
 });

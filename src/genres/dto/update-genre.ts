@@ -2,7 +2,7 @@ import { UpdateGenreInput } from '@core/genre/application/mappers/update-genre.u
 import { OmitType } from '@nestjs/mapped-types';
 
 export class UpdateGenreInputWithoutId extends OmitType(UpdateGenreInput, [
-  'id',
+    'id',
 ] as any) {}
 
 export class UpdateGenreDto extends UpdateGenreInputWithoutId {}

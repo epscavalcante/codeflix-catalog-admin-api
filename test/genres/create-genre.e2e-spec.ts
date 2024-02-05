@@ -71,14 +71,19 @@ describe('GenresController (e2e)', () => {
                         .expect(201);
 
                     const keyInResponse = CreateGenreFixture.keysInResponse;
-                    expect(Object.keys(response.body)).toStrictEqual(keyInResponse);
+                    expect(Object.keys(response.body)).toStrictEqual(
+                        keyInResponse,
+                    );
 
                     const genreResponse = response.body;
                     const genreCreated = await genreRepository.findById(
                         new GenreId(genreResponse.id),
                     );
                     const presenter = new GenrePresenter(
-                        GenreOutputMapper.toOutput(genreCreated!, relations.categories),
+                        GenreOutputMapper.toOutput(
+                            genreCreated!,
+                            relations.categories,
+                        ),
                     );
                     const genreSerialized = instanceToPlain(presenter);
 

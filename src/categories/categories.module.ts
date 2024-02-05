@@ -14,7 +14,8 @@ import CategoryModel from '@core/category/infra/database/sequelize/models/catego
     ],
     exports: [
         CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
-        CATEGORY_PROVIDERS.VALIDATIONS.CATEGORIES_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide
-    ]
+        CATEGORY_PROVIDERS.VALIDATIONS
+            .CATEGORIES_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide,
+    ],
 })
 export class CategoriesModule {}

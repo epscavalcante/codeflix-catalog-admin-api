@@ -177,7 +177,9 @@ describe('Integration Test Sequelize repository', () => {
             await categoryRepository.insert(category);
             const genres = Genre.fake()
                 .theGenres(20)
-                .withCreatedAt((index) => new Date(new Date().getTime() + 100 + index))
+                .withCreatedAt(
+                    (index) => new Date(new Date().getTime() + 100 + index),
+                )
                 .addCategoryId(category.categoryId)
                 .build();
             await genreRepository.bulkInsert(genres);
@@ -199,17 +201,16 @@ describe('Integration Test Sequelize repository', () => {
                 perPage: 15,
             });
 
-            [...genres.reverse().slice(0, 15)]
-                .forEach((item, index) => {
-                    expect(genresSearchResult.items[index]).toBeInstanceOf(Genre);
-                    const genreExpected = genresSearchResult.items[index].toJSON();
-                    expect(item.toJSON()).toStrictEqual({
-                        ...genreExpected,
-                        categoriesId: expect.arrayContaining([
-                            category.categoryId.value
-                        ])
-                    })
+            [...genres.reverse().slice(0, 15)].forEach((item, index) => {
+                expect(genresSearchResult.items[index]).toBeInstanceOf(Genre);
+                const genreExpected = genresSearchResult.items[index].toJSON();
+                expect(item.toJSON()).toStrictEqual({
+                    ...genreExpected,
+                    categoriesId: expect.arrayContaining([
+                        category.categoryId.value,
+                    ]),
                 });
+            });
         });
     });
 });

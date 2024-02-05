@@ -6,6 +6,8 @@ import { SharedModule } from './shared/shared.module';
 import { CastMembersModule } from './cast-members/cast-members.module';
 import { GenresModule } from './genres/genres.module';
 import { AuthModule } from './auth/auth.module';
+import { EventModule } from './event/event.module';
+import { ApplicationModule } from './application/application.module';
 
 @Module({
     imports: [
@@ -13,6 +15,8 @@ import { AuthModule } from './auth/auth.module';
         SharedModule,
         DatabaseModule,
         AuthModule,
+        EventModule,
+        ApplicationModule,
         CategoriesModule,
         CastMembersModule,
         GenresModule,

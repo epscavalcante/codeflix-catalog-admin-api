@@ -67,9 +67,7 @@ export default class GenreMemoryRepository
         const existsId = new Set<GenreId>();
         const notExistsId = new Set<GenreId>();
         ids.forEach((id) => {
-            const item = this.items.find((entity) =>
-                entity.genreId.equals(id),
-            );
+            const item = this.items.find((entity) => entity.genreId.equals(id));
             item ? existsId.add(id) : notExistsId.add(id);
         });
         return {
