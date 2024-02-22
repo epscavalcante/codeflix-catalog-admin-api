@@ -1,6 +1,6 @@
 import MediaFileSizeError from '@core/shared/domain/errors/media-file-size.error';
 import VideoBanner from './video-banner.vo';
-import { VideoId } from './video.aggragate';
+import { VideoId } from './video.aggregate';
 import MediaFileMimeTypeError from '@core/shared/domain/errors/media-file-mime-type.error';
 
 describe('Vídeo Banner Unit Tests', () => {

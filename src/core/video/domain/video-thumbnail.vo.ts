@@ -1,7 +1,7 @@
 import { Either } from '@core/shared/domain/either';
 import MediaFileValidator from '@core/shared/domain/validations/media-file.validator';
 import ImageMedia from '@core/shared/domain/value-objects/image-media.vo';
-import { VideoId } from './video.aggragate';
+import { VideoId } from './video.aggregate';
 import MediaFileMimeTypeError from '@core/shared/domain/errors/media-file-mime-type.error';
 import MediaFileSizeError from '@core/shared/domain/errors/media-file-size.error';
 

@@ -1,6 +1,6 @@
 import MediaFileSizeError from '@core/shared/domain/errors/media-file-size.error';
 import VideoThumbnail from './video-thumbnail.vo';
-import { VideoId } from './video.aggragate';
+import { VideoId } from './video.aggregate';
 import MediaFileMimeTypeError from '@core/shared/domain/errors/media-file-mime-type.error';
 
 describe('Video Thumbnail Unit Tests', () => {

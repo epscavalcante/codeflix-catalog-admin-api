@@ -7,6 +7,9 @@ import Rating from './video-rating.vo';
 import VideoBanner from './video-banner.vo';
 import VideoThumbnailHalf from './video-thumbnail-half.vo';
 import VideoThumbnail from './video-thumbnail.vo';
+import VideoTrailer from './video-trailer.vo';
+import VideoMedia from './video-media.vo';
+import VideoValidator from './video.validator';
 
 export class VideoId extends Uuid {}
 
@@ -25,6 +28,8 @@ export default class Video extends AggregateRoot {
     banner?: VideoBanner | null;
     thumbnail?: VideoThumbnail | null;
     thumbnailHalf?: VideoThumbnailHalf | null;
+    trailer?: VideoTrailer | null;
+    video?: VideoMedia | null;
     createdAt: Date;
 
     constructor(props: VideoConstructorProps) {
@@ -40,9 +45,13 @@ export default class Video extends AggregateRoot {
         this.categoriesId = props.categoriesId;
         this.genresId = props.genresId;
         this.castMembersId = props.castMembersId;
+
         this.banner = props?.banner ?? null;
         this.thumbnail = props?.thumbnail ?? null;
         this.thumbnailHalf = props?.thumbnailHalf ?? null;
+        this.trailer = props.trailer ?? null;
+        this.video = props.video ?? null;
+
         this.createdAt = props.createdAt ?? new Date();
     }
 
@@ -73,10 +82,9 @@ export default class Video extends AggregateRoot {
     }
 
     validate(fields?: string[]) {
-        return fields;
-        // const categoryValidator = CategoryValidatorFactory.create();
+        const videoValidator = new VideoValidator();
 
-        // return categoryValidator.validate(this.notification, this, fields);
+        return videoValidator.validate(this.notification, this, fields);
     }
 
     static fake() {
@@ -185,6 +193,8 @@ export default class Video extends AggregateRoot {
             thumbnailHalf: this.thumbnailHalf
                 ? this.thumbnailHalf.toJson()
                 : null,
+            trailer: this.trailer ? this.trailer.toJson() : null,
+            video: this.video ? this.video.toJson() : null,
             createdAt: this.createdAt,
         };
     }
@@ -204,11 +214,11 @@ export type VideoConstructorProps = {
     isPublished: boolean;
     rating: Rating;
 
-    banner?: VideoBanner | null;
-    thumbnail?: VideoThumbnail | null;
-    thumbnailHalf?: VideoThumbnailHalf | null;
-    // trailer?: Trailer | null;
-    // video?: VideoMedia | null;
+    banner?: VideoBanner;
+    thumbnail?: VideoThumbnail;
+    thumbnailHalf?: VideoThumbnailHalf;
+    trailer?: VideoTrailer;
+    video?: VideoMedia;
 
     categoriesId: Map<string, CategoryId>;
     genresId: Map<string, GenreId>;
@@ -227,8 +237,8 @@ export type VideoCreateCommandProps = {
     banner?: VideoBanner;
     thumbnail?: VideoThumbnail;
     thumbnailHalf?: VideoThumbnailHalf;
-    // trailer?: Trailer;
-    // video?: VideoMedia;
+    trailer?: VideoTrailer;
+    video?: VideoMedia;
 
     categoriesId: CategoryId[];
     genresId: GenreId[];
