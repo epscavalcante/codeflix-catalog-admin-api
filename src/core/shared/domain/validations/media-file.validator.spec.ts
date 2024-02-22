@@ -12,7 +12,7 @@ describe('MediaFileValidator Unit Tests', () => {
         const data = Buffer.alloc(1024 * 1024 + 1);
         expect(() =>
             validator.validate('test.png', 'image/png', data.length),
-        ).toThrow(new MediaFileSizeError(data.length, validator['max_size']));
+        ).toThrow(new MediaFileSizeError(data.length, validator['maxSize']));
     });
 
     it('should throw an error if the file mime type is not valid', () => {
@@ -22,7 +22,7 @@ describe('MediaFileValidator Unit Tests', () => {
         ).toThrow(
             new MediaFileMimeTypeError(
                 'text/plain',
-                validator['valid_mime_types'],
+                validator['validMimeTypes'],
             ),
         );
     });
