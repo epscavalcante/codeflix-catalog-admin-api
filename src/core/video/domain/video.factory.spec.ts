@@ -182,7 +182,7 @@ describe('VideoFakerBuilder Unit Tests', () => {
             expect(faker['_createdAt']()).toBe(date);
             expect(faker.createdAt).toBe(date);
         });
-        test.skip('should pass index to createdAt factory', () => {
+        test('should pass index to createdAt factory', () => {
             const date = new Date();
             faker.withCreatedAt(
                 (index) => new Date(date.getTime() + index + 2),

@@ -65,7 +65,7 @@ export default class Video extends AggregateRoot {
 
         this.registerHandler(
             VideoCreatedEvent.name,
-            this.onAudioVideoMediaUpdated.bind(this),
+            this.onVideoCreated.bind(this),
         );
     }
 
@@ -140,8 +140,8 @@ export default class Video extends AggregateRoot {
         this.duration = duration;
     }
 
-    changeYearLauched(duration: number): void {
-        this.duration = duration;
+    changeYearLaunched(duration: number): void {
+        this.yearLaunched = duration;
     }
 
     changeRating(rating: Rating): void {
@@ -225,6 +225,12 @@ export default class Video extends AggregateRoot {
     }
 
     onAudioVideoMediaUpdated() {
+        if (this.isPublished) return;
+
+        this.markAsPublished();
+    }
+
+    onVideoCreated() {
         if (this.isPublished) return;
 
         this.markAsPublished();

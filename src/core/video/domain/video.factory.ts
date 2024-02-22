@@ -261,7 +261,7 @@ export default class VideoFactory<TBuild = any> {
                     genresId: genresId,
                     castMembersId: castMembersId,
                     ...(this._createdAt && {
-                        created_at: this.callFactory(this._createdAt, index),
+                        createdAt: this.callFactory(this._createdAt, index),
                     }),
                 });
                 video['videoId'] = !this._videoId
