@@ -11,13 +11,16 @@ import VideoTrailer from './video-trailer.vo';
 import VideoMedia from './video-media.vo';
 import VideoValidator from './video.validator';
 import { AudioVideoMediaStatus } from '@core/shared/domain/value-objects/audio-video-media.vo';
+import AudioVideoMediaUpdatedEvent from './events/audio-video-media.updated.event';
+import { VideoCreatedEvent } from './events/video-created.event';
+import VideoFactory from './video.factory';
 
 export class VideoId extends Uuid {}
 
 export default class Video extends AggregateRoot {
     videoId: VideoId;
     title: string;
-    description: string | null;
+    description: string;
     yearLaunched: number;
     duration: number;
     rating: Rating;
@@ -54,6 +57,16 @@ export default class Video extends AggregateRoot {
         this.video = props.video ?? null;
 
         this.createdAt = props.createdAt ?? new Date();
+
+        this.registerHandler(
+            AudioVideoMediaUpdatedEvent.name,
+            this.onAudioVideoMediaUpdated.bind(this),
+        );
+
+        this.registerHandler(
+            VideoCreatedEvent.name,
+            this.onAudioVideoMediaUpdated.bind(this),
+        );
     }
 
     static create(props: VideoCreateCommandProps): Video {
@@ -78,7 +91,27 @@ export default class Video extends AggregateRoot {
         });
 
         video.validate(['title']);
-        video.markIsPublished();
+        video.applyEvent(
+            new VideoCreatedEvent({
+                id: video.videoId,
+                title: video.title,
+                description: video.description,
+                yearLaunched: video.yearLaunched,
+                duration: video.duration,
+                rating: video.rating,
+                isOpened: video.isOpened,
+                isPublished: video.isPublished,
+                banner: video.banner ?? null,
+                thumbnail: video.thumbnail ?? null,
+                thumbnailHalf: video.thumbnailHalf ?? null,
+                trailer: video.trailer ?? null,
+                video: video.video ?? null,
+                castMembersId: Array.from(video.castMembersId.values()),
+                categoriesId: Array.from(video.categoriesId.values()),
+                genresId: Array.from(video.genresId.values()),
+                createdAt: video.createdAt,
+            }),
+        );
 
         return video;
     }
@@ -90,7 +123,7 @@ export default class Video extends AggregateRoot {
     }
 
     static fake() {
-        // return CategoryFactory;
+        return VideoFactory;
     }
 
     changeTitle(title: string): void {
@@ -128,22 +161,10 @@ export default class Video extends AggregateRoot {
 
     changeTrailer(trailer: VideoTrailer) {
         this.trailer = trailer;
-        this.markIsPublished();
     }
 
     changeVideo(video: VideoMedia) {
         this.video = video;
-        this.markIsPublished();
-    }
-
-    private markIsPublished() {
-        if (
-            this.trailer &&
-            this.video &&
-            this.video.status === AudioVideoMediaStatus.COMPLETED &&
-            this.trailer.status === AudioVideoMediaStatus.COMPLETED
-        )
-            this.isPublished = true;
     }
 
     markAsOpened() {
@@ -201,6 +222,22 @@ export default class Video extends AggregateRoot {
                 castMemberId,
             ]),
         );
+    }
+
+    onAudioVideoMediaUpdated() {
+        if (this.isPublished) return;
+
+        this.markAsPublished();
+    }
+
+    private markAsPublished() {
+        if (
+            this.trailer &&
+            this.video &&
+            this.video.status === AudioVideoMediaStatus.COMPLETED &&
+            this.trailer.status === AudioVideoMediaStatus.COMPLETED
+        )
+            this.isPublished = true;
     }
 
     toJSON() {
