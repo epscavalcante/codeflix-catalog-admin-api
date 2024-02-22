@@ -10,6 +10,7 @@ import VideoThumbnail from './video-thumbnail.vo';
 import VideoTrailer from './video-trailer.vo';
 import VideoMedia from './video-media.vo';
 import VideoValidator from './video.validator';
+import { AudioVideoMediaStatus } from '@core/shared/domain/value-objects/audio-video-media.vo';
 
 export class VideoId extends Uuid {}
 
@@ -77,6 +78,7 @@ export default class Video extends AggregateRoot {
         });
 
         video.validate(['title']);
+        video.markIsPublished();
 
         return video;
     }
@@ -111,6 +113,37 @@ export default class Video extends AggregateRoot {
 
     changeRating(rating: Rating): void {
         this.rating = rating;
+    }
+    changeBanner(banner: VideoBanner) {
+        this.banner = banner;
+    }
+
+    changeThumbnail(thumbnail: VideoThumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    changeThumbnailHalf(thumbnailHalf: VideoThumbnailHalf) {
+        this.thumbnailHalf = thumbnailHalf;
+    }
+
+    changeTrailer(trailer: VideoTrailer) {
+        this.trailer = trailer;
+        this.markIsPublished();
+    }
+
+    changeVideo(video: VideoMedia) {
+        this.video = video;
+        this.markIsPublished();
+    }
+
+    private markIsPublished() {
+        if (
+            this.trailer &&
+            this.video &&
+            this.video.status === AudioVideoMediaStatus.COMPLETED &&
+            this.trailer.status === AudioVideoMediaStatus.COMPLETED
+        )
+            this.isPublished = true;
     }
 
     markAsOpened() {
