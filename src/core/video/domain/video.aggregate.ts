@@ -251,7 +251,8 @@ export default class Video extends AggregateRoot {
             videoId: this.videoId.value,
             title: this.title,
             description: this.description,
-            duration: this.description,
+            duration: this.duration,
+            rating: this.rating.value,
             yearLaunched: this.yearLaunched,
             isOpened: this.isOpened,
             isPublished: this.isPublished,
@@ -290,11 +291,11 @@ export type VideoConstructorProps = {
     isPublished: boolean;
     rating: Rating;
 
-    banner?: VideoBanner;
-    thumbnail?: VideoThumbnail;
-    thumbnailHalf?: VideoThumbnailHalf;
-    trailer?: VideoTrailer;
-    video?: VideoMedia;
+    banner?: VideoBanner | null;
+    thumbnail?: VideoThumbnail | null;
+    thumbnailHalf?: VideoThumbnailHalf | null;
+    trailer?: VideoTrailer | null;
+    video?: VideoMedia | null;
 
     categoriesId: Map<string, CategoryId>;
     genresId: Map<string, GenreId>;

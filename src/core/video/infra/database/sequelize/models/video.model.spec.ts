@@ -1,4 +1,3 @@
-import { setupDatabase } from '@core/shared/infra/database/setup-database';
 import VideoModel, {
     VideoCastMemberModel,
     VideoCategoryModel,
@@ -12,10 +11,7 @@ import VideoImageMediaModel, {
 import AudioVideoMediaModel, {
     AudioVideoMediaRelatedField,
 } from './video-audio-media.model';
-import {
-    GenreCategoryModel,
-    GenreModel,
-} from '@core/genre/infra/database/sequelize/models/genre.model';
+import { GenreModel } from '@core/genre/infra/database/sequelize/models/genre.model';
 import CategoryModel from '@core/category/infra/database/sequelize/models/category.model';
 import CastMemberModel from '@core/cast-member/infra/database/sequelize/models/cast-member.model';
 import CategorySequelizeRepository from '@core/category/infra/repositories/category-sequelize.repository';
@@ -27,21 +23,9 @@ import CastMemberSequelizeRepository from '@core/cast-member/infra/repositories/
 import CastMember from '@core/cast-member/domain/cast-member.aggregate';
 import { VideoId } from '@core/video/domain/video.aggregate';
 import { AudioVideoMediaStatus } from '@core/shared/domain/value-objects/audio-video-media.vo';
+import { setupDatabaseForVideo } from '../../setup-database';
 
-setupDatabase({
-    models: [
-        VideoImageMediaModel,
-        AudioVideoMediaModel,
-        VideoCategoryModel,
-        VideoGenreModel,
-        GenreCategoryModel,
-        VideoCastMemberModel,
-        CategoryModel,
-        GenreModel,
-        CastMemberModel,
-        VideoModel,
-    ],
-});
+setupDatabaseForVideo();
 
 describe('VideoCategoryModel Unit Tests', () => {
     test('table name', () => {
@@ -552,7 +536,6 @@ describe('VideoModel Unit Tests', () => {
                     VideoImageMediaModel.build({
                         name: 'name',
                         location: 'location',
-                        videoId: videoProps.videoId,
                         videoRelatedField: ImageMediaRelatedField.BANNER,
                     } as any),
                 ],
@@ -560,7 +543,6 @@ describe('VideoModel Unit Tests', () => {
                     AudioVideoMediaModel.build({
                         name: 'name',
                         rawLocation: 'location',
-                        videoId: videoProps.videoId,
                         videoRelatedField: AudioVideoMediaRelatedField.TRAILER,
                         status: AudioVideoMediaStatus.COMPLETED,
                     } as any),
