@@ -60,7 +60,7 @@ describe('Audio Video Media Model Tests', () => {
             expect(attributes.encodedLocation).toMatchObject({
                 field: 'encoded_location',
                 fieldName: 'encodedLocation',
-                allowNull: false,
+                allowNull: true,
                 type: DataType.STRING(255),
             });
         });

@@ -14,7 +14,7 @@ describe('Video Image Model Tests', () => {
         test('check defined props ', () => {
             const attributes = VideoImageMediaModel.getAttributes();
             expect(Object.keys(attributes)).toStrictEqual([
-                'videoImageId',
+                'videoImageMediaId',
                 'name',
                 'location',
                 'videoId',

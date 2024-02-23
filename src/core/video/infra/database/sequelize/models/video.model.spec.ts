@@ -535,6 +535,7 @@ describe('VideoModel Unit Tests', () => {
                 imageMedias: [
                     VideoImageMediaModel.build({
                         name: 'name',
+                        videoId: videoProps.videoId,
                         location: 'location',
                         videoRelatedField: ImageMediaRelatedField.BANNER,
                     } as any),
@@ -542,6 +543,7 @@ describe('VideoModel Unit Tests', () => {
                 audioVideoMedias: [
                     AudioVideoMediaModel.build({
                         name: 'name',
+                        videoId: videoProps.videoId,
                         rawLocation: 'location',
                         videoRelatedField: AudioVideoMediaRelatedField.TRAILER,
                         status: AudioVideoMediaStatus.COMPLETED,
