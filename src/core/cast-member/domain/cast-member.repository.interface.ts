@@ -10,8 +10,6 @@ import ISearchableRepository, {
     SearchResult,
 } from '@core/shared/domain/repositories/searchable.repository.interface';
 import { SearchValidationError } from '@core/shared/domain/errors/search-validation.error';
-import { error } from 'console';
-import { filter } from 'rxjs';
 
 export type CastMemberFilter = {
     name?: string | null;
@@ -81,7 +79,7 @@ export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {
 
 export class CastMemberSearchResult extends SearchResult<CastMember> {}
 
-export default interface CastMemberRepository
+export default interface ICastMemberRepository
     extends ISearchableRepository<
         CastMember,
         CastMemberId,
