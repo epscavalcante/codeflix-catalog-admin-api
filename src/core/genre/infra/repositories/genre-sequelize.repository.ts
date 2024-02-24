@@ -112,6 +112,7 @@ export default class GenreSequelizeRepository implements IGenreRepository {
 
     async findByIds(ids: GenreId[]): Promise<Genre[]> {
         const models = await this.genreModel.findAll({
+            include: ['categoriesId'],
             where: {
                 genreId: {
                     [Op.in]: ids.map((genreId) => genreId.value),
