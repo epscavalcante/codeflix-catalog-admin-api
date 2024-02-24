@@ -36,6 +36,36 @@ export default class CastMemberMemoryRepository
         });
     }
 
+    async findByIds(ids: CastMemberId[]): Promise<CastMember[]> {
+        return this.items.filter((entity) => {
+            return ids.some((id) => entity.castMemberId.equals(id));
+        });
+    }
+
+    async existsByIds(
+        ids: CastMemberId[],
+    ): Promise<{ exists: CastMemberId[]; notExists: CastMemberId[] }> {
+        if (this.items.length === 0) {
+            return {
+                exists: [],
+                notExists: ids,
+            };
+        }
+
+        const existsId = new Set<CastMemberId>();
+        const notExistsId = new Set<CastMemberId>();
+        ids.forEach((id) => {
+            const item = this.items.find((entity) =>
+                entity.castMemberId.equals(id),
+            );
+            item ? existsId.add(id) : notExistsId.add(id);
+        });
+        return {
+            exists: Array.from(existsId.values()),
+            notExists: Array.from(notExistsId.values()),
+        };
+    }
+
     protected applySorting(
         items: CastMember[],
         sort: string | null,

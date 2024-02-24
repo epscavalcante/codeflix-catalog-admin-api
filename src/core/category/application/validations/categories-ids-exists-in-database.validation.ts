@@ -1,9 +1,12 @@
 import { CategoryId } from '@core/category/domain/category.aggregate';
 import ICategoryRepository from '@core/category/domain/category.repository.interface';
 import { CategoryNotFoundError } from '@core/category/domain/errors/catagory-not-found.error';
+import IExistsInDatabaseValidation from '@core/shared/application/validations/exists-in-database.interface';
 import { Either } from '@core/shared/domain/either';
 
-export default class CategoriesIdsExistsInDatabaseValidation {
+export default class CategoriesIdsExistsInDatabaseValidation
+    implements IExistsInDatabaseValidation
+{
     constructor(private readonly categoryRepository: ICategoryRepository) {}
 
     async validate(

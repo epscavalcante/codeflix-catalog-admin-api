@@ -86,4 +86,10 @@ export default interface ICastMemberRepository
         CastMemberFilter,
         CastMemberSearchParams,
         CastMemberSearchResult
-    > {}
+    > {
+    findByIds(castMemberIds: CastMemberId[]): Promise<CastMember[]>;
+    existsByIds(castMembersId: CastMemberId[]): Promise<{
+        exists: CastMemberId[];
+        notExists: CastMemberId[];
+    }>;
+}
