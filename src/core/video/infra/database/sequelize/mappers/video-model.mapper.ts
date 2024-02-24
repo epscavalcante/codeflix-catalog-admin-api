@@ -179,7 +179,6 @@ export default class VideoModelMapper {
             .map((item) => (item.has ? item.field : null))
             .filter(Boolean) as [];
 
-        console.log(relationsToBeIncluded);
         return VideoModel.build(props, {
             include: relationsToBeIncluded,
         });

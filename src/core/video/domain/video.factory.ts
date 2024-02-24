@@ -17,7 +17,8 @@ export default class VideoFactory<TBuild = any> {
     // auto generated in entity
     private _videoId: PropOrFactory<VideoId> | undefined = undefined;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    private _title: PropOrFactory<string> = (_index) => this.chance.word();
+    private _title: PropOrFactory<string> = (_index) =>
+        this.chance.word({ length: 5 });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     private _description: PropOrFactory<string> = (_index) =>
         this.chance.word();

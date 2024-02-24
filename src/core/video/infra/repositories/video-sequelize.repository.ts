@@ -56,49 +56,74 @@ export default class VideoSequelizeRepository implements IVideoRepository {
     }
 
     async update(video: Video): Promise<void> {
-        const id = video.videoId.value;
-        const model = await this._get(id);
-        if (!model) throw new VideoNotFoundError(id);
-        model.$remove(
-            'categories',
-            model.categoriesId.map((categoryId) => categoryId.categoryId),
-            {
-                transaction: this.unitOfWork.getTransaction(),
+        const model = await this._get(video.videoId.value);
+        if (!model) throw new VideoNotFoundError(video.videoId.value);
+
+        await this._removeAllRelationsAndMedias(model);
+
+        const modelProps = VideoModelMapper.toModelProps(video);
+
+        await this.videoModel.update(modelProps, {
+            where: {
+                videoId: video.videoId.value,
             },
-        );
-        const { categoriesId, ...props } = VideoModelMapper.toModelProps(video);
-        const [effectedRows] = await this.videoModel.update(props, {
-            where: { videoId: id },
             transaction: this.unitOfWork.getTransaction(),
         });
 
-        await model.$add(
-            'categories',
-            categoriesId.map((categoryId) => categoryId.categoryId),
-            {
-                transaction: this.unitOfWork.getTransaction(),
-            },
-        );
+        await Promise.all([
+            ...modelProps.imageMedias.map((videoImageMediaModel) =>
+                model.$create('imageMedia', videoImageMediaModel.toJSON(), {
+                    transaction: this.unitOfWork.getTransaction(),
+                }),
+            ),
+            ...modelProps.audioVideoMedias.map((audioVideoImageMediaModel) =>
+                model.$create(
+                    'audioVideoMedia',
+                    audioVideoImageMediaModel.toJSON(),
+                    {
+                        transaction: this.unitOfWork.getTransaction(),
+                    },
+                ),
+            ),
+            model.$add(
+                'categories',
+                modelProps.categoriesId.map(
+                    (videoCategoryModel) => videoCategoryModel.categoryId,
+                ),
+                { transaction: this.unitOfWork.getTransaction() },
+            ),
+            model.$add(
+                'genres',
+                modelProps.genresId.map(
+                    (videoGenreModel) => videoGenreModel.genreId,
+                ),
+                { transaction: this.unitOfWork.getTransaction() },
+            ),
+            model.$add(
+                'castMembers',
+                modelProps.castMembersId.map(
+                    (videoCastMemberModel) => videoCastMemberModel.castMemberId,
+                ),
+                { transaction: this.unitOfWork.getTransaction() },
+            ),
+        ]);
 
-        if (effectedRows !== 1) throw new VideoNotFoundError(model.videoId);
         this.unitOfWork.addAggregateRoot(video);
     }
 
-    //#Todo alterar para Video
     async delete(videoId: VideoId): Promise<void> {
-        const videoCategoryRelation =
-            this.videoModel.associations.categoriesId.target;
-        await videoCategoryRelation.destroy({
-            where: { videoId: videoId.value },
-            transaction: this.unitOfWork.getTransaction(),
-        });
+        const model = await this._get(videoId.value);
+        if (!model) throw new VideoNotFoundError(videoId.value);
+
+        await this._removeAllRelationsAndMedias(model);
+
         const effectedRows = await this.videoModel.destroy({
             where: { videoId: videoId.value },
             transaction: this.unitOfWork.getTransaction(),
         });
 
         if (effectedRows !== 1) throw new VideoNotFoundError(videoId.value);
-        // this.unitOfWork.addAggregateRoot(video);
+        this.unitOfWork.addAggregateRoot(VideoModelMapper.toEntity(model));
     }
 
     async findAll(): Promise<Video[]> {
@@ -330,9 +355,51 @@ export default class VideoSequelizeRepository implements IVideoRepository {
         return Video;
     }
 
+    private _removeAllRelationsAndMedias(model: VideoModel) {
+        return Promise.all([
+            ...model.imageMedias.map((videoImageMediaModel) =>
+                videoImageMediaModel.destroy({
+                    transaction: this.unitOfWork.getTransaction(),
+                }),
+            ),
+            ...model.audioVideoMedias.map((audioVideoImageMedia) =>
+                audioVideoImageMedia.destroy({
+                    transaction: this.unitOfWork.getTransaction(),
+                }),
+            ),
+            model.$remove(
+                'categories',
+                model.categoriesId.map(
+                    (videoCategoryModel) => videoCategoryModel.categoryId,
+                ),
+                {
+                    transaction: this.unitOfWork.getTransaction(),
+                },
+            ),
+            model.$remove(
+                'genres',
+                model.genresId.map(
+                    (videoGenreModel) => videoGenreModel.genreId,
+                ),
+                {
+                    transaction: this.unitOfWork.getTransaction(),
+                },
+            ),
+            model.$remove(
+                'castMembers',
+                model.castMembersId.map(
+                    (videoCastMemberModel) => videoCastMemberModel.castMemberId,
+                ),
+                {
+                    transaction: this.unitOfWork.getTransaction(),
+                },
+            ),
+        ]);
+    }
+
     private async _get(id: string) {
         return await VideoModel.findByPk(id, {
-            include: ['categoriesId'],
+            include: this.relationsIncluded,
             transaction: this.unitOfWork.getTransaction(),
         });
     }
