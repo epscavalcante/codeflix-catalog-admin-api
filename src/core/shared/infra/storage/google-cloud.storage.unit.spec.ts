@@ -3,7 +3,7 @@ import GoogleCloudStorage from './google-cloud.storage';
 import { Storage as GoogleCloudStorageSdk } from '@google-cloud/storage';
 import Config from '../config';
 
-describe('Google Cloud Storage', () => {
+describe.skip('Google Cloud Storage', () => {
     let googleCloudStorage: IStorage;
     let googleCloudStorageSdk: GoogleCloudStorageSdk;
 

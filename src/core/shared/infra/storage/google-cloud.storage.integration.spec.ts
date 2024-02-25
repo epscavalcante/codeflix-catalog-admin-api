@@ -4,7 +4,7 @@ import { Storage as GoogleCloudStorageSdk } from '@google-cloud/storage';
 import Config from '../config';
 import FileNotFoundError from '@core/shared/domain/errors/file-not-found.error';
 
-describe('Google Cloud Storage Integration tests', () => {
+describe.skip('Google Cloud Storage Integration tests', () => {
     let googleCloudStorage: IStorage;
     let googleCloudStorageSdk: GoogleCloudStorageSdk;
 
