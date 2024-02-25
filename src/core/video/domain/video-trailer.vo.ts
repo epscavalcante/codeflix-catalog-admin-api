@@ -47,7 +47,7 @@ export default class VideoTrailer extends AudioVideoMedia {
         });
     }
 
-    process() {
+    markAsProcessing() {
         return new VideoTrailer({
             name: this.name,
             rawLocation: this.rawLocation,
@@ -56,7 +56,7 @@ export default class VideoTrailer extends AudioVideoMedia {
         });
     }
 
-    complete(encodedLocation: string) {
+    markAsCompleted(encodedLocation: string) {
         return new VideoTrailer({
             name: this.name,
             rawLocation: this.rawLocation,
@@ -65,7 +65,7 @@ export default class VideoTrailer extends AudioVideoMedia {
         });
     }
 
-    failed() {
+    markAsFailed() {
         return new VideoTrailer({
             name: this.name,
             rawLocation: this.rawLocation,

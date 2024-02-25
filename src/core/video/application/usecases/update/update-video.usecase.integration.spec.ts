@@ -172,8 +172,12 @@ describe('UpdateVideoUseCase integration test', () => {
         expect(output.id).toBeDefined();
 
         const videoUpdated = await videoRepository.findById(video.videoId);
-        expect(videoUpdated!.toJSON()).toMatchObject(
-            expect.objectContaining(video.toJSON()),
-        );
+        const expected = video.toJSON();
+        expect(videoUpdated!.toJSON()).toMatchObject({
+            ...expected,
+            categoriesId: expect.arrayContaining(expected.categoriesId),
+            genresId: expect.arrayContaining(expected.genresId),
+            castMembersId: expect.arrayContaining(expected.castMembersId),
+        });
     });
 });

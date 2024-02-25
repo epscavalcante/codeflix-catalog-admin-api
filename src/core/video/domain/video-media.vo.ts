@@ -44,7 +44,7 @@ export default class VideoMedia extends AudioVideoMedia {
         });
     }
 
-    process() {
+    markAsProcessing() {
         return new VideoMedia({
             name: this.name,
             rawLocation: this.rawLocation,
@@ -53,7 +53,7 @@ export default class VideoMedia extends AudioVideoMedia {
         });
     }
 
-    complete(encodedLocation: string) {
+    markAsCompleted(encodedLocation: string) {
         return new VideoMedia({
             name: this.name,
             rawLocation: this.rawLocation,
@@ -62,7 +62,7 @@ export default class VideoMedia extends AudioVideoMedia {
         });
     }
 
-    failed() {
+    markAsFailed() {
         return new VideoMedia({
             name: this.name,
             rawLocation: this.rawLocation,
