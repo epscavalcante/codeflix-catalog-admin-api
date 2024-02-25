@@ -23,7 +23,7 @@ export default class Config {
     static googleCredentials() {
         Config.readEnv();
 
-        return JSON.parse(Config.env.GOOGLE_CLOUD_CREDENTIALS);
+        return JSON.parse(Config.env.GOOGLE_CLOUD_STORAGE_CREDENTIALS);
     }
 
     static rabbitmqUri() {
@@ -38,10 +38,7 @@ export default class Config {
         }
 
         const { parsed } = readEnv({
-            path: join(
-                __dirname,
-                `../../../../../.env.${process.env.NODE_ENV}`,
-            ),
+            path: join(__dirname, `../../../../.env.${process.env.NODE_ENV}`),
         });
 
         Config.env = {
