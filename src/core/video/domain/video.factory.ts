@@ -175,7 +175,7 @@ export default class VideoFactory<TBuild = any> {
         this._trailer = VideoTrailer.create(
             'test name trailer',
             'test path trailer',
-        ).complete('test encoded_location trailer');
+        ).markAsCompleted('test encoded_location trailer');
         return this;
     }
 
@@ -193,7 +193,7 @@ export default class VideoFactory<TBuild = any> {
         this._video = VideoMedia.create(
             'test name video',
             'test path video',
-        ).complete('test encoded_location video');
+        ).markAsCompleted('test encoded_location video');
         return this;
     }
 

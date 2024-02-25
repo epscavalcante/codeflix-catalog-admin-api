@@ -205,11 +205,11 @@ describe('Video Unit Tests', () => {
             const trailer = VideoTrailer.create(
                 'test name trailer',
                 'test raw location trailer',
-            ).complete('test encoded_location trailer');
+            ).markAsCompleted('test encoded_location trailer');
             const videoMedia = VideoMedia.create(
                 'test name video',
                 'test raw location video',
-            ).complete('test encoded_location video');
+            ).markAsCompleted('test encoded_location video');
 
             const video = Video.create({
                 title: 'test title',
@@ -388,11 +388,11 @@ describe('Video Unit Tests', () => {
         const trailer = VideoTrailer.create(
             'test name trailer',
             'test raw location trailer',
-        ).complete('test encoded_location trailer');
+        ).markAsCompleted('test encoded_location trailer');
         const videoMedia = VideoMedia.create(
             'test name video',
             'test raw location video',
-        ).complete('test encoded_location video');
+        ).markAsCompleted('test encoded_location video');
 
         video.changeTrailer(trailer);
         video.changeVideo(videoMedia);
