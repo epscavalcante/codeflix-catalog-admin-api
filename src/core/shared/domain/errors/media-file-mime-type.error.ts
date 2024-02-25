@@ -1,9 +1,9 @@
 export default class MediaFileMimeTypeError extends Error {
     constructor(mimeType: string, validMimeTypes: string[]) {
         super(
-            `Media file mime type (${mimeType}) not exist in ${validMimeTypes.join(
+            `The mime type must be one of the values: ${validMimeTypes.join(
                 ', ',
-            )}`,
+            )}. Passed value: ${mimeType}`,
         );
     }
 }
