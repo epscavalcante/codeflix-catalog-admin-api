@@ -4,6 +4,7 @@ import {
     IsBoolean,
     IsInt,
     IsNotEmpty,
+    IsOptional,
     IsString,
     IsUUID,
     Min,
@@ -16,57 +17,58 @@ export default class UpdateVideoInput {
     id: string;
 
     @IsString()
-    @IsNotEmpty()
-    title: string;
+    @IsOptional()
+    title?: string;
 
     @IsString()
-    @IsNotEmpty()
-    description: string;
+    @IsOptional()
+    description?: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsInt()
     @Min(1900)
-    yearLaunched: number;
+    yearLaunched?: number;
 
     @IsInt()
-    @IsNotEmpty()
+    @IsOptional()
     @Min(1)
-    duration: number;
+    duration?: number;
 
     @IsBoolean()
-    @IsNotEmpty()
-    isOpened: boolean;
+    @IsOptional()
+    isOpened?: boolean;
 
     @IsString()
-    @IsNotEmpty()
-    rating: RatingClassifications;
+    @IsOptional()
+    rating?: RatingClassifications;
 
     @IsArray()
-    @IsNotEmpty()
+    @IsOptional()
     @IsUUID('4', { each: true })
-    genresId: string[];
+    genresId?: string[];
 
     @IsArray()
-    @IsNotEmpty()
+    @IsOptional()
     @IsUUID('4', { each: true })
-    categoriesId: string[];
+    categoriesId?: string[];
 
     @IsArray()
-    @IsNotEmpty()
+    @IsOptional()
     @IsUUID('4', { each: true })
-    castMembersId: string[];
+    castMembersId?: string[];
 
     constructor(props?: UpdateVideoInputConstructorProps) {
         if (!props) return;
-        this.title = props.title;
-        this.description = props.description;
-        this.yearLaunched = props.yearLaunched;
-        this.duration = props.duration;
+        this.id = props.id;
+        this.title = props?.title;
+        this.description = props?.description;
+        this.yearLaunched = props?.yearLaunched;
+        this.duration = props?.duration;
         this.isOpened = props.isOpened;
-        this.rating = props.rating;
-        this.genresId = props.genresId;
-        this.categoriesId = props.categoriesId;
-        this.castMembersId = props.castMembersId;
+        this.rating = props?.rating;
+        this.genresId = props?.genresId;
+        this.categoriesId = props?.categoriesId;
+        this.castMembersId = props?.castMembersId;
     }
 }
 
@@ -77,13 +79,14 @@ export class ValidateCreateVideoInput {
 }
 
 export type UpdateVideoInputConstructorProps = {
-    title: string;
-    description: string;
-    yearLaunched: number;
-    duration: number;
-    isOpened: boolean;
-    rating: RatingClassifications;
-    categoriesId: string[];
-    genresId: string[];
-    castMembersId: string[];
+    id: string;
+    title?: string;
+    description?: string;
+    yearLaunched?: number;
+    duration?: number;
+    isOpened?: boolean;
+    rating?: RatingClassifications;
+    categoriesId?: string[];
+    genresId?: string[];
+    castMembersId?: string[];
 };
