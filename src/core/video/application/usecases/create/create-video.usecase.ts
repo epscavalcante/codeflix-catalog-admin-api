@@ -6,7 +6,9 @@ import Video from '@core/video/domain/video.aggregate';
 import IVideoRepository from '@core/video/domain/video.repository.interface';
 import CreateVideoInput from './create-video.usecase.input';
 import CreateVideoOutput from './create-video.usecase.output';
-import IExistsInDatabaseValidation from '@core/shared/application/validations/exists-in-database.interface';
+import ICategoryIdsExistsInDatabaseValidation from '@core/category/application/validations/categories-ids-exists-in-database.interface';
+import IGenresIdExistsInDatabaseValidation from '@core/genre/application/validations/genres-ids-exists-in-database.interface';
+import ICastMemberIdsExistsInDatabaseValidation from '@core/cast-member/application/validations/cast-members-ids-exists-in-database.interface';
 
 export default class CreateVideoUseCase
     implements IUseCase<CreateVideoInput, CreateVideoOutput>
@@ -14,14 +16,13 @@ export default class CreateVideoUseCase
     constructor(
         private readonly unitOfWork: IUnitOfWork,
         private readonly repository: IVideoRepository,
-        private readonly categoriesIdExistsInDatabaseValidation: IExistsInDatabaseValidation,
-        private readonly genresIdExistsInDatabaseValidation: IExistsInDatabaseValidation,
-        private readonly castMembersIdExistsInDatabaseValidation: IExistsInDatabaseValidation,
+        private readonly categoriesIdExistsInDatabaseValidation: ICategoryIdsExistsInDatabaseValidation,
+        private readonly genresIdExistsInDatabaseValidation: IGenresIdExistsInDatabaseValidation,
+        private readonly castMembersIdExistsInDatabaseValidation: ICastMemberIdsExistsInDatabaseValidation,
     ) {}
 
     async handle(input: CreateVideoInput): Promise<CreateVideoOutput> {
         const [rating, errorRating] = Rating.create(input.rating).asArray();
-
         const [
             genresIdValidation,
             categoriesIdValidation,
@@ -37,13 +38,11 @@ export default class CreateVideoUseCase
                 input.castMembersId,
             ),
         ]);
-
         const [genresId, genresIdNotFoundErrors] = genresIdValidation.asArray();
         const [categoriesId, categoriesIdNotFoundErrors] =
             categoriesIdValidation.asArray();
         const [castMembersId, castMembersIdNotFoundErrors] =
             castMembersIdValidation.asArray();
-
         const video = Video.create({
             ...input,
             rating,
@@ -87,6 +86,6 @@ export default class CreateVideoUseCase
             this.repository.insert(video),
         );
 
-        return { ...video.toJSON(), id: video.videoId.value } as any; //{ id: video.videoId.value };
+        return { id: video.videoId.value };
     }
 }
