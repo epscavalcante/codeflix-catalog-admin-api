@@ -1,5 +1,3 @@
-import CategoryMemoryRepository from '@core/category/infra/repositories/category-memory.repository';
-import GenreMemoryRepository from '@core/genre/infra/repositories/genre-memory.repository';
 import ListGenreUseCase from '../use-cases/list-genre.use-case';
 import { GenreSearchResult } from '@core/genre/domain/genre.repository.interface';
 import Category from '@core/category/domain/category.aggregate';
@@ -14,7 +12,6 @@ import {
     GenreModel,
 } from '@core/genre/infra/database/sequelize/models/genre.model';
 import CategoryModel from '@core/category/infra/database/sequelize/models/category.model';
-import { isAbsolute } from 'path';
 
 setupDatabase({ models: [GenreModel, CategoryModel, GenreCategoryModel] });
 

@@ -1,6 +1,4 @@
-import GenreMemoryRepository from '@core/genre/infra/repositories/genre-memory.repository';
 import FindGenreUseCase from '../use-cases/find-genre.use-case';
-import CategoryMemoryRepository from '@core/category/infra/repositories/category-memory.repository';
 import InvalidUuidException from '@core/shared/domain/errors/uuid-validation.error';
 import GenreId from '@core/genre/domain/genre.id.vo';
 import { GenreNotFoundError } from '@core/genre/domain/errors/genre-not-found.error';

@@ -48,7 +48,7 @@ describe('FindVideoUseCase unit test', () => {
         );
     });
 
-    test.only('Deve retornar um vídeo', async () => {
+    test('Deve retornar um vídeo', async () => {
         const categories = Category.fake().theCategories(2).build();
         await categoryRepository.bulkInsert(categories);
         const genre = Genre.fake()
