@@ -119,8 +119,6 @@ describe('GenreModelMapper Unit Tests', () => {
         const category1 = Category.fake().aCategory().build();
         const category2 = Category.fake().aCategory().build();
         await categoryRepository.bulkInsert([category1, category2]);
-        const createdAt = new Date();
-        const genreId = new GenreId('5490020a-e866-4229-9adc-aa44b83234c4');
         const genre = Genre.create({
             name: 'Test',
             categoriesId: [category1.categoryId, category2.categoryId],

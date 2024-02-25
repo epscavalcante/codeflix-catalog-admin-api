@@ -1,5 +1,5 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import Config from './config';
+import Config from '../config';
 
 export function setupDatabase(options: SequelizeOptions = {}) {
     let _sequelize: Sequelize;

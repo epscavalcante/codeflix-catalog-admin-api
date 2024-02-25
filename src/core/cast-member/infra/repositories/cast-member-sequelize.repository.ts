@@ -124,6 +124,57 @@ export default class CastMemberSequelizeRepository
             : null;
     }
 
+    async findByIds(castMembersId: CastMemberId[]): Promise<CastMember[]> {
+        const castMemberModels = await this.castMemberModel.findAll({
+            where: {
+                castMemberId: {
+                    [Op.in]: castMembersId.map(
+                        (castMemberId) => castMemberId.value,
+                    ),
+                },
+            },
+        });
+
+        return castMemberModels.map((castMemberModel) =>
+            CastMemberMapper.toEntity(castMemberModel),
+        );
+    }
+
+    async existsByIds(
+        castMembersId: CastMemberId[],
+    ): Promise<{ exists: CastMemberId[]; notExists: CastMemberId[] }> {
+        if (!castMembersId.length) {
+            return {
+                exists: [],
+                notExists: [],
+            };
+        }
+
+        const castMembersModel = await this.castMemberModel.findAll({
+            where: {
+                castMemberId: {
+                    [Op.in]: castMembersId.map(
+                        (castMemberId) => castMemberId.value,
+                    ),
+                },
+            },
+        });
+
+        const existsCastMemberIds = castMembersModel.map(
+            (categoryModel) => new CastMemberId(categoryModel.castMemberId),
+        );
+        const notExistsCastMemberIds = castMembersId.filter(
+            (castMemberId) =>
+                !existsCastMemberIds.some((existCastMemberId) =>
+                    existCastMemberId.equals(castMemberId),
+                ),
+        );
+        return {
+            exists: existsCastMemberIds,
+            notExists: notExistsCastMemberIds,
+        };
+    }
+
     getEntity(): new (...args: any[]) => CastMember {
         return CastMember;
     }

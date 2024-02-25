@@ -3,7 +3,7 @@ import IGenreRepository, {
     GenreSearchResult,
 } from '@core/genre/domain/genre.repository.interface';
 import { SortDirection } from '@core/shared/domain/repositories/searchable.repository.interface';
-import { Op, literal, where } from 'sequelize';
+import { Op, literal } from 'sequelize';
 import { GenreModel } from '../database/sequelize/models/genre.model';
 import SequelizeUnitOfWorkRepository from '@core/shared/infra/repositories/sequelize-unit-of-work.repository';
 import Genre from '@core/genre/domain/genre.aggregate';
@@ -112,6 +112,7 @@ export default class GenreSequelizeRepository implements IGenreRepository {
 
     async findByIds(ids: GenreId[]): Promise<Genre[]> {
         const models = await this.genreModel.findAll({
+            include: ['categoriesId'],
             where: {
                 genreId: {
                     [Op.in]: ids.map((genreId) => genreId.value),
