@@ -6,6 +6,23 @@ import {
 import Joi from 'joi';
 import { join } from 'path';
 
+//@ts-expect-error - check
+const joiJson = Joi.extend((joi) => {
+    return {
+        type: 'object',
+        base: joi.object(),
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        coerce(value, _schema) {
+            if (value[0] !== '{' && !/^\s*\{/.test(value)) return;
+            try {
+                return { value: JSON.parse(value) };
+            } catch (error) {
+                console.error(error);
+            }
+        },
+    };
+});
+
 type DatabaseSchemaType = {
     DB_VENDOR: 'mysql' | 'sqlite';
     DB_HOST: string;
@@ -43,6 +60,17 @@ export const configDatabaseValidationSchema: Joi.StrictSchemaMap<DatabaseSchemaT
         DB_AUTO_LOAD_MODELS: Joi.boolean().required(),
     };
 
+type GoogleCloudStorageSchemaType = {
+    GOOGLE_CLOUD_STORAGE_CREDENTIALS: object;
+    GOOGLE_CLOUD_STORAGE_BUCKET_NAME: string;
+};
+
+export const configGoogleCloudStorageValidationSchema: Joi.StrictSchemaMap<GoogleCloudStorageSchemaType> =
+    {
+        GOOGLE_CLOUD_STORAGE_CREDENTIALS: joiJson.object().required(),
+        GOOGLE_CLOUD_STORAGE_BUCKET_NAME: Joi.string().required(),
+    };
+
 @Module({})
 export class ConfigModule extends NestConfigModule {
     static forRoot(options: ConfigModuleOptions = {}) {
@@ -57,6 +85,7 @@ export class ConfigModule extends NestConfigModule {
             ],
             validationSchema: Joi.object({
                 ...configDatabaseValidationSchema,
+                ...configGoogleCloudStorageValidationSchema,
             }),
             ...otherProps,
         });

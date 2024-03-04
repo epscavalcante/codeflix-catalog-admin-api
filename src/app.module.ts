@@ -8,6 +8,7 @@ import { GenresModule } from './genres/genres.module';
 import { AuthModule } from './auth/auth.module';
 import { EventModule } from './event/event.module';
 import { ApplicationModule } from './application/application.module';
+import { VideosModule } from './videos/videos.module';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { ApplicationModule } from './application/application.module';
         CategoriesModule,
         CastMembersModule,
         GenresModule,
+        VideosModule,
     ],
 })
 export class AppModule {}

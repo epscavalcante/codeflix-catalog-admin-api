@@ -43,7 +43,7 @@ describe('DeleteVideoUseCase integration test', () => {
         castMemberRepository = new CastMemberSequelizeRepository(
             CastMemberModel,
         );
-        useCase = new DeleteVideoUseCase(videoRepository);
+        useCase = new DeleteVideoUseCase(unitOfWork, videoRepository);
     });
 
     test('Deve lançar InvalidUuidExeception com id fake', async () => {
