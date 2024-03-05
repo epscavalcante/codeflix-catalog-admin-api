@@ -112,6 +112,8 @@ describe('FindVideoUseCase unit test', () => {
             duration: video.duration,
             yearLaunched: video.yearLaunched,
             rating: video.rating.value,
+            isOpened: true,
+            isPublished: false,
             banner: video.banner!.url,
             thumbnail: video.thumbnail!.url,
             thumbnailHalf: video.thumbnailHalf!.url,

@@ -3,6 +3,8 @@ import DeleteCastMemberUseCase from '@core/cast-member/application/use-cases/del
 import FindCastMemberUseCase from '@core/cast-member/application/use-cases/find-cast-member.use-case';
 import ListCastMemberUseCase from '@core/cast-member/application/use-cases/list-cast-member-use-case';
 import UpdateCastMemberUseCase from '@core/cast-member/application/use-cases/update-cast-member.use-case';
+import CastMembersIdsExistsInDatabaseValidation from '@core/cast-member/application/validations/cast-members-ids-exists-in-database.validation';
+import ICastMemberRepository from '@core/cast-member/domain/cast-member.repository.interface';
 import CastMemberRepository from '@core/cast-member/domain/cast-member.repository.interface';
 import CastMemberModel from '@core/cast-member/infra/database/sequelize/models/cast-member.model';
 import CastMemberMemoryRepository from '@core/cast-member/infra/repositories/cast-member-memory.repository';
@@ -65,7 +67,20 @@ export const USE_CASES = {
     },
 };
 
+export const VALIDATIONS = {
+    CAST_MEMBERS_IDS_EXISTS_IN_DATABASE_VALIDATOR: {
+        provide: CastMembersIdsExistsInDatabaseValidation,
+        useFactory: (castMemberRepository: ICastMemberRepository) => {
+            return new CastMembersIdsExistsInDatabaseValidation(
+                castMemberRepository,
+            );
+        },
+        inject: [REPOSITORIES.CAST_MEMBER_REPOSITORY.provide],
+    },
+};
+
 export const CAST_MEMBER_PROVIDERS = {
     REPOSITORIES,
     USE_CASES,
+    VALIDATIONS,
 };

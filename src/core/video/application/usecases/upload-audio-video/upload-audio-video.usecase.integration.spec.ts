@@ -28,9 +28,13 @@ import UploadAudioVideoUseCase from './upload-audio-video.usecase';
 import { AudioVideoMediaRelatedField } from '@core/video/infra/database/sequelize/models/video-audio-media.model';
 import VideoTrailer from '@core/video/domain/video-trailer.vo';
 import { AudioVideoMediaStatus } from '@core/shared/domain/value-objects/audio-video-media.vo';
+import ApplicationService from '@core/shared/application/application.service';
+import DomainEventMediator from '@core/shared/domain/domain-events/domain-event.mediator';
+import EventEmitter2 from 'eventemitter2';
 
 const setupDatabase = setupDatabaseForVideo();
 let unitOfWork: SequelizeUnitOfWorkRepository;
+let applicationService: ApplicationService;
 let useCase: UploadAudioVideoUseCase;
 let storage: IStorage;
 let videoRepository: IVideoRepository;
@@ -63,6 +67,10 @@ describe('UpdateVideoUseCase integration test', () => {
     beforeEach(() => {
         storage = new MemoryStorage();
         unitOfWork = new SequelizeUnitOfWorkRepository(setupDatabase.sequelize);
+        applicationService = new ApplicationService(
+            unitOfWork,
+            new DomainEventMediator(new EventEmitter2()),
+        );
         categoryRepository = new CategorySequelizeRepository(CategoryModel);
         videoRepository = new VideoSequelizeRepository(VideoModel, unitOfWork);
         genreRepository = new GenreSequelizeRepository(GenreModel, unitOfWork);
@@ -70,7 +78,7 @@ describe('UpdateVideoUseCase integration test', () => {
             CastMemberModel,
         );
         useCase = new UploadAudioVideoUseCase(
-            unitOfWork,
+            applicationService,
             storage,
             videoRepository,
         );

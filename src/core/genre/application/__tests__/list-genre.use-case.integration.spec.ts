@@ -13,7 +13,7 @@ import {
 } from '@core/genre/infra/database/sequelize/models/genre.model';
 import CategoryModel from '@core/category/infra/database/sequelize/models/category.model';
 
-setupDatabase({ models: [GenreModel, CategoryModel, GenreCategoryModel] });
+// setupDatabase({ models: [GenreModel, CategoryModel, GenreCategoryModel] });
 
 describe('ListGenreUseCase integration Test', () => {
     let useCase: ListGenreUseCase;

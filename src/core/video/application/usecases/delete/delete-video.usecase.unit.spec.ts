@@ -4,14 +4,18 @@ import VideoMemoryRepository from '@core/video/infra/repositories/video-memory.r
 import DeleteVideoUseCase from './delete-video.usecase';
 import InvalidUuidException from '@core/shared/domain/errors/uuid-validation.error';
 import VideoNotFoundError from '@core/video/domain/errors/video-not-found.error';
+import IUnitOfWork from '@core/shared/domain/repositories/unit-of-work.interface';
+import MemoryUnitOfWorkRepository from '@core/shared/infra/repositories/memory-unit-of-work.repository';
 
 describe('DeleteVideoUseCase unit test', () => {
     let useCase: DeleteVideoUseCase;
+    let unitOfWork: IUnitOfWork;
     let videoRepository: IVideoRepository;
 
     beforeEach(() => {
+        unitOfWork = new MemoryUnitOfWorkRepository();
         videoRepository = new VideoMemoryRepository();
-        useCase = new DeleteVideoUseCase(videoRepository);
+        useCase = new DeleteVideoUseCase(unitOfWork, videoRepository);
     });
 
     test('Deve lançar InvalidUuidExeception com id fake', async () => {

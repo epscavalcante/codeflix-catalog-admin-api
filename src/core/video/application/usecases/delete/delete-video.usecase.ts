@@ -3,14 +3,20 @@ import DeleteVideoUseCaseInput from './delete-video.usecase.input';
 import DeleteVideoUseCaseOutput from './delete-video.usecase.output';
 import { VideoId } from '@core/video/domain/video.aggregate';
 import IVideoRepository from '@core/video/domain/video.repository.interface';
+import IUnitOfWork from '@core/shared/domain/repositories/unit-of-work.interface';
 
 export default class DeleteVideoUseCase
     implements IUseCase<DeleteVideoUseCaseInput, DeleteVideoUseCaseOutput>
 {
-    constructor(private readonly videoRepository: IVideoRepository) {}
+    constructor(
+        private readonly unitOfWork: IUnitOfWork,
+        private readonly videoRepository: IVideoRepository,
+    ) {}
     async handle(input: DeleteVideoUseCaseInput): Promise<void> {
         const videoId = new VideoId(input.id);
 
-        return this.videoRepository.delete(videoId);
+        await this.unitOfWork.execute(async () =>
+            this.videoRepository.delete(videoId),
+        );
     }
 }

@@ -5,39 +5,41 @@ import Genre from '@core/genre/domain/genre.aggregate';
 import { RatingClassifications } from '@core/video/domain/video-rating.vo';
 import Video from '@core/video/domain/video.aggregate';
 
-type VideoCategoryOutput = {
+export type VideoCategoryOutputType = {
     id: string;
     name: string;
     isActive: boolean;
     // createdAt: Date;
 };
 
-type VideoGenreOutput = {
+export type VideoGenreOutputType = {
     id: string;
     name: string;
 };
 
-type VideoCastMemberOutput = {
+export type VideoCastMemberOutputType = {
     id: string;
     name: string;
     type: CastMemberTypeEnum;
 };
 
-export type VideoOutput = {
+export type VideoOutputType = {
     id: string;
     title: string;
     description: string;
     duration: number;
     banner: string | null;
+    isPublished: boolean;
+    isOpened: boolean;
     thumbnail: string | null;
     thumbnailHalf: string | null;
     video: string | null;
     trailer: string | null;
     yearLaunched: number;
     rating: RatingClassifications;
-    genres: VideoGenreOutput[];
-    categories: VideoCategoryOutput[];
-    castMembers: VideoCastMemberOutput[];
+    genres: VideoGenreOutputType[];
+    categories: VideoCategoryOutputType[];
+    castMembers: VideoCastMemberOutputType[];
     createdAt: Date;
 };
 
@@ -53,7 +55,7 @@ export default class VideoUseCaseMapper {
             castMembers: CastMember[];
             genres: Genre[];
         },
-    ): VideoOutput {
+    ): VideoOutputType {
         return {
             id: video.videoId.value,
             title: video.title,
@@ -66,6 +68,8 @@ export default class VideoUseCaseMapper {
             trailer: video.trailer?.url ?? null,
             yearLaunched: video.yearLaunched,
             rating: video.rating.value,
+            isOpened: video.isOpened,
+            isPublished: video.isPublished,
             categories: categories.map((category) => ({
                 id: category.categoryId.value,
                 name: category.name,

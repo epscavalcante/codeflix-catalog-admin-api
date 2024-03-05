@@ -6,7 +6,7 @@ import ISearchableRepository, {
 import { CategoryId } from '@core/category/domain/category.aggregate';
 import GenreId from '@core/genre/domain/genre.id.vo';
 import { CastMemberId } from '@core/cast-member/domain/cast-member-id.value-object';
-import Video from './video.aggregate';
+import Video, { VideoId } from './video.aggregate';
 
 export type VideoFilter = {
     title?: string | null;
@@ -91,7 +91,7 @@ export class VideoSearchResult extends SearchResult<Video> {}
 export default interface IVideoRepository
     extends ISearchableRepository<
         Video,
-        GenreId,
+        VideoId,
         VideoFilter,
         VideoSearchParams,
         VideoSearchResult

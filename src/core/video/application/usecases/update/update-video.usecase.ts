@@ -16,7 +16,7 @@ export default class UpdateVideoUseCase
 {
     constructor(
         private readonly unitOfWork: IUnitOfWork,
-        private readonly repository: IVideoRepository,
+        private readonly videoRepository: IVideoRepository,
         private readonly categoriesIdExistsInDatabaseValidation: ICategoryIdsExistsInDatabaseValidation,
         private readonly genresIdExistsInDatabaseValidation: IGenresIdExistsInDatabaseValidation,
         private readonly castMembersIdExistsInDatabaseValidation: ICastMemberIdsExistsInDatabaseValidation,
@@ -24,7 +24,7 @@ export default class UpdateVideoUseCase
 
     async handle(input: UpdateVideoInput): Promise<UpdateVideoOutput> {
         const videoId = new VideoId(input.id);
-        const videoFound = await this.repository.findById(videoId);
+        const videoFound = await this.videoRepository.findById(videoId);
         if (!videoFound) throw new VideoNotFoundError(input.id);
         const notification = videoFound.notification;
 
@@ -101,7 +101,7 @@ export default class UpdateVideoUseCase
             throw new EntityValidationError(notification.toJSON());
 
         await this.unitOfWork.execute(async () =>
-            this.repository.update(videoFound),
+            this.videoRepository.update(videoFound),
         );
 
         return { id: videoFound.videoId.value };

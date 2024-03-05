@@ -4,18 +4,18 @@ import UploadAudioVideoOutput from './upload-audio-video.usecase.output';
 import IVideoRepository from '@core/video/domain/video.repository.interface';
 import { VideoId } from '@core/video/domain/video.aggregate';
 import VideoNotFoundError from '@core/video/domain/errors/video-not-found.error';
-import IUnitOfWork from '@core/shared/domain/repositories/unit-of-work.interface';
 import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 import IStorage from '@core/shared/domain/storage.interface';
 import { AudioVideoMediaRelatedField } from '@core/video/infra/database/sequelize/models/video-audio-media.model';
 import VideoTrailer from '@core/video/domain/video-trailer.vo';
 import VideoMedia from '@core/video/domain/video-media.vo';
+import ApplicationService from '@core/shared/application/application.service';
 
 export default class UploadAudioVideoUseCase
     implements IUseCase<UploadAudioVideoInput, UploadAudioVideoOutput>
 {
     constructor(
-        private readonly unitOfWork: IUnitOfWork,
+        private readonly applicationService: ApplicationService,
         private readonly storage: IStorage,
         private readonly repository: IVideoRepository,
     ) {}
@@ -55,7 +55,7 @@ export default class UploadAudioVideoUseCase
             id: videoMedia.url,
         });
 
-        await this.unitOfWork.execute(async () =>
+        await this.applicationService.run(async () =>
             this.repository.update(video),
         );
     }
