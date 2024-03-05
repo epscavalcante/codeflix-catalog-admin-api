@@ -1,5 +1,5 @@
-import { VideoOutput } from '../video.usecase.mapper';
+import { VideoOutputType } from '../video.usecase.mapper';
 
-type FindVideoOutput = VideoOutput;
+type FindVideoOutput = VideoOutputType;
 
 export default FindVideoOutput;
