@@ -1,84 +1,111 @@
-import { ListGenresOutput } from '@core/genre/application/use-cases/list-genre.use-case';
 import { Transform, Type } from 'class-transformer';
 import CollectionPresenter from '../shared/presenters/collection.presenter';
+import {
+    VideoCastMemberOutputType,
+    VideoCategoryOutputType,
+    VideoGenreOutputType,
+    VideoOutputType,
+} from '@core/video/application/usecases/video.usecase.mapper';
+import { ListVideoOutputType } from '@core/video/application/usecases/list/list-video.use-case';
 
 export default class VideoPresenter {
     id: string;
     title: string;
+    description: string;
+    yearLaunched: number;
+    duration: number;
+    rating: string;
+    isOpened: boolean;
+    isPublished: boolean;
     // categoriesId: string[];
-    // @Type(() => GenreCategoryPresenter)
-    // categories: GenreCategoryPresenter[];
+    @Type(() => VideoCastMemberPresenter)
+    castMembers: VideoCastMemberPresenter[];
+    @Type(() => VideoCategoryPresenter)
+    categories: VideoCategoryPresenter[];
+    @Type(() => VideoGenrePresenter)
+    genres: VideoGenrePresenter[];
     // isActive: boolean;
     @Transform(({ value }: { value: Date }) => {
         return value.toISOString();
     })
     createdAt: Date;
 
-    constructor(output: any) {
+    constructor(output: VideoOutputType) {
         this.id = output.id;
         this.title = output.title;
-        // this.categoriesId = output.categoriesId;
-        // this.categories = output.categories.map((item) => {
-        //     return new GenreCategoryPresenter(item);
-        // });
+        this.description = output.description;
+        this.yearLaunched = output.yearLaunched;
+        this.duration = output.duration;
+        this.rating = output.rating;
+        this.isOpened = output.isOpened;
+        this.isPublished = output.isPublished;
+        this.categories = output.categories.map((item) => {
+            return new VideoCategoryPresenter(item);
+        });
+        this.castMembers = output.castMembers.map((item) => {
+            return new VideoCastMemberPresenter(item);
+        });
+        this.genres = output.genres.map((item) => {
+            return new VideoGenrePresenter(item);
+        });
         // this.isActive = output.isActive;
         this.createdAt = output.createdAt;
     }
 }
 
-// export class VideoCategoryPresenter {
-//     id: string;
-//     name: string;
-//     isActive: boolean;
-//     //   @Transform(({ value }: { value: Date }) => {
-//     //     return value.toISOString();
-//     //   })
-//     //   created_at: Date;
+export class VideoCategoryPresenter {
+    id: string;
+    name: string;
+    isActive: boolean;
+    //   @Transform(({ value }: { value: Date }) => {
+    //     return value.toISOString();
+    //   })
+    //   created_at: Date;
 
-//     constructor(output: GenreCategoryOutputType) {
-//         this.id = output.id;
-//         this.name = output.name;
-//         this.isActive = output.isActive;
-//     }
-// }
+    constructor(output: VideoCategoryOutputType) {
+        this.id = output.id;
+        this.name = output.name;
+        this.isActive = output.isActive;
+    }
+}
 
-// export class VideoGenrePresenter {
-//     id: string;
-//     name: string;
-//     isActive: boolean;
-//     //   @Transform(({ value }: { value: Date }) => {
-//     //     return value.toISOString();
-//     //   })
-//     //   created_at: Date;
+export class VideoGenrePresenter {
+    id: string;
+    name: string;
+    // isActive: boolean;
+    //   @Transform(({ value }: { value: Date }) => {
+    //     return value.toISOString();
+    //   })
+    //   created_at: Date;
 
-//     constructor(output: GenreCategoryOutputType) {
-//         this.id = output.id;
-//         this.name = output.name;
-//         this.isActive = output.isActive;
-//     }
-// }
+    constructor(output: VideoGenreOutputType) {
+        this.id = output.id;
+        this.name = output.name;
+        // this.isActive = output.isActive;
+    }
+}
 
-// export class VideoCastMemberPresenter {
-//     id: string;
-//     name: string;
-//     type: 1 | 2;
-//     //   @Transform(({ value }: { value: Date }) => {
-//     //     return value.toISOString();
-//     //   })
-//     //   created_at: Date;
+export class VideoCastMemberPresenter {
+    id: string;
+    name: string;
+    type: 1 | 2;
+    //   @Transform(({ value }: { value: Date }) => {
+    //     return value.toISOString();
+    //   })
+    //   created_at: Date;
 
-//     constructor(output: VideoCastMembers) {
-//         this.id = output.id;
-//         this.name = output.name;
-//         this.type = output.type;
-//     }
-// }
+    constructor(output: VideoCastMemberOutputType) {
+        this.id = output.id;
+        this.name = output.name;
+        this.type = output.type;
+    }
+}
 
-export class GenreCollectionPresenter extends CollectionPresenter {
+export class VideoCollectionPresenter extends CollectionPresenter {
     @Type(() => VideoPresenter)
     data: VideoPresenter[];
 
-    constructor(output: ListGenresOutput) {
+    constructor(output: ListVideoOutputType) {
         const { items, ...paginationProps } = output;
         super(paginationProps);
         this.data = items.map((item) => new VideoPresenter(item));

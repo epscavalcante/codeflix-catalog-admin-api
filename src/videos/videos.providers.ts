@@ -23,6 +23,7 @@ import { getModelToken } from '@nestjs/sequelize';
 import { CAST_MEMBER_PROVIDERS } from '../cast-members/cast-members.provider';
 import { CATEGORY_PROVIDERS } from '../categories/categories.provider';
 import { GENRE_PROVIDERS } from '../genres/genres.provider';
+import ListVideoUseCase from '@core/video/application/usecases/list/list-video.use-case';
 
 export const REPOSITORIES = {
     VIDEO_REPOSITORY: {
@@ -122,23 +123,33 @@ export const USE_CASES = {
             ),
         inject: [
             REPOSITORIES.VIDEO_REPOSITORY.provide,
-            CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
             GENRE_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
+            CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
             CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY.provide,
         ],
     },
 
-    // LIST_VIDEO_USE_CASE: {
-    //     provide: ListVideoUseCase,
-    //     useFactory: (
-    //         videoRepository: IVideoRepository,
-    //         categoryRepository: ICategoryRepository,
-    //     ) => new ListVideoUseCase(videoRepository, categoryRepository),
-    //     inject: [
-    //         REPOSITORIES.VIDEO_REPOSITORY.provide,
-    //         CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
-    //     ],
-    // },
+    LIST_VIDEO_USE_CASE: {
+        provide: ListVideoUseCase,
+        useFactory: (
+            videoRepository: IVideoRepository,
+            genreRepository: IGenreRepository,
+            categoryRepository: ICategoryRepository,
+            castMemberRepository: ICastMemberRepository,
+        ) =>
+            new ListVideoUseCase(
+                videoRepository,
+                genreRepository,
+                categoryRepository,
+                castMemberRepository,
+            ),
+        inject: [
+            REPOSITORIES.VIDEO_REPOSITORY.provide,
+            GENRE_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
+            CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
+            CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY.provide,
+        ],
+    },
 
     DELETE_VIDEO_USE_CASE: {
         provide: DeleteVideoUseCase,

@@ -9,14 +9,17 @@ import {
     Inject,
     ParseUUIDPipe,
     HttpCode,
+    Query,
 } from '@nestjs/common';
 import CreateVideoUseCase from '@core/video/application/usecases/create/create-video.usecase';
 import FindVideoUseCase from '@core/video/application/usecases/find/find-video.usecase';
 import UpdateVideoUseCase from '@core/video/application/usecases/update/update-video.usecase';
 import DeleteVideoUseCase from '@core/video/application/usecases/delete/delete-video.usecase';
 import CreateVideoDto from './dto/create-video.dto';
-import VideoPresenter from './videos.presenter';
+import VideoPresenter, { VideoCollectionPresenter } from './videos.presenter';
 import UpdateVideoDto from './dto/update-video';
+import ListVideoUseCase from '@core/video/application/usecases/list/list-video.use-case';
+import SearchVideoDto from './dto/search-video.dto';
 
 @Controller('videos')
 export default class VideosController {
@@ -26,8 +29,8 @@ export default class VideosController {
     @Inject(FindVideoUseCase)
     private findVideoUseCase: FindVideoUseCase;
 
-    // @Inject(ListVideoUseCase)
-    // private listVideoUseCase: ListVideoUseCase;
+    @Inject(ListVideoUseCase)
+    private listVideoUseCase: ListVideoUseCase;
 
     @Inject(UpdateVideoUseCase)
     private updateVideoUseCase: UpdateVideoUseCase;
@@ -47,20 +50,24 @@ export default class VideosController {
     constructor() {}
 
     @Post()
+    @HttpCode(201)
     async create(@Body() createVideoDto: CreateVideoDto) {
         const videoCreatedOutput =
             await this.createVideoUseCase.handle(createVideoDto);
+        console.log(videoCreatedOutput);
 
-        return new VideoPresenter(videoCreatedOutput);
+        return {
+            id: videoCreatedOutput.id,
+        };
     }
 
-    // @Get()
-    // async search(@Query() searchVideoDto: SearchVideoDto) {
-    //     const videosSearchedOutput =
-    //         await this.listVideoUseCase.handle(searchVideoDto);
+    @Get()
+    async search(@Query() searchVideoDto: SearchVideoDto) {
+        const videosSearchedOutput =
+            await this.listVideoUseCase.handle(searchVideoDto);
 
-    //     return new VideoCollectionPresenter(videosSearchedOutput);
-    // }
+        return new VideoCollectionPresenter(videosSearchedOutput);
+    }
 
     @HttpCode(200)
     @Get(':id')
@@ -87,7 +94,9 @@ export default class VideosController {
             id,
         });
 
-        return new VideoPresenter(videoUpdatedOutput);
+        return {
+            id: videoUpdatedOutput.id,
+        };
     }
 
     @HttpCode(204)
