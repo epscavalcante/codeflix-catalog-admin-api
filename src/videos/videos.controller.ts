@@ -54,7 +54,6 @@ export default class VideosController {
     async create(@Body() createVideoDto: CreateVideoDto) {
         const videoCreatedOutput =
             await this.createVideoUseCase.handle(createVideoDto);
-        console.log(videoCreatedOutput);
 
         return {
             id: videoCreatedOutput.id,
