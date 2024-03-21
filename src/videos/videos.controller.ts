@@ -25,7 +25,6 @@ import UpdateVideoDto from './dto/update-video';
 import ListVideoUseCase from '@core/video/application/usecases/list/list-video.use-case';
 import SearchVideoDto from './dto/search-video.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import UploadAudioVideoInput from '@core/video/application/usecases/upload-audio-video/upload-audio-video.usecase.input';
 import { AudioVideoMediaRelatedField } from '@core/video/infra/database/sequelize/models/video-audio-media.model';
 import UploadAudioVideoUseCase from '@core/video/application/usecases/upload-audio-video/upload-audio-video.usecase';
 import UploadImageUseCase from '@core/video/application/usecases/upload-image/upload-image.usecase';
