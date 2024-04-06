@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: codeflix-catalog-admin-api-configmap
+data:
+  DB_VENDOR: mysql
+  DB_DATABASE: codeflix-catalog
+  DB_PORT: "3306"
+  DB_LOGGING: "false"
+  DB_AUTO_LOAD_MODELS: "true"
+  GOOGLE_CLOUD_STORAGE_BUCKET_NAME: codeflix-catalog

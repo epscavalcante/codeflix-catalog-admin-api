@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codeflix-catalog-admin-api
+  labels:
+    app: codeflix-catalog-admin-api
+spec:
+  selector:
+    matchLabels:
+      app: codeflix-catalog-admin-api
+  template:
+    metadata:
+      labels:
+        app: codeflix-catalog-admin-api
+    spec:
+      containers:
+      - name: codeflix-catalog-admin-api
+        image: epscavalcante/codeflix-catalog-admin-api:test
+        imagePullPolicy: Always
+        args: [ "dist/main" ]
+        envFrom:
+          - configMapRef:
+              name: codeflix-catalog-admin-api-configmap
+          - secretRef:
+              name: codeflix-catalog-admin-api-secret
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "0.1"
