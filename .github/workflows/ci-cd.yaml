@@ -108,8 +108,8 @@ jobs:
           cache-to: type=gha,mode=max
           file: Dockerfile.prod
           tags: |
-            ${{ secrets.DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:latest
-            ${{ secrets.DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
   cd:
