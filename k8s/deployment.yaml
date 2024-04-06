@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: codeflix-catalog-admin-api
-        image: epscavalcante/codeflix-catalog-admin-api:test
+        image: epscavalcante/codeflix-catalog-admin-api:v0.0.10
         imagePullPolicy: Always
         args: [ "dist/main" ]
         envFrom:
