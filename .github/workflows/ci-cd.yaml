@@ -112,6 +112,18 @@ jobs:
             ${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
+            - name: Setup kustomize
+            uses: imranismail/setup-kustomize@v2.1.0
+    
+      - name: Update k8s resources
+        run: |
+          cd k8s
+          kustomize edit set image ${{ env.IMAGE_NAME }}=${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
+          cd ..
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -am "Update k8s image version"
+          git push
   cd:
     needs: ci
     runs-on: ubuntu-latest
