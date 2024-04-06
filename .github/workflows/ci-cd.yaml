@@ -112,8 +112,9 @@ jobs:
             ${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
-            - name: Setup kustomize
-            uses: imranismail/setup-kustomize@v2.1.0
+
+      - name: Setup kustomize
+        uses: imranismail/setup-kustomize@v2.1.0
     
       - name: Update k8s resources
         run: |
