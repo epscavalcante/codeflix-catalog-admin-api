@@ -1,4 +1,3 @@
-import CategorySequelizeRepository from '@core/category/infra/repositories/category-sequelize.repository';
 import CategoryModel from '@core/category/infra/database/sequelize/models/category.model';
 import CategoryMapper from '@core/category/infra/database/sequelize/mappers/category.mapper';
 import Category, { CategoryId } from '@core/category/domain/category.aggregate';
@@ -6,13 +5,7 @@ import { setupDatabase } from '@core/shared/infra/database/setup-database';
 import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 
 describe('Category Mapper Integration Tests', () => {
-    let repository: CategorySequelizeRepository;
-
     setupDatabase({ models: [CategoryModel] });
-
-    beforeEach(async () => {
-        repository = new CategorySequelizeRepository(CategoryModel);
-    });
 
     describe('Category map Model to Entity', () => {
         test('Should receives entity validation exception', () => {

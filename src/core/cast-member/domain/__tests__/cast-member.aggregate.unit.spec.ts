@@ -93,11 +93,9 @@ describe('CastMember Unit Test', () => {
         describe('Invalidação do name e tipo', () => {
             test('Deve invalidar criação da categoria sem nome e sem tipo', () => {
                 const input: CastMemberCreateCommand = {
-                    // @ts-ignore
                     name: null,
-                    // @ts-ignore
                     type: null,
-                };
+                } as any;
 
                 const castMember = CastMember.create(input);
 
@@ -119,11 +117,9 @@ describe('CastMember Unit Test', () => {
 
             test('Deve invalidar criação da categoria com nome vazio', () => {
                 const input: CastMemberCreateCommand = {
-                    // @ts-ignore
                     name: '',
-                    // @ts-ignore
                     type: '',
-                };
+                } as any;
 
                 const castMember = CastMember.create(input);
 
@@ -143,9 +139,8 @@ describe('CastMember Unit Test', () => {
             test('Deve invalidar criação da categoria com nome maior que 255 caracteres', () => {
                 const input: CastMemberCreateCommand = {
                     name: 'a'.repeat(256),
-                    // @ts-ignore
                     type: null,
-                };
+                } as any;
 
                 const castMember = CastMember.create(input);
 

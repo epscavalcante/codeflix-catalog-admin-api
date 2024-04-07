@@ -3,8 +3,6 @@ import { ConfigModule } from '../config/config.module';
 import { DatabaseModule } from '../database/database.module';
 import { CategoriesModule } from './categories.module';
 import { CategoriesController } from './categories.controller';
-import ICategoryRepository from '../core/category/domain/category.repository.interface';
-import { CATEGORY_PROVIDERS } from './categories.provider';
 import CreateCategoryUseCase from '@core/category/application/use-cases/create-category.use-case';
 import ListCategoryUseCase from '@core/category/application/use-cases/list-category.use-case';
 import FindCategoryUseCase from '@core/category/application/use-cases/find-category.use-case';
@@ -14,7 +12,6 @@ import { AuthModule } from '../auth/auth.module';
 
 describe('CategoriesController Integration tests', () => {
     let controller: CategoriesController;
-    let repository: ICategoryRepository;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -26,9 +23,6 @@ describe('CategoriesController Integration tests', () => {
             ],
         }).compile();
         controller = module.get<CategoriesController>(CategoriesController);
-        repository = module.get<ICategoryRepository>(
-            CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
-        );
     });
 
     test('Deve instanciar corretamente os componentes', () => {

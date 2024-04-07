@@ -19,7 +19,7 @@ export default class VideoPresenter {
     isPublished: boolean;
     banner: string | null;
     thumbnail: string | null;
-    thumbanilHalf: string | null;
+    thumbnailHalf: string | null;
     // categoriesId: string[];
     @Type(() => VideoCastMemberPresenter)
     castMembers: VideoCastMemberPresenter[];
@@ -44,7 +44,7 @@ export default class VideoPresenter {
         this.isPublished = output.isPublished;
         this.banner = output.banner;
         this.thumbnail = output.thumbnail;
-        this.thumbanilHalf = output.thumbnailHalf;
+        this.thumbnailHalf = output.thumbnailHalf;
         this.categories = output.categories.map((item) => {
             return new VideoCategoryPresenter(item);
         });

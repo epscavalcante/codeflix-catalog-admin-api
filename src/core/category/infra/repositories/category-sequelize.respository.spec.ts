@@ -87,7 +87,7 @@ describe('Category Sequelize Repository Tests', () => {
 
         const { count } = await CategoryModel.findAndCountAll();
 
-        expect(categories).toHaveLength(3);
+        expect(categories).toHaveLength(count);
     });
 
     describe('Update category', () => {

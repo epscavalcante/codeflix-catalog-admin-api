@@ -3,7 +3,9 @@ import { Response } from 'express';
 import EntityNotFoundError from '@core/shared/domain/errors/entity-not-found.error';
 
 @Catch(EntityNotFoundError)
-export class NotFoundErrorFilter<T> implements ExceptionFilter {
+export class NotFoundErrorFilter<T extends EntityNotFoundError>
+    implements ExceptionFilter<T>
+{
     catch(exception: EntityNotFoundError, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response: Response = ctx.getResponse();

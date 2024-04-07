@@ -2,7 +2,10 @@ import ICategoryRepository from '@core/category/domain/category.repository.inter
 import Category from '@core/category/domain/category.aggregate';
 import IUseCase from '@core/shared/application/use-cases/use-case.interface';
 import CategoryOutput, { CategoryOutputType } from './mappers/category-output';
-import { CreateCategoryInput } from './mappers/create-category-input.use-case';
+import {
+    CreateCategoryInput,
+    CreateCategoryInputProps,
+} from './mappers/create-category-input.use-case';
 import EntityValidationError from '@core/shared/domain/errors/entity-validation.error';
 
 export default class CreateCategoryUseCase
@@ -10,8 +13,9 @@ export default class CreateCategoryUseCase
 {
     constructor(private readonly repository: ICategoryRepository) {}
 
-    async handle(input: CreateCategoryInput): Promise<CreateCategoryOutput> {
-        // @ts-ignore
+    async handle(
+        input: CreateCategoryInputProps,
+    ): Promise<CreateCategoryOutput> {
         const category = Category.create(input);
 
         if (category.notification.hasErrors()) {
