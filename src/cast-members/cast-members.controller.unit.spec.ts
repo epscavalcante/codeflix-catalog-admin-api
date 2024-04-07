@@ -29,7 +29,7 @@ describe('CastMembersController Unit Tests', () => {
         const mockCreateUseCase = {
             handle: jest.fn().mockReturnValue(Promise.resolve(output)),
         };
-        // @ts-expect-error
+        //@ts-expect-error todo
         controller['createCastMemberUseCase'] = mockCreateUseCase;
         const input: CreateCastMemberDto = {
             name: 'Member',
@@ -54,7 +54,7 @@ describe('CastMembersController Unit Tests', () => {
             handle: jest.fn().mockReturnValue(Promise.resolve(output)),
         };
 
-        //@ts-expect-error
+        //@ts-expect-error todo
         controller['updateCastMemberUseCase'] = mockUpdateUseCase;
         const input: UpdateCastMemberDto = {
             name: 'Member',
@@ -75,7 +75,7 @@ describe('CastMembersController Unit Tests', () => {
             handle: jest.fn().mockReturnValue(Promise.resolve(expectedOutput)),
         };
 
-        //@ts-expect-error
+        //@ts-expect-error todo
         controller['deleteCastMemberUseCase'] = mockDeleteUseCase;
         const id = '9366b7dc-2d71-4799-b91c-c64adb205104';
         expect(controller.remove(id)).toBeInstanceOf(Promise);
@@ -96,7 +96,7 @@ describe('CastMembersController Unit Tests', () => {
             handle: jest.fn().mockReturnValue(Promise.resolve(output)),
         };
 
-        //@ts-expect-error
+        //@ts-expect-error todo
         controller['findCastMemberUseCase'] = mockGetUseCase;
         const presenter = await controller.findOne(id);
         expect(mockGetUseCase.handle).toHaveBeenCalledWith({ id });
@@ -123,7 +123,7 @@ describe('CastMembersController Unit Tests', () => {
             handle: jest.fn().mockReturnValue(Promise.resolve(output)),
         };
 
-        //@ts-expect-error
+        //@ts-expect-error todo
         controller['listCastMemberUseCase'] = mockListUseCase;
         const searchParams = {
             page: 1,

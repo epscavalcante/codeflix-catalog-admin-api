@@ -1,8 +1,7 @@
 import Genre from '@core/genre/domain/genre.aggregate';
-import GenreMemoryRepository from './genre-memory.repository';
 import GenreId from '@core/genre/domain/genre.id.vo';
 import { GenreNotFoundError } from '@core/genre/domain/errors/genre-not-found.error';
-import Category, { CategoryId } from '@core/category/domain/category.aggregate';
+import Category from '@core/category/domain/category.aggregate';
 import { setupDatabase } from '@core/shared/infra/database/setup-database';
 import GenreSequelizeRepository from './genre-sequelize.repository';
 import {
@@ -29,13 +28,8 @@ describe('Integration Test Sequelize repository', () => {
 
     beforeEach(async () => {
         unitOfWork = new SequelizeUnitOfWorkRepository(sequelize.sequelize);
-        (genreRepository = new GenreSequelizeRepository(
-            GenreModel,
-            unitOfWork,
-        )),
-            (categoryRepository = new CategorySequelizeRepository(
-                CategoryModel,
-            ));
+        genreRepository = new GenreSequelizeRepository(GenreModel, unitOfWork);
+        categoryRepository = new CategorySequelizeRepository(CategoryModel);
     });
 
     test('Should insert an entity', async () => {

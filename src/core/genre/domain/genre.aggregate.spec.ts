@@ -12,8 +12,6 @@ beforeEach(() => {
 });
 
 describe('Genre Unit Test', () => {
-    let genreValidationSpy: any;
-
     describe('Constructor props', () => {
         test('Deve instanciar um gênero pelo construtor com id manual', () => {
             const genreId = new GenreId();
@@ -73,10 +71,9 @@ describe('Genre Unit Test', () => {
         describe('Invalidação do name', () => {
             test('Deve invalidar criação da gênero nome indefinido', () => {
                 const input: GenreStaticCreateProps = {
-                    // @ts-ignore
                     name: undefined,
                     categoriesId: [new CategoryId()],
-                };
+                } as any;
 
                 const genre = Genre.create(input);
 
@@ -94,10 +91,9 @@ describe('Genre Unit Test', () => {
 
             test('Deve invalidar criação da gênero sem nome', () => {
                 const input: GenreStaticCreateProps = {
-                    // @ts-ignore
                     name: null,
                     categoriesId: [new CategoryId()],
-                };
+                } as any;
 
                 const genre = Genre.create(input);
 

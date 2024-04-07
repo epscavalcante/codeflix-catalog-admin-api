@@ -14,12 +14,11 @@ export default class CastMemberFactory<TBuild = any> {
     private _name: PropOrFactory<string> = (_index) =>
         this.chance.word({ length: 5 });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // @ts-ignore
-    private _type: PropOrFactory<CastMemberType> = (_index) =>
-        new CastMemberType(
-            // @ts-ignore
-            [CastMemberTypeEnum.ACTOR, CastMemberTypeEnum.DIRECTOR].random(),
-        );
+    private _type: PropOrFactory<CastMemberType> = () => {
+        const types = [CastMemberTypeEnum.ACTOR, CastMemberTypeEnum.DIRECTOR];
+        const type = types[Math.floor(Math.random() * types.length)];
+        return new CastMemberType(type);
+    };
     // auto generated in entity
     private _createdAt: PropOrFactory<Date> | undefined = undefined;
 
@@ -140,8 +139,3 @@ export default class CastMemberFactory<TBuild = any> {
             : factoryOrValue;
     }
 }
-
-// @ts-ignore
-Array.prototype.random = function () {
-    return this[Math.floor(Math.random() * this.length)];
-};

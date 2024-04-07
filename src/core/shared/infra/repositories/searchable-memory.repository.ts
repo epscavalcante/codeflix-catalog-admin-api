@@ -54,9 +54,7 @@ export abstract class SearchableMemoryRepository<
         }
 
         return [...items].sort((a, b) => {
-            //@ts-ignore
             const aValue = customSort ? customSort(sort, a) : a[sort];
-            //@ts-ignore
             const bValue = customSort ? customSort(sort, b) : b[sort];
 
             if (aValue < bValue) {

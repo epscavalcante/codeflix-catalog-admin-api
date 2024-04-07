@@ -103,8 +103,6 @@ describe('UpdateGenreUseCase integration Test', () => {
             categoriesId: [categories[2].categoryId.value],
         });
 
-        const genreModel = await genreRepository.findById(genre.genreId);
-
         expect(spyInsert).toHaveBeenCalled();
         expect(spyValidateCategoriesId).toHaveBeenCalled();
         expect(output).toStrictEqual({

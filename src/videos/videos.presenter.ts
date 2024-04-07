@@ -17,6 +17,9 @@ export default class VideoPresenter {
     rating: string;
     isOpened: boolean;
     isPublished: boolean;
+    banner: string | null;
+    thumbnail: string | null;
+    thumbnailHalf: string | null;
     // categoriesId: string[];
     @Type(() => VideoCastMemberPresenter)
     castMembers: VideoCastMemberPresenter[];
@@ -39,6 +42,9 @@ export default class VideoPresenter {
         this.rating = output.rating;
         this.isOpened = output.isOpened;
         this.isPublished = output.isPublished;
+        this.banner = output.banner;
+        this.thumbnail = output.thumbnail;
+        this.thumbnailHalf = output.thumbnailHalf;
         this.categories = output.categories.map((item) => {
             return new VideoCategoryPresenter(item);
         });

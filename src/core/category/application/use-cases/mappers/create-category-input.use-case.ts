@@ -6,9 +6,9 @@ import {
     validateSync,
 } from 'class-validator';
 
-type CreateCategoryInputProps = {
+export type CreateCategoryInputProps = {
     name: string;
-    description?: string | null;
+    description?: string;
     isActive?: boolean;
 };
 
@@ -19,7 +19,7 @@ export class CreateCategoryInput {
 
     @IsOptional()
     @IsString()
-    description?: string | null;
+    description?: string;
 
     @IsOptional()
     @IsBoolean()

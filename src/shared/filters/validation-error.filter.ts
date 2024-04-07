@@ -4,7 +4,7 @@ import { Response } from 'express';
 import { union } from 'lodash';
 
 @Catch(EntityValidationError)
-export class ValidationErrorFilter<T> implements ExceptionFilter {
+export class ValidationErrorFilter implements ExceptionFilter {
     catch(exception: EntityValidationError, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response: Response = ctx.getResponse();
@@ -16,7 +16,7 @@ export class ValidationErrorFilter<T> implements ExceptionFilter {
                 ...exception.error.reduce(
                     (acc, error) =>
                         acc.concat(
-                            // @ts-ignore
+                            // @ts-expect-error: Unreachable code error
                             typeof error === 'string'
                                 ? [[error]]
                                 : Object.values(error),

@@ -2,8 +2,6 @@ import Uuid from '../../shared/domain/value-objects/uuid.vo';
 import Category, { CategoryProps } from './category.aggregate';
 
 describe('Category Unit Test', () => {
-    let categoryValidationSpy: any;
-
     describe('Without validation entity', () => {
         beforeEach(() => {
             Category.prototype.validate = jest
@@ -246,9 +244,8 @@ describe('Category Unit Test', () => {
         describe('Invalidação do name', () => {
             test('Deve invalidar criação da categoria sem nome', () => {
                 const input: CategoryProps = {
-                    // @ts-ignore
                     name: null,
-                };
+                } as any;
 
                 const category = Category.create(input);
 

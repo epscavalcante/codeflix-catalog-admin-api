@@ -223,6 +223,9 @@ describe('VideosController (e2e)', () => {
                         rating: '16',
                         isOpened: true,
                         isPublished: false,
+                        banner: null,
+                        thumbnail: null,
+                        thumbnailHalf: null,
                         yearLaunched: 2024,
                         categories: expect.arrayContaining([
                             {

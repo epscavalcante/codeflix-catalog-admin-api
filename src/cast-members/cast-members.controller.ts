@@ -10,7 +10,7 @@ import {
     ParseUUIDPipe,
     HttpCode,
     Query,
-    UseGuards,
+    // UseGuards,
 } from '@nestjs/common';
 import UpdateCastMemberUseCase from '@core/cast-member/application/use-cases/update-cast-member.use-case';
 import DeleteCastMemberUseCase from '@core/cast-member/application/use-cases/delete-cast-member.use-case';

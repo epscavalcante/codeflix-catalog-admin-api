@@ -1,4 +1,3 @@
-// @ts-nocheck
 type Flatten<Type> = Type extends Array<infer Item> ? Item : Type;
 
 type IteratorValue<Ok, Error> = Ok | Error;
@@ -42,7 +41,9 @@ export class Either<Ok, Error = any>
         return new Either(null, error);
     }
 
-    static safe<Ok, Error = any>(fn: () => Ok): Either<Ok, Error> {
+    static safe<Ok, Error = any>(
+        fn: () => Ok,
+    ): Either<Ok | null, Error | null> {
         try {
             return Either.ok(fn());
         } catch (e) {
@@ -54,7 +55,7 @@ export class Either<Ok, Error = any>
      * This method is used to transform the value into a new value.
      * The new value always will be a ok.
      */
-    map<NewOk>(fn: (value: Ok) => NewOk): Either<NewOk, Error> {
+    map<NewOk>(fn: (value: Ok) => NewOk): Either<NewOk | null, Error | null> {
         if (this.isOk()) {
             return Either.ok(fn(this.ok));
         }
@@ -67,7 +68,7 @@ export class Either<Ok, Error = any>
      */
     chain<NewOk, NewError = any>(
         fn: (value: Ok) => Either<NewOk, NewError>,
-    ): Either<NewOk, Error | NewError> {
+    ): Either<NewOk | null, Error | NewError> {
         if (this.isOk()) {
             return fn(this.ok);
         }
@@ -122,6 +123,7 @@ class EitherIterator<Ok, Error>
         this._value = value;
     }
 
+    // @ts-expect-error todo
     next(): IteratorResult<
         IteratorValue<Ok, Error>,
         IteratorValue<Ok, Error> | undefined
@@ -143,6 +145,7 @@ class EitherIterator<Ok, Error>
         }
 
         return {
+            // @ts-expect-error todo
             value: null,
             done: true,
         };
