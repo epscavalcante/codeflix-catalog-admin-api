@@ -114,9 +114,11 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
 
       - name: Setup kustomize
+        if: github.event_name != 'pull_request'
         uses: imranismail/setup-kustomize@v2.1.0
     
       - name: Update k8s resources
+        if: github.event_name != 'pull_request'
         run: |
           cd k8s
           kustomize edit set image ${{ env.IMAGE_NAME }}=${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
