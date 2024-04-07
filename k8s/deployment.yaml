@@ -5,7 +5,7 @@ metadata:
   labels:
     app: codeflix-catalog-admin-api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: codeflix-catalog-admin-api
