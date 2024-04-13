@@ -133,7 +133,7 @@ export default class VideoModelMapper {
         const video = new Video({
             videoId: new VideoId(videoId),
             ...otherData,
-            rating,
+            rating: rating!,
             genresId: new Map(
                 genresIdMap.map((genreId) => [genreId.value, genreId]),
             ),

@@ -27,7 +27,7 @@ export default class Rating extends ValueObject {
 
     static create(
         value: RatingClassifications,
-    ): Either<Rating, VideoRatingClassificationError> {
+    ): Either<Rating | null, VideoRatingClassificationError | null> {
         return Either.safe(() => new Rating(value));
     }
 

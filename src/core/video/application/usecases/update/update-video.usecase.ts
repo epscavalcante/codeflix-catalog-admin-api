@@ -39,7 +39,7 @@ export default class UpdateVideoUseCase
             const [rating, errorRating] = Rating.create(input.rating).asArray();
             if (errorRating)
                 notification.setError(errorRating.message, 'rating');
-            videoFound.changeRating(rating);
+            videoFound.changeRating(rating!);
         }
 
         if (input.genresId) {

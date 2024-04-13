@@ -52,7 +52,7 @@ export default class UploadAudioVideoUseCase
         await this.storage.put({
             file: input.file.data,
             mimeType: input.file.mimeType,
-            id: videoMedia.url,
+            id: videoMedia!.url,
         });
 
         await this.applicationService.run(async () =>

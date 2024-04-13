@@ -31,7 +31,7 @@ export default class CastMemberType extends ValueObject {
 
     static create(
         value: CastMemberTypeEnum,
-    ): Either<CastMemberType, CastMemberTypeError> {
+    ): Either<CastMemberType | null, CastMemberTypeError | null> {
         return Either.safe(() => new CastMemberType(value));
     }
 }

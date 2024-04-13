@@ -53,7 +53,7 @@ export default class UploadImageUseCase
         await this.storage.put({
             file: input.file.data,
             mimeType: input.file.mimeType,
-            id: image.url,
+            id: image!.url,
         });
 
         await this.unitOfWork.execute(async () =>
