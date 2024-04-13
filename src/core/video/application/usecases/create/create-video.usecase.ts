@@ -45,7 +45,7 @@ export default class CreateVideoUseCase
             castMembersIdValidation.asArray();
         const video = Video.create({
             ...input,
-            rating,
+            rating: rating!,
             genresId: genresIdNotFoundErrors || !genresId ? [] : genresId,
             categoriesId:
                 categoriesIdNotFoundErrors || !categoriesId ? [] : categoriesId,

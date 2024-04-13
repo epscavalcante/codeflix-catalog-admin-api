@@ -20,7 +20,7 @@ export default class CreateCastMemberUseCase
         ).asArray();
         const entity = CastMember.create({
             ...input,
-            type,
+            type: type!,
         });
         const notification = entity.notification;
         if (errorCastMemberType) {

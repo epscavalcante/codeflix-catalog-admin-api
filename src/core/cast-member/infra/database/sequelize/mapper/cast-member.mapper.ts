@@ -13,7 +13,7 @@ export default class CastMemberMapper {
         const castMember = new CastMember({
             castMemberId: new CastMemberId(model.castMemberId),
             name: model.name,
-            type: castMemberType,
+            type: castMemberType!,
             createdAt: model.createdAt,
         });
 

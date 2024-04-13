@@ -30,7 +30,7 @@ export default class UpdateCastMemberUseCase
                 input.type,
             ).asArray();
 
-            castMember.changeType(castMemberType);
+            castMember.changeType(castMemberType!);
 
             if (castMemberTypeError) {
                 castMember.notification.setError(
