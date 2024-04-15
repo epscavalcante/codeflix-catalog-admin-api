@@ -61,7 +61,7 @@ export default class GenreSequelizeRepository implements IGenreRepository {
             },
         );
         const { categoriesId, ...props } = GenreModelMapper.toModelProps(genre);
-        const [effectedRows] = await this.genreModel.update(props, {
+        await this.genreModel.update(props, {
             where: { genreId: id },
             transaction: this.unitOfWork.getTransaction(),
         });
@@ -74,7 +74,6 @@ export default class GenreSequelizeRepository implements IGenreRepository {
             },
         );
 
-        if (effectedRows !== 1) throw new GenreNotFoundError(model.genreId);
         this.unitOfWork.addAggregateRoot(genre);
     }
 

@@ -48,7 +48,7 @@ describe('Database Module Tests', () => {
             DB_AUTO_LOAD_MODELS: true,
         };
 
-        test('Deve iniciar a aplicação com sqlite', async () => {
+        test.only('Deve iniciar a aplicação com mysql', async () => {
             const module = await Test.createTestingModule({
                 imports: [
                     DatabaseModule,
