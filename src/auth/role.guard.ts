@@ -8,7 +8,7 @@ import {
 import { Reflector } from '@nestjs/core';
 
 export enum Role {
-    MANAGE_CATALOG = 'manage-catalog',
+    MANAGER_CATALOG = 'manager-catalog',
     // add more
 }
 
@@ -25,7 +25,7 @@ export default class RoleGuard implements CanActivate {
         const payload = request['user'] as any;
         const realmRoles = payload?.realm_access?.roles || [];
 
-        if (!realmRoles.includes(Role.MANAGE_CATALOG))
+        if (!realmRoles.includes(Role.MANAGER_CATALOG))
             throw new ForbiddenException();
         return true;
     }

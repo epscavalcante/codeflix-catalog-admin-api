@@ -10,7 +10,7 @@ import { ConfigService } from '@nestjs/config';
             useFactory: (configService: ConfigService) => {
                 return {
                     publicKey: configService.get('JWT_PUBLIC_KEY'),
-                    privateKey: configService.get('JWT_PRIVATE_KEY'),
+                    // privateKey: configService.get('JWT_PRIVATE_KEY'), // usar apenas local
                     signOptions: {
                         algorithm: 'RS256',
                     },

@@ -10,6 +10,7 @@ import {
     ParseUUIDPipe,
     HttpCode,
     Query,
+    UseGuards,
     // UseGuards,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -24,10 +25,10 @@ import FindCategoryUseCase from '@core/category/application/use-cases/find-categ
 import ListCategoryUseCase from '@core/category/application/use-cases/list-category.use-case';
 import UpdateCategoryUseCase from '@core/category/application/use-cases/update-category.use-case';
 import DeleteCategoryUseCase from '@core/category/application/use-cases/delete-category.use-case';
-// import AuthGuard from '../auth/auth.guard';
-// import RoleGuard from '../auth/role.guard';
+import AuthGuard from '../auth/auth.guard';
+import RoleGuard from '../auth/role.guard';
 
-// @UseGuards(AuthGuard, RoleGuard)
+@UseGuards(AuthGuard, RoleGuard)
 @Controller('categories')
 export class CategoriesController {
     @Inject(CreateCategoryUseCase)

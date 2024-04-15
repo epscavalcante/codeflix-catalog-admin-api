@@ -14,6 +14,7 @@ import {
     UseInterceptors,
     BadRequestException,
     ValidationPipe,
+    UseGuards,
 } from '@nestjs/common';
 import CreateVideoUseCase from '@core/video/application/usecases/create/create-video.usecase';
 import FindVideoUseCase from '@core/video/application/usecases/find/find-video.usecase';
@@ -31,7 +32,10 @@ import UploadImageUseCase from '@core/video/application/usecases/upload-image/up
 import { ImageMediaRelatedField } from '@core/video/infra/database/sequelize/models/video-image-media.model';
 import UploadImageVideoMediaDto from './dto/upload-image-video-media.dto';
 import UploadAudioVideoDto from './dto/upload-audio-video-media.dto';
+import AuthGuard from '../auth/auth.guard';
+import RoleGuard from '../auth/role.guard';
 
+@UseGuards(AuthGuard, RoleGuard)
 @Controller('videos')
 export default class VideosController {
     @Inject(CreateVideoUseCase)
