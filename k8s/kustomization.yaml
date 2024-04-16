@@ -11,4 +11,4 @@ resources:
 images:
 - name: epscavalcante/codeflix-catalog-admin-api
   newName: epscavalcante/codeflix-catalog-admin-api
-  newTag: v0.0.17
+  newTag: v0.0.18
