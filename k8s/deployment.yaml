@@ -19,6 +19,9 @@ spec:
         image: epscavalcante/codeflix-catalog-admin-api:latest
         imagePullPolicy: Always
         args: [ "dist/main" ]
+        env:
+          - name: JWT_PUBLIC_KEY
+            value: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyFVsRZSMdZUFJ5uoJNxahSnagdLdrgpEkaPTIzv5iAc17Zvrh5NQMsas5RDpqci6L2iNHAzbaLWNWZw42spTlW9DhhtaR9vyOBHOYRqToCeXucUbSy7vHnkWxShWP9xEgdKLpFiZHtHdF4HTV4gI8lKQV4GctEZMrxhMVlEYvV0jBjE6L0DzA3WJV9NUFw5OBScdHTiUeF6z0j4Ge6Fv2gW/sFAxqmeU6ruFnnwY1pIAQmlCV0ZLHOqaUMiL/YeT9YxnJcGDNuY+VtlQAyaXo+7OfV/xwFj6BSE3G6ZAqxITfTzYYyrfyUB703WRDW2qW2gMIZpyfNr4RwGU9IuCTwIDAQAB\n-----END PUBLIC KEY-----\n"
         envFrom:
           - configMapRef:
               name: codeflix-catalog-admin-api-configmap
