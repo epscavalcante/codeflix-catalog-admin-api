@@ -3,6 +3,7 @@ import { AggregateRoot } from '../aggregate-root';
 import Uuid from '../value-objects/uuid.vo';
 import DomainEventMediator from './domain-event.mediator';
 import IDomainEvent from './domain-event.interface';
+import IIntegrationEvent from '../events/integration.event.interface';
 
 class StubNameUpdatedEvent implements IDomainEvent {
     eventVersion: number = 1;
@@ -13,6 +14,23 @@ class StubNameUpdatedEvent implements IDomainEvent {
     ) {
         this.occurredOn = new Date();
         this.name;
+    }
+
+    getIntegrationEvent(): StubNameUpdatedIntegrationEvent {
+        return new StubNameUpdatedIntegrationEvent(this);
+    }
+}
+
+class StubNameUpdatedIntegrationEvent implements IIntegrationEvent {
+    eventVersion: number = 1;
+    occurredOn: Date;
+    eventData: any;
+    eventName: string;
+    constructor(event: StubNameUpdatedEvent) {
+        this.occurredOn = event.occurredOn;
+        this.eventVersion = event.eventVersion;
+        this.eventData = event;
+        this.eventName = this.constructor.name;
     }
 }
 
@@ -62,5 +80,41 @@ describe('DomainEventMediator UnitTests', () => {
         const aggregate = new StubAggregateRoot(new Uuid(), 'name');
         aggregate.updateName('name updated');
         await domainEventMediator.publish(aggregate);
+    });
+
+    test('Deve publicar os eventos de integração', async () => {
+        expect.assertions(4);
+        domainEventMediator.register(
+            StubNameUpdatedIntegrationEvent.name,
+            (event: StubNameUpdatedIntegrationEvent) => {
+                expect(event.eventName).toBe(
+                    StubNameUpdatedIntegrationEvent.name,
+                );
+                expect(event.eventVersion).toBe(1);
+                expect(event.eventData.name).toBe('name updated');
+                expect(event.occurredOn).toBeInstanceOf(Date);
+            },
+        );
+        const aggregate = new StubAggregateRoot(new Uuid(), 'name');
+        aggregate.updateName('name updated');
+        await domainEventMediator.publishIntegrationEvents(aggregate);
+    });
+
+    test('Deve publicar os eventos de integração', async () => {
+        expect.assertions(4);
+        domainEventMediator.register(
+            StubNameUpdatedIntegrationEvent.name,
+            (event: StubNameUpdatedIntegrationEvent) => {
+                expect(event.eventName).toBe(
+                    StubNameUpdatedIntegrationEvent.name,
+                );
+                expect(event.eventVersion).toBe(1);
+                expect(event.eventData.name).toBe('name updated');
+                expect(event.occurredOn).toBeInstanceOf(Date);
+            },
+        );
+        const aggregate = new StubAggregateRoot(new Uuid(), 'name');
+        aggregate.updateName('name updated');
+        await domainEventMediator.publishIntegrationEvents(aggregate);
     });
 });

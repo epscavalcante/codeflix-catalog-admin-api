@@ -25,12 +25,13 @@ export default class ApplicationService {
 
     async finish() {
         const aggregates = this.unitOfWork.getAggregatesRoot();
-
         for (const aggregate of aggregates) {
             await this.domainEventMediator.publish(aggregate);
         }
-
         await this.unitOfWork.commit();
+        for (const aggregate of aggregates) {
+            await this.domainEventMediator.publishIntegrationEvents(aggregate);
+        }
     }
 
     async fail() {

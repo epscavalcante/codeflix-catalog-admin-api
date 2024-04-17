@@ -1,5 +1,6 @@
 import IDomainEvent from '@core/shared/domain/domain-events/domain-event.interface';
 import GenreId from '../genre.id.vo';
+import GenreCreatedIntegrationEvent from './genre-created.integration-event';
 
 type GenreCreatedEventProps = {
     genreId: GenreId;
@@ -20,5 +21,9 @@ export default class GenreCreatedEvent implements IDomainEvent {
         this.identifier = props.genreId;
         this.name = props.name;
         this.createdAt = props.createdAt;
+    }
+
+    getIntegrationEvent(): GenreCreatedIntegrationEvent {
+        return new GenreCreatedIntegrationEvent(this);
     }
 }

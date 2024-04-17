@@ -26,7 +26,7 @@ import RabbitMQFakeConsumer from './rabbitmq-fake.consumer';
         GenresModule,
         VideosModule,
         RabbitMQModule.forRoot(RabbitMQModule, {
-            uri: 'amqp://admin:admin@rabbitmq:5672',
+            uri: 'amqp://admin:admin@172.17.0.5:5672',
         }),
     ],
     providers: [RabbitMQFakeConsumer],
