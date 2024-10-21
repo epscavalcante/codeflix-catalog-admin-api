@@ -1,18 +1,31 @@
 version: '3'
 
 services:
-    app:
+    codeflix-catalog-admin-api:
         build: ./node
-        container_name: catalog-admin-app
+        container_name: codeflix-catalog-admin-api
         command: ./.docker/start.sh
         ports:
             - 3000:3000
         volumes:
             - ..:/home/node/app
 
-    db:
+    codeflix-catalog-admin-minio:
+        image: minio/minio
+        container_name: codeflix-catalog-admin-minio
+        command: server /data --console-address ":9001"
+        environment:
+            - MINIO_ROOT_USER=minio
+            - MINIO_ROOT_PASSWORD=password
+        ports:
+          - "9000:9000"
+          - "9001:9001"
+        volumes:
+            - ./minio/data:/data
+
+    codeflix-catalog-admin-db:
         image: mysql:8.0.30-debian
-        container_name: catalog-admin-db
+        container_name: codeflix-catalog-admin-db
         environment:
             - MYSQL_DATABASE=catalog
             - MYSQL_ROOT_PASSWORD=root
@@ -21,9 +34,9 @@ services:
         security_opt:
             - seccomp:unconfined
 
-    db_tests:
+    codeflix-catalog-admin-db-tests:
         image: mysql:8.0.30-debian
-        container_name: catalog-admin-db-tests
+        container_name: codeflix-catalog-admin-db-tests
         environment:
         - MYSQL_DATABASE=catalog
         - MYSQL_ROOT_PASSWORD=root

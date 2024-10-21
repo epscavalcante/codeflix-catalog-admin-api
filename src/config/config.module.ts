@@ -71,6 +71,19 @@ export const configGoogleCloudStorageValidationSchema: Joi.StrictSchemaMap<Googl
         GOOGLE_CLOUD_STORAGE_BUCKET_NAME: Joi.string().required(),
     };
 
+type MinioStorageSchemaType = {
+    MINIO_ACCESS_KEY: string;
+    MINIO_SECRET_KEY: string;
+    MINIO_BUCKET_NAME: string;
+};
+
+export const configMinioStorageValidationSchema: Joi.StrictSchemaMap<MinioStorageSchemaType> =
+    {
+        MINIO_ACCESS_KEY: joiJson.string().required(),
+        MINIO_SECRET_KEY: Joi.string().required(),
+        MINIO_BUCKET_NAME: Joi.string().required(),
+    };
+
 @Module({})
 export class ConfigModule extends NestConfigModule {
     static forRoot(options: ConfigModuleOptions = {}) {
@@ -86,6 +99,7 @@ export class ConfigModule extends NestConfigModule {
             validationSchema: Joi.object({
                 ...configDatabaseValidationSchema,
                 ...configGoogleCloudStorageValidationSchema,
+                ...configMinioStorageValidationSchema,
             }),
             ...otherProps,
         });

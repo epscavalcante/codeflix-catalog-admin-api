@@ -44,3 +44,4 @@ tsconfig.tsbuildinfo
 ":memory:"*
 
 .docker/mysql/data
+.docker/minio/data
