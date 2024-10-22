@@ -14,6 +14,9 @@ import { ConfigService } from '@nestjs/config';
                     signOptions: {
                         algorithm: 'RS256',
                     },
+                    verifyOptions: {
+                        algorithms: ['RS256'],
+                    },
                 };
             },
             inject: [ConfigService],
