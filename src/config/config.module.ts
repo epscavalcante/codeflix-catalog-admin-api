@@ -91,8 +91,8 @@ type JWTSchemaType = {
 
 export const configJwtSchemaValidationSchema: Joi.StrictSchemaMap<JWTSchemaType> =
     {
-        JWT_PRIVATE_KEY: joiJson.string().required(),
-        JWT_PUBLIC_KEY: Joi.string().optional(),
+        JWT_PRIVATE_KEY: joiJson.string().optional(),
+        JWT_PUBLIC_KEY: Joi.string().required(),
     };
 
 @Module({})
