@@ -84,6 +84,17 @@ export const configMinioStorageValidationSchema: Joi.StrictSchemaMap<MinioStorag
         MINIO_BUCKET_NAME: Joi.string().required(),
     };
 
+type JWTSchemaType = {
+    JWT_PRIVATE_KEY: string;
+    JWT_PUBLIC_KEY: string;
+};
+
+export const configJwtSchemaValidationSchema: Joi.StrictSchemaMap<JWTSchemaType> =
+    {
+        JWT_PRIVATE_KEY: joiJson.string().required(),
+        JWT_PUBLIC_KEY: Joi.string().optional(),
+    };
+
 @Module({})
 export class ConfigModule extends NestConfigModule {
     static forRoot(options: ConfigModuleOptions = {}) {
@@ -100,6 +111,7 @@ export class ConfigModule extends NestConfigModule {
                 ...configDatabaseValidationSchema,
                 ...configGoogleCloudStorageValidationSchema,
                 ...configMinioStorageValidationSchema,
+                ...configJwtSchemaValidationSchema,
             }),
             ...otherProps,
         });
