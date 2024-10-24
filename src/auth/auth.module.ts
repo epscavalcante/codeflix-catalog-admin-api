@@ -9,10 +9,16 @@ import { ConfigService } from '@nestjs/config';
         JwtModule.registerAsync({
             useFactory: (configService: ConfigService) => {
                 return {
-                    publicKey: configService.get('JWT_PUBLIC_KEY'),
+                    publicKey: Buffer.from(
+                        configService.get('JWT_PUBLIC_KEY')! as string,
+                        'base64',
+                    ).toString('ascii'),
                     privateKey: configService.get('JWT_PRIVATE_KEY'), // usar apenas local
                     signOptions: {
                         algorithm: 'RS256',
+                    },
+                    verifyOptions: {
+                        algorithms: ['RS256'],
                     },
                 };
             },
