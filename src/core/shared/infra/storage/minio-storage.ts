@@ -97,6 +97,7 @@ export default class MinioStorage implements IStorage {
             );
         } catch (error) {
             console.log({ error });
+            throw error;
         }
     }
 }
